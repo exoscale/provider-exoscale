@@ -16,7 +16,11 @@
 #   publish-provider-package:
 #     uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider.yml@main
 #     with:
+<<<<<<< HEAD
 #       repository: provider-exoscale
+=======
+#       repository: provider-template
+>>>>>>> 941e831 (chores: disable cicd)
 #       version: ${{ github.event.inputs.version }}
 #       go-version: ${{ github.event.inputs.go-version }}
 #       cleanup-disk: true
