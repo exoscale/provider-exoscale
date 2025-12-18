@@ -3,6 +3,7 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/pkg/errors"
@@ -22,7 +23,38 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal exoscale credentials as JSON"
+
+	keyApiKey    string = "key"
+	keyApiSecret string = "secret"
+	keyTimeout   string = "timeout"
 )
+
+type exoscaleClientConf struct {
+	APIKey    string   `json:"key"`
+	APISecret string   `json:"secret"`
+	Timeout   *float64 `json:"timeout"`
+}
+
+func (conf *exoscaleClientConf) Validate() error {
+	var errs []string
+	if conf.APIKey == "" {
+		errs = append(errs, "missing api key")
+	}
+
+	if conf.APISecret == "" {
+		errs = append(errs, "missing api secret")
+	}
+
+	if conf.Timeout != nil && *conf.Timeout < 0 {
+		errs = append(errs, "invalid timeout")
+	}
+
+	if len(errs) > 0 {
+		return errors.New(strings.Join(errs, ","))
+	}
+
+	return nil
+}
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
@@ -45,16 +77,24 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		creds := map[string]string{}
-		if err := json.Unmarshal(data, &creds); err != nil {
+
+		var conf exoscaleClientConf
+		if err := json.Unmarshal(data, &conf); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
+		if err := conf.Validate(); err != nil {
+			return ps, errors.Wrap(errors.New("invalid exoscale provider configuration"), err.Error())
+		}
 
-		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
+		terraformConf := terraform.ProviderConfiguration{
+			keyApiKey:    conf.APIKey,
+			keyApiSecret: conf.APISecret,
+		}
+		if conf.Timeout != nil {
+			terraformConf[keyTimeout] = conf.Timeout
+		}
+		ps.Configuration = terraformConf
+
 		return ps, nil
 	}
 }
