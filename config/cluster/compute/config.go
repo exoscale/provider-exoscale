@@ -27,4 +27,9 @@ func Configure(p *config.Provider) {
 			IgnoredFields: []string{"security_group"},
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_anti_affinity_group", func(r *config.Resource) {
+		r.ShortGroup = "compute"
+		r.Kind = "AntiAffinityGroup"
+	})
 }

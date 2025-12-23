@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	antiaffinitygroup "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/antiaffinitygroup"
 	securitygroup "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/securitygroup"
 	securitygrouprules "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/securitygrouprules"
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/sshkey"
@@ -19,6 +20,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		antiaffinitygroup.Setup,
 		securitygroup.Setup,
 		securitygrouprules.Setup,
 		sshkey.Setup,
@@ -35,6 +37,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		antiaffinitygroup.SetupGated,
 		securitygroup.SetupGated,
 		securitygrouprules.SetupGated,
 		sshkey.SetupGated,

@@ -9,7 +9,8 @@ import (
 var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_ssh_key":             config.NameAsIdentifier,       // we use terraform import exoscale_ssh_key.my_ssh_key ssh-key-name
 	"exoscale_security_group":      config.IdentifierFromProvider, // we use terraform import exoscale_security_group.my_security_group security-group-id
-	"exoscale_security_group_rule": config.IdentifierFromProvider, // config.TemplatedStringAsIdentifier("", "{{ .parameters.security_group_id }}/{{ .external_name }}"), // we use terraform import exoscale_security_group_rule.my_security_group_rule <security-group-ID>/<security-group-rule-ID>
+	"exoscale_security_group_rule": config.IdentifierFromProvider, // we use terraform import exoscale_security_group_rule.my_security_group_rule <security-group-ID>/<security-group-rule-ID>
+	"exoscale_anti_affinity_group": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
