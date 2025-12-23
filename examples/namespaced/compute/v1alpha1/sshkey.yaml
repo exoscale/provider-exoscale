@@ -1,0 +1,11 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SSHKey
+metadata:
+  name: my-ssh-key
+  namespace: crossplane-system
+spec:
+  forProvider:
+    publicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJeNWlMhGQ/Tos4G99M+cazT24B1soxbNe57chciK+mm quentin.albertone@exoscale.ch"
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default

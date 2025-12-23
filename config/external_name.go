@@ -4,20 +4,12 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/config"
 )
 
-// ExternalNameConfigs contains all external name configurations for this
-// provider.
+// ExternalNameConfigs contains all external name configurations for this provider.
+// cf. https://github.com/crossplane/upjet/blob/main/docs/configuring-a-resource.md#external-name
 var ExternalNameConfigs = map[string]config.ExternalName{
-	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": idWithStub(),
-}
-
-func idWithStub() config.ExternalName {
-	e := config.IdentifierFromProvider
-	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
-		en, _ := config.IDAsExternalName(tfstate)
-		return en, nil
-	}
-	return e
+	"exoscale_ssh_key":             config.NameAsIdentifier,       // we use terraform import exoscale_ssh_key.my_ssh_key ssh-key-name
+	"exoscale_security_group":      config.IdentifierFromProvider, // we use terraform import exoscale_security_group.my_security_group security-group-id
+	"exoscale_security_group_rule": config.IdentifierFromProvider, // config.TemplatedStringAsIdentifier("", "{{ .parameters.security_group_id }}/{{ .external_name }}"), // we use terraform import exoscale_security_group_rule.my_security_group_rule <security-group-ID>/<security-group-rule-ID>
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

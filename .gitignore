@@ -5,6 +5,8 @@ cover.out
 /vendor
 /.vendor-new
 .DS_Store
+examples/cluster/providerconfig/secret.yaml
+examples/namespaced/providerconfig/secret.yaml
 
 # ignore IDE folders
 .vscode/
