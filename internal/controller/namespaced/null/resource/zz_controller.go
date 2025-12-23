@@ -21,8 +21,8 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/crossplane/upjet-provider-template/apis/namespaced/null/v1alpha1"
-	features "github.com/crossplane/upjet-provider-template/internal/features"
+	v1alpha1 "github.com/exoscale/provider-exoscale/apis/namespaced/null/v1alpha1"
+	features "github.com/exoscale/provider-exoscale/internal/features"
 )
 
 // SetupGated adds a controller that reconciles Resource managed resources.

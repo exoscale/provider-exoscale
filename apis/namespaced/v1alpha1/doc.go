@@ -1,5 +1,5 @@
-// Package v1alpha1 contains the core resources of the template jet provider.
+// Package v1alpha1 contains the core resources of the exoscale jet provider.
 // +kubebuilder:object:generate=true
-// +groupName=template.m.crossplane.io
+// +groupName=exoscale.m.exoscale.ch
 // +versionName=v1alpha1
 package v1alpha1

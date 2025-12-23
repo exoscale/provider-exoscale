@@ -10,9 +10,9 @@ package namespaced
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane/upjet-provider-template/apis/namespaced/null/v1alpha1"
-	v1alpha1namespaced "github.com/crossplane/upjet-provider-template/apis/namespaced/v1alpha1"
-	v1beta1 "github.com/crossplane/upjet-provider-template/apis/namespaced/v1beta1"
+	v1alpha1 "github.com/exoscale/provider-exoscale/apis/namespaced/null/v1alpha1"
+	v1alpha1namespaced "github.com/exoscale/provider-exoscale/apis/namespaced/v1alpha1"
+	v1beta1 "github.com/exoscale/provider-exoscale/apis/namespaced/v1beta1"
 )
 
 func init() {
