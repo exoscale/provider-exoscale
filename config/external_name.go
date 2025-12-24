@@ -6,11 +6,13 @@ import (
 
 // ExternalNameConfigs contains all external name configurations for this provider.
 // cf. https://github.com/crossplane/upjet/blob/main/docs/configuring-a-resource.md#external-name
+// TODO: check how the read function in terraform provider works.
 var ExternalNameConfigs = map[string]config.ExternalName{
-	"exoscale_ssh_key":             config.NameAsIdentifier,       // we use terraform import exoscale_ssh_key.my_ssh_key ssh-key-name
-	"exoscale_security_group":      config.IdentifierFromProvider, // we use terraform import exoscale_security_group.my_security_group security-group-id
-	"exoscale_security_group_rule": config.IdentifierFromProvider, // we use terraform import exoscale_security_group_rule.my_security_group_rule <security-group-ID>/<security-group-rule-ID>
-	"exoscale_anti_affinity_group": config.IdentifierFromProvider,
+	"exoscale_ssh_key":              config.NameAsIdentifier,
+	"exoscale_security_group":       config.IdentifierFromProvider,
+	"exoscale_security_group_rule":  config.IdentifierFromProvider,
+	"exoscale_anti_affinity_group":  config.IdentifierFromProvider,
+	"exoscale_block_storage_volume": config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.67.1 TODO: upgrade terraform version in makefile once the new release is out.
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

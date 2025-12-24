@@ -10,6 +10,9 @@ package v1alpha1
 func (tr *AntiAffinityGroup) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *BlockStorageVolume) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *SecurityGroup) Hub() {}
 
 // Hub marks this type as a conversion hub.

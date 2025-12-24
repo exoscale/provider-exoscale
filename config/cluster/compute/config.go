@@ -2,20 +2,22 @@ package repository
 
 import "github.com/crossplane/upjet/v2/pkg/config"
 
+const shortGroup string = "compute"
+
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("exoscale_ssh_key", func(r *config.Resource) {
-		r.ShortGroup = "compute"
+		r.ShortGroup = shortGroup
 		r.Kind = "SSHKey"
 	})
 
 	p.AddResourceConfigurator("exoscale_security_group", func(r *config.Resource) {
-		r.ShortGroup = "compute"
+		r.ShortGroup = shortGroup
 		r.Kind = "SecurityGroup"
 	})
 
 	p.AddResourceConfigurator("exoscale_security_group_rule", func(r *config.Resource) {
-		r.ShortGroup = "compute"
+		r.ShortGroup = shortGroup
 		r.Kind = "SecurityGroupRules"
 
 		r.References["security_group_id"] = config.Reference{
@@ -29,7 +31,13 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("exoscale_anti_affinity_group", func(r *config.Resource) {
-		r.ShortGroup = "compute"
+		r.ShortGroup = shortGroup
 		r.Kind = "AntiAffinityGroup"
+	})
+
+	p.AddResourceConfigurator("exoscale_block_storage_volume", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "BlockStorageVolume"
+		r.TerraformResource.Schema["zone"].ForceNew = true
 	})
 }

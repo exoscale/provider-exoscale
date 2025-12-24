@@ -10,6 +10,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	antiaffinitygroup "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/antiaffinitygroup"
+	blockstoragevolume "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/blockstoragevolume"
 	securitygroup "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/securitygroup"
 	securitygrouprules "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/securitygrouprules"
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/sshkey"
@@ -21,6 +22,7 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		antiaffinitygroup.Setup,
+		blockstoragevolume.Setup,
 		securitygroup.Setup,
 		securitygrouprules.Setup,
 		sshkey.Setup,
@@ -38,6 +40,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		antiaffinitygroup.SetupGated,
+		blockstoragevolume.SetupGated,
 		securitygroup.SetupGated,
 		securitygrouprules.SetupGated,
 		sshkey.SetupGated,

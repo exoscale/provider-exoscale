@@ -1,0 +1,13 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: BlockStorageVolume
+metadata:
+  name: my-block-storage
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-block-storage
+    size: 20
+    zone: ch-gva-2
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
