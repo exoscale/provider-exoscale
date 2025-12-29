@@ -40,4 +40,9 @@ func Configure(p *config.Provider) {
 		r.Kind = "BlockStorageVolume"
 		r.TerraformResource.Schema["zone"].ForceNew = true
 	})
+
+	p.AddResourceConfigurator("exoscale_elastic_ip", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "ElasticIP"
+	})
 }

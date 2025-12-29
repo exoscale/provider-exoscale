@@ -11,6 +11,7 @@ import (
 
 	antiaffinitygroup "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/antiaffinitygroup"
 	blockstoragevolume "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/blockstoragevolume"
+	elasticip "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/elasticip"
 	securitygroup "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/securitygroup"
 	securitygrouprules "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/securitygrouprules"
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/sshkey"
@@ -23,6 +24,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		antiaffinitygroup.Setup,
 		blockstoragevolume.Setup,
+		elasticip.Setup,
 		securitygroup.Setup,
 		securitygrouprules.Setup,
 		sshkey.Setup,
@@ -41,6 +43,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		antiaffinitygroup.SetupGated,
 		blockstoragevolume.SetupGated,
+		elasticip.SetupGated,
 		securitygroup.SetupGated,
 		securitygrouprules.SetupGated,
 		sshkey.SetupGated,

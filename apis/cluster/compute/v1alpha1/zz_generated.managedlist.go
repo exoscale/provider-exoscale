@@ -26,6 +26,15 @@ func (l *BlockStorageVolumeList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this ElasticIPList.
+func (l *ElasticIPList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this SSHKeyList.
 func (l *SSHKeyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
