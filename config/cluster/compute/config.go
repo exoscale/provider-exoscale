@@ -45,4 +45,9 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = shortGroup
 		r.Kind = "ElasticIP"
 	})
+
+	p.AddResourceConfigurator("exoscale_private_network", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "PrivateNetwork"
+	})
 }

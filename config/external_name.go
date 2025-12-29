@@ -14,6 +14,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_anti_affinity_group":  config.IdentifierFromProvider,
 	"exoscale_block_storage_volume": config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.67.1 TODO: upgrade terraform version in makefile once the new release is out.
 	"exoscale_elastic_ip":           config.IdentifierFromProvider,
+	"exoscale_private_network":      config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
