@@ -1,0 +1,72 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: my_instance
+  name: my-instance
+  namespace: crossplane-system
+spec:
+  forProvider:
+    diskSize: 10
+    name: my-instance
+    templateId: 0cd58ee7-333a-4256-aa6e-288e6dad3a08
+    type: standard.small
+    zone: ch-gva-2
+    sshKeysSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my-ssh-key-1
+    securityGroupIdsSelector:
+      matchLabels:
+        testing.upbound.io/example-name: security-group-1
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SSHKey
+metadata:
+  labels:
+    testing.upbound.io/example-name: my-ssh-key-1
+  name: my-ssh-key-1
+  namespace: crossplane-system
+spec:
+  forProvider:
+    publicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJeNWlMhGQ/Tos4G99M+cazT24B1soxbNe57chciK+mm quentin.albertone@exoscale.ch"
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroup
+metadata:
+  labels:
+    testing.upbound.io/example-name: security-group-1
+  name: security-group-1
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-security-group
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroupRules
+metadata:
+  name: allows-ssh
+  namespace: crossplane-system
+spec:
+  forProvider:
+    cidr: 0.0.0.0/0
+    endPort: 22
+    protocol: TCP
+    securityGroupIdRef:
+      name: security-group-1
+      namespace: crossplane-system
+    startPort: 22
+    type: INGRESS
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default

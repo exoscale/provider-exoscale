@@ -13,6 +13,225 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this Instance.
+func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var mrsp reference.MultiNamespacedResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.AntiAffinityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.AntiAffinityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.AntiAffinityGroupIdsSelector,
+		To: reference.To{
+			List:    &AntiAffinityGroupList{},
+			Managed: &AntiAffinityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AntiAffinityGroupIds")
+	}
+	mg.Spec.ForProvider.AntiAffinityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.AntiAffinityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.BlockStorageVolumeIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.BlockStorageVolumeIdsRefs,
+		Selector:      mg.Spec.ForProvider.BlockStorageVolumeIdsSelector,
+		To: reference.To{
+			List:    &BlockStorageVolumeList{},
+			Managed: &BlockStorageVolume{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.BlockStorageVolumeIds")
+	}
+	mg.Spec.ForProvider.BlockStorageVolumeIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.BlockStorageVolumeIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.ElasticIPIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.ElasticIPIdsRefs,
+		Selector:      mg.Spec.ForProvider.ElasticIPIdsSelector,
+		To: reference.To{
+			List:    &ElasticIPList{},
+			Managed: &ElasticIP{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ElasticIPIds")
+	}
+	mg.Spec.ForProvider.ElasticIPIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ElasticIPIdsRefs = mrsp.ResolvedReferences
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.NetworkInterface); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkInterface[i3].NetworkID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.NetworkInterface[i3].NetworkIDRef,
+			Selector:     mg.Spec.ForProvider.NetworkInterface[i3].NetworkIDSelector,
+			To: reference.To{
+				List:    &PrivateNetworkList{},
+				Managed: &PrivateNetwork{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.NetworkInterface[i3].NetworkID")
+		}
+		mg.Spec.ForProvider.NetworkInterface[i3].NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.NetworkInterface[i3].NetworkIDRef = rsp.ResolvedReference
+
+	}
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SSHKeys),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.SSHKeysRefs,
+		Selector:      mg.Spec.ForProvider.SSHKeysSelector,
+		To: reference.To{
+			List:    &SSHKeyList{},
+			Managed: &SSHKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SSHKeys")
+	}
+	mg.Spec.ForProvider.SSHKeys = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SSHKeysRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &SecurityGroupList{},
+			Managed: &SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityGroupIds")
+	}
+	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.AntiAffinityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.AntiAffinityGroupIdsRefs,
+		Selector:      mg.Spec.InitProvider.AntiAffinityGroupIdsSelector,
+		To: reference.To{
+			List:    &AntiAffinityGroupList{},
+			Managed: &AntiAffinityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AntiAffinityGroupIds")
+	}
+	mg.Spec.InitProvider.AntiAffinityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.AntiAffinityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.BlockStorageVolumeIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.BlockStorageVolumeIdsRefs,
+		Selector:      mg.Spec.InitProvider.BlockStorageVolumeIdsSelector,
+		To: reference.To{
+			List:    &BlockStorageVolumeList{},
+			Managed: &BlockStorageVolume{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.BlockStorageVolumeIds")
+	}
+	mg.Spec.InitProvider.BlockStorageVolumeIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.BlockStorageVolumeIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.ElasticIPIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.ElasticIPIdsRefs,
+		Selector:      mg.Spec.InitProvider.ElasticIPIdsSelector,
+		To: reference.To{
+			List:    &ElasticIPList{},
+			Managed: &ElasticIP{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ElasticIPIds")
+	}
+	mg.Spec.InitProvider.ElasticIPIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.ElasticIPIdsRefs = mrsp.ResolvedReferences
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.NetworkInterface); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkInterface[i3].NetworkID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.NetworkInterface[i3].NetworkIDRef,
+			Selector:     mg.Spec.InitProvider.NetworkInterface[i3].NetworkIDSelector,
+			To: reference.To{
+				List:    &PrivateNetworkList{},
+				Managed: &PrivateNetwork{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.NetworkInterface[i3].NetworkID")
+		}
+		mg.Spec.InitProvider.NetworkInterface[i3].NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.NetworkInterface[i3].NetworkIDRef = rsp.ResolvedReference
+
+	}
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.SSHKeys),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.SSHKeysRefs,
+		Selector:      mg.Spec.InitProvider.SSHKeysSelector,
+		To: reference.To{
+			List:    &SSHKeyList{},
+			Managed: &SSHKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SSHKeys")
+	}
+	mg.Spec.InitProvider.SSHKeys = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.SSHKeysRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiNamespacedResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.InitProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &SecurityGroupList{},
+			Managed: &SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityGroupIds")
+	}
+	mg.Spec.InitProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
 // ResolveReferences of this SecurityGroupRules.
 func (mg *SecurityGroupRules) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)

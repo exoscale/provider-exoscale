@@ -50,4 +50,28 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = shortGroup
 		r.Kind = "PrivateNetwork"
 	})
+
+	p.AddResourceConfigurator("exoscale_compute_instance", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "Instance"
+
+		r.References["anti_affinity_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+		}
+		r.References["block_storage_volume_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.BlockStorageVolume",
+		}
+		r.References["elastic_ip_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.ElasticIP",
+		}
+		r.References["network_interface.network_id"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork",
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SecurityGroup",
+		}
+		r.References["ssh_keys"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SSHKey",
+		}
+	})
 }
