@@ -1,0 +1,8 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: ElasticIP
+metadata:
+  name: my-elastic-ip
+  namespace: default
+spec:
+  forProvider:
+    zone: ch-gva-2

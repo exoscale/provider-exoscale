@@ -1,0 +1,11 @@
+## cf. config/external_name.go:15
+# apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+# kind: BlockStorageVolume
+# metadata:
+#   name: my-block-storage
+#   namespace: default
+# spec:
+#   forProvider:
+#     name: my-block-storage
+#     size: 20
+#     zone: ch-gva-2

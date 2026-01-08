@@ -1,0 +1,9 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: AntiAffinityGroup
+metadata:
+  name: my-anti-affinity-group
+  namespace: default
+spec:
+  forProvider:
+    description: Prevent compute instances to run on the same host
+    name: my-anti-affinity-group

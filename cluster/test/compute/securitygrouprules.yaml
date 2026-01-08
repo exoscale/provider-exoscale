@@ -1,0 +1,25 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: my-security-group
+  namespace: default
+spec:
+  forProvider:
+    name: my-security-group
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroupRules
+metadata:
+  name: my-security-group-rule
+  namespace: default
+spec:
+  forProvider:
+    cidr: 0.0.0.0/0
+    endPort: 22
+    protocol: TCP
+    securityGroupIdRef:
+      name: my-security-group
+      namespace: default
+    startPort: 22
+    type: INGRESS
