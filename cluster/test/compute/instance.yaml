@@ -1,0 +1,21 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: Instance
+metadata:
+  name: my-instance
+  namespace: default
+spec:
+  forProvider:
+    diskSize: 10
+    name: my-instance
+    templateId: 0cd58ee7-333a-4256-aa6e-288e6dad3a08
+    type: standard.small
+    zone: ch-gva-2
+    userData: |
+      #cloud-config
+      package_upgrade: true
+      packages:
+        - nginx
+      runcmd:
+        - systemctl enable nginx
+        - systemctl start nginx
+        - echo "Hello from Exoscale!" > /var/www/html/index.html

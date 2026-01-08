@@ -1,0 +1,12 @@
+apiVersion: compute.exoscale.exoscale.ch/v1alpha1
+kind: PrivateNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/privatenetwork
+  labels:
+    testing.upbound.io/example-name: my_private_network
+  name: my-private-network
+spec:
+  forProvider:
+    name: my-private-network
+    zone: ch-gva-2

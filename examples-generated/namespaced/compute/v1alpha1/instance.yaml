@@ -1,0 +1,16 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: my_instance
+  name: my-instance
+  namespace: crossplane-system
+spec:
+  forProvider:
+    diskSize: 10
+    name: my-instance
+    templateId: ${data.exoscale_template.my_template.id}
+    type: standard.medium
+    zone: ch-gva-2

@@ -1,0 +1,11 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: my-security-group
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-security-group
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default

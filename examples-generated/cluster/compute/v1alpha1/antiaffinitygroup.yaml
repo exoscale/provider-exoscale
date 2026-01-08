@@ -1,0 +1,12 @@
+apiVersion: compute.exoscale.exoscale.ch/v1alpha1
+kind: AntiAffinityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/antiaffinitygroup
+  labels:
+    testing.upbound.io/example-name: my_anti_affinity_group
+  name: my-anti-affinity-group
+spec:
+  forProvider:
+    description: Prevent compute instances to run on the same host
+    name: my-anti-affinity-group

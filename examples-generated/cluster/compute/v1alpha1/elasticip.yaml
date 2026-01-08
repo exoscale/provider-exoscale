@@ -1,0 +1,11 @@
+apiVersion: compute.exoscale.exoscale.ch/v1alpha1
+kind: ElasticIP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/elasticip
+  labels:
+    testing.upbound.io/example-name: my_elastic_ip
+  name: my-elastic-ip
+spec:
+  forProvider:
+    zone: ch-gva-2

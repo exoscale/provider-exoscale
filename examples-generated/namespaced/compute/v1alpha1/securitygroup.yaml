@@ -1,0 +1,12 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/securitygroup
+  labels:
+    testing.upbound.io/example-name: my_security_group
+  name: my-security-group
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-security-group

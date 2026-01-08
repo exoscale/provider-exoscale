@@ -1,0 +1,12 @@
+## make e2e PROVIDER_NAME=provider-exoscale UPTEST_EXAMPLE_LIST="cluster/test/compute/sshkey.yaml" UPTEST_CLOUD_CREDENTIALS="{\"key\": \"$EXOSCALE_API_KEY\", \"secret\": \"$EXOSCALE_API_SECRET\"}"
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SSHKey
+metadata:
+  annotations:
+  labels:
+    testing.upbound.io/example-name: my-ssh-key
+  name: my-ssh-key
+  namespace: default
+spec:
+  forProvider:
+    publicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJeNWlMhGQ/Tos4G99M+cazT24B1soxbNe57chciK+mm quentin.albertone@exoscale.ch"

@@ -14,25 +14,38 @@ https://github.com/crossplane/upjet/blob/main/docs/generating-a-provider.md
 ## Developing
 
 Run code-generation pipeline:
-```console
-go run cmd/generator/main.go "$PWD"
+```Bash
+$> make generate
 ```
 
-Run against a Kubernetes cluster:
+Check deployed resources
+```Bash
+&> watch kubectl get managed -A
+```
 
-```console
+Run against an existing Kubernetes cluster:
+
+```Bash
 make run
+```
+
+Run e2e test
+```Bash
+&> export EXOSCALE_API_KEY=...
+&> export EXOSCALE_API_SECRET=...
+
+$> make e2e PROVIDER_NAME=provider-exoscale UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',') UPTEST_CLOUD_CREDENTIALS="{\"key\": \"$EXOSCALE_API_KEY\", \"secret\": \"$EXOSCALE_API_SECRET\"}"
 ```
 
 Build, push, and install:
 
-```console
+```Bash
 make all
 ```
 
 Build binary:
 
-```console
+```Bash
 make build
 ```
 

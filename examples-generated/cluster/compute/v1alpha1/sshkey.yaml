@@ -1,0 +1,11 @@
+apiVersion: compute.exoscale.exoscale.ch/v1alpha1
+kind: SSHKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/sshkey
+  labels:
+    testing.upbound.io/example-name: my_ssh_key
+  name: my-ssh-key
+spec:
+  forProvider:
+    publicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGRY...

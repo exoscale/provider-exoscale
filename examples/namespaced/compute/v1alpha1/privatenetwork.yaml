@@ -1,0 +1,12 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: PrivateNetwork
+metadata:
+  name: my-private-network
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-private-network
+    zone: ch-gva-2
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default

@@ -4,20 +4,18 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/config"
 )
 
-// ExternalNameConfigs contains all external name configurations for this
-// provider.
+// ExternalNameConfigs contains all external name configurations for this provider.
+// cf. https://github.com/crossplane/upjet/blob/main/docs/configuring-a-resource.md#external-name
+// TODO: check how the read function in terraform provider works.
 var ExternalNameConfigs = map[string]config.ExternalName{
-	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": idWithStub(),
-}
-
-func idWithStub() config.ExternalName {
-	e := config.IdentifierFromProvider
-	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
-		en, _ := config.IDAsExternalName(tfstate)
-		return en, nil
-	}
-	return e
+	"exoscale_ssh_key":              config.NameAsIdentifier,
+	"exoscale_security_group":       config.IdentifierFromProvider,
+	"exoscale_security_group_rule":  config.IdentifierFromProvider,
+	"exoscale_anti_affinity_group":  config.IdentifierFromProvider,
+	"exoscale_block_storage_volume": config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.67.1 TODO: upgrade terraform version in makefile once the new release is out.
+	"exoscale_elastic_ip":           config.IdentifierFromProvider,
+	"exoscale_private_network":      config.IdentifierFromProvider,
+	"exoscale_compute_instance":     config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
