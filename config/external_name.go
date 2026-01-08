@@ -16,6 +16,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_elastic_ip":           config.IdentifierFromProvider,
 	"exoscale_private_network":      config.IdentifierFromProvider,
 	"exoscale_compute_instance":     config.IdentifierFromProvider,
+	"exoscale_nlb":                  config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

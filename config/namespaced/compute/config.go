@@ -74,4 +74,9 @@ func Configure(p *config.Provider) {
 			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SSHKey",
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_nlb", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "NLB"
+	})
 }

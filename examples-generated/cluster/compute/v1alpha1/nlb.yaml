@@ -1,0 +1,12 @@
+apiVersion: compute.exoscale.exoscale.ch/v1alpha1
+kind: NLB
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/nlb
+  labels:
+    testing.upbound.io/example-name: my_nlb
+  name: my-nlb
+spec:
+  forProvider:
+    name: my-nlb
+    zone: ch-gva-2
