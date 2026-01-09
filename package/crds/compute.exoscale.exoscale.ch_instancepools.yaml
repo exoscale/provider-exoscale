@@ -662,9 +662,6 @@ spec:
                       (Number) The number of managed instances.
                       The number of managed instances.
                     type: number
-                  state:
-                    description: (String)
-                    type: string
                   templateId:
                     description: |-
                       (String) The exoscale_template (ID) to use when creating the managed instances.
@@ -1289,9 +1286,6 @@ spec:
                       (Number) The number of managed instances.
                       The number of managed instances.
                     type: number
-                  state:
-                    description: (String)
-                    type: string
                   templateId:
                     description: |-
                       (String) The exoscale_template (ID) to use when creating the managed instances.

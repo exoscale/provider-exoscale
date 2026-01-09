@@ -25,6 +25,9 @@ func (tr *InstancePool) Hub() {}
 func (tr *NLB) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *NLBService) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *PrivateNetwork) Hub() {}
 
 // Hub marks this type as a conversion hub.

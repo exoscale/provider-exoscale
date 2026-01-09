@@ -447,6 +447,84 @@ func (mg *InstancePool) ResolveReferences(ctx context.Context, c client.Reader) 
 	return nil
 }
 
+// ResolveReferences of this NLBService.
+func (mg *NLBService) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstancePoolID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.InstancePoolIDRef,
+		Selector:     mg.Spec.ForProvider.InstancePoolIDSelector,
+		To: reference.To{
+			List:    &InstancePoolList{},
+			Managed: &InstancePool{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.InstancePoolID")
+	}
+	mg.Spec.ForProvider.InstancePoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.InstancePoolIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NlbID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NlbIDRef,
+		Selector:     mg.Spec.ForProvider.NlbIDSelector,
+		To: reference.To{
+			List:    &NLBList{},
+			Managed: &NLB{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NlbID")
+	}
+	mg.Spec.ForProvider.NlbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NlbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstancePoolID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.InstancePoolIDRef,
+		Selector:     mg.Spec.InitProvider.InstancePoolIDSelector,
+		To: reference.To{
+			List:    &InstancePoolList{},
+			Managed: &InstancePool{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstancePoolID")
+	}
+	mg.Spec.InitProvider.InstancePoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstancePoolIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NlbID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.NlbIDRef,
+		Selector:     mg.Spec.InitProvider.NlbIDSelector,
+		To: reference.To{
+			List:    &NLBList{},
+			Managed: &NLB{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NlbID")
+	}
+	mg.Spec.InitProvider.NlbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NlbIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this SecurityGroupRules.
 func (mg *SecurityGroupRules) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)

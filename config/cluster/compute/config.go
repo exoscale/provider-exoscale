@@ -75,11 +75,6 @@ func Configure(p *config.Provider) {
 		}
 	})
 
-	p.AddResourceConfigurator("exoscale_nlb", func(r *config.Resource) {
-		r.ShortGroup = shortGroup
-		r.Kind = "NLB"
-	})
-
 	p.AddResourceConfigurator("exoscale_instance_pool", func(r *config.Resource) {
 		r.ShortGroup = shortGroup
 		r.Kind = "InstancePool"
@@ -106,6 +101,23 @@ func Configure(p *config.Provider) {
 		// Ignore the deprecated service_offering, virtual_machines field to avoid conflicts
 		r.LateInitializer = config.LateInitializer{
 			IgnoredFields: []string{"service_offering", "virtual_machines", "affinity_group_ids"},
+		}
+	})
+
+	p.AddResourceConfigurator("exoscale_nlb", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "NLB"
+	})
+
+	p.AddResourceConfigurator("exoscale_nlb_service", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "NLBService"
+
+		r.References["instance_pool_id"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.InstancePool",
+		}
+		r.References["nlb_id"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.NLB",
 		}
 	})
 }

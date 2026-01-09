@@ -147,9 +147,6 @@ type InstancePoolInitParameters struct {
 	// The number of managed instances.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// (String)
-	State *string `json:"state,omitempty" tf:"state,omitempty"`
-
 	// (String) The exoscale_template (ID) to use when creating the managed instances.
 	// The [exoscale_template](../data-sources/template.md) (ID) to use when creating the managed instances.
 	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
@@ -423,10 +420,6 @@ type InstancePoolParameters struct {
 	// The number of managed instances.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
-
-	// (String)
-	// +kubebuilder:validation:Optional
-	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
 	// (String) The exoscale_template (ID) to use when creating the managed instances.
 	// The [exoscale_template](../data-sources/template.md) (ID) to use when creating the managed instances.
