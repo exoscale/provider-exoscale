@@ -1,0 +1,62 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: InstancePool
+metadata:
+  labels:
+    testing.upbound.io/example-name: my-instance-pool
+  annotations:
+    uptest.upbound.io/pre-delete-hook: "sleep.sh"
+  name: my-instance-pool
+  namespace: default
+spec:
+  forProvider:
+    diskSize: 10
+    instanceType: standard.small
+    name: my-instance-pool
+    size: 3
+    templateId: 0cd58ee7-333a-4256-aa6e-288e6dad3a08
+    zone: ch-gva-2
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: NLBService
+metadata:
+  name: my-nlb-service
+  namespace: default
+spec:
+  forProvider:
+    healthcheck:
+    - interval: 5
+      mode: https
+      port: 8443
+      retries: 1
+      timeout: 3
+      tlsSni: example.net
+      uri: /healthz
+    instancePoolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my-instance-pool
+    name: my-nlb-service
+    nlbIdRef:
+      name: my-nlb
+      namespace: default
+    nlbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_nlb
+    port: 443
+    protocol: tcp
+    strategy: round-robin
+    targetPort: 8443
+    zone: ch-gva-2
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: NLB
+metadata:
+  annotations:
+    uptest.upbound.io/pre-delete-hook: "sleep.sh"
+  name: my-nlb
+  namespace: default
+spec:
+  forProvider:
+    name: my-nlb
+    zone: ch-gva-2
