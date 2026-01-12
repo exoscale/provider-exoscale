@@ -1,0 +1,47 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: NLBService
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/nlbservice
+  labels:
+    testing.upbound.io/example-name: my_nlb_service
+  name: my-nlb-service
+  namespace: crossplane-system
+spec:
+  forProvider:
+    healthcheck:
+    - interval: 5
+      mode: https
+      port: 8443
+      retries: 1
+      timeout: 3
+      tlsSni: example.net
+      uri: /healthz
+    instancePoolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_instance_pool
+    name: my-nlb-service
+    nlbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_nlb
+    port: 443
+    protocol: tcp
+    strategy: round-robin
+    targetPort: 8443
+    zone: ch-gva-2
+
+---
+
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: NLB
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/nlbservice
+  labels:
+    testing.upbound.io/example-name: my_nlb
+  name: my-nlb
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-nlb
+    zone: ch-gva-2

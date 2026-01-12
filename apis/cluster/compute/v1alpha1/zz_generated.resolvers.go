@@ -232,6 +232,299 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	return nil
 }
 
+// ResolveReferences of this InstancePool.
+func (mg *InstancePool) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.AffinityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.AffinityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.AffinityGroupIdsSelector,
+		To: reference.To{
+			List:    &AntiAffinityGroupList{},
+			Managed: &AntiAffinityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AffinityGroupIds")
+	}
+	mg.Spec.ForProvider.AffinityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.AffinityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.AntiAffinityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.AntiAffinityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.AntiAffinityGroupIdsSelector,
+		To: reference.To{
+			List:    &AntiAffinityGroupList{},
+			Managed: &AntiAffinityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AntiAffinityGroupIds")
+	}
+	mg.Spec.ForProvider.AntiAffinityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.AntiAffinityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.ElasticIPIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.ElasticIPIdsRefs,
+		Selector:      mg.Spec.ForProvider.ElasticIPIdsSelector,
+		To: reference.To{
+			List:    &ElasticIPList{},
+			Managed: &ElasticIP{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ElasticIPIds")
+	}
+	mg.Spec.ForProvider.ElasticIPIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ElasticIPIdsRefs = mrsp.ResolvedReferences
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KeyPair),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.KeyPairRef,
+		Selector:     mg.Spec.ForProvider.KeyPairSelector,
+		To: reference.To{
+			List:    &SSHKeyList{},
+			Managed: &SSHKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KeyPair")
+	}
+	mg.Spec.ForProvider.KeyPair = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KeyPairRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.NetworkIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.NetworkIdsRefs,
+		Selector:      mg.Spec.ForProvider.NetworkIdsSelector,
+		To: reference.To{
+			List:    &PrivateNetworkList{},
+			Managed: &PrivateNetwork{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkIds")
+	}
+	mg.Spec.ForProvider.NetworkIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.NetworkIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &SecurityGroupList{},
+			Managed: &SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityGroupIds")
+	}
+	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.AffinityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.AffinityGroupIdsRefs,
+		Selector:      mg.Spec.InitProvider.AffinityGroupIdsSelector,
+		To: reference.To{
+			List:    &AntiAffinityGroupList{},
+			Managed: &AntiAffinityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AffinityGroupIds")
+	}
+	mg.Spec.InitProvider.AffinityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.AffinityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.AntiAffinityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.AntiAffinityGroupIdsRefs,
+		Selector:      mg.Spec.InitProvider.AntiAffinityGroupIdsSelector,
+		To: reference.To{
+			List:    &AntiAffinityGroupList{},
+			Managed: &AntiAffinityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AntiAffinityGroupIds")
+	}
+	mg.Spec.InitProvider.AntiAffinityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.AntiAffinityGroupIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.ElasticIPIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.ElasticIPIdsRefs,
+		Selector:      mg.Spec.InitProvider.ElasticIPIdsSelector,
+		To: reference.To{
+			List:    &ElasticIPList{},
+			Managed: &ElasticIP{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ElasticIPIds")
+	}
+	mg.Spec.InitProvider.ElasticIPIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.ElasticIPIdsRefs = mrsp.ResolvedReferences
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.KeyPair),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.KeyPairRef,
+		Selector:     mg.Spec.InitProvider.KeyPairSelector,
+		To: reference.To{
+			List:    &SSHKeyList{},
+			Managed: &SSHKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.KeyPair")
+	}
+	mg.Spec.InitProvider.KeyPair = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.KeyPairRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.NetworkIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.NetworkIdsRefs,
+		Selector:      mg.Spec.InitProvider.NetworkIdsSelector,
+		To: reference.To{
+			List:    &PrivateNetworkList{},
+			Managed: &PrivateNetwork{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkIds")
+	}
+	mg.Spec.InitProvider.NetworkIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.NetworkIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.InitProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &SecurityGroupList{},
+			Managed: &SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityGroupIds")
+	}
+	mg.Spec.InitProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this NLBService.
+func (mg *NLBService) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstancePoolID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.InstancePoolIDRef,
+		Selector:     mg.Spec.ForProvider.InstancePoolIDSelector,
+		To: reference.To{
+			List:    &InstancePoolList{},
+			Managed: &InstancePool{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.InstancePoolID")
+	}
+	mg.Spec.ForProvider.InstancePoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.InstancePoolIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NlbID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NlbIDRef,
+		Selector:     mg.Spec.ForProvider.NlbIDSelector,
+		To: reference.To{
+			List:    &NLBList{},
+			Managed: &NLB{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NlbID")
+	}
+	mg.Spec.ForProvider.NlbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NlbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstancePoolID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.InstancePoolIDRef,
+		Selector:     mg.Spec.InitProvider.InstancePoolIDSelector,
+		To: reference.To{
+			List:    &InstancePoolList{},
+			Managed: &InstancePool{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstancePoolID")
+	}
+	mg.Spec.InitProvider.InstancePoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstancePoolIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NlbID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.NlbIDRef,
+		Selector:     mg.Spec.InitProvider.NlbIDSelector,
+		To: reference.To{
+			List:    &NLBList{},
+			Managed: &NLB{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NlbID")
+	}
+	mg.Spec.InitProvider.NlbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NlbIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this SecurityGroupRules.
 func (mg *SecurityGroupRules) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)

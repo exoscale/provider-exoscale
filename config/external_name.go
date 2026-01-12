@@ -16,6 +16,9 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_elastic_ip":           config.IdentifierFromProvider,
 	"exoscale_private_network":      config.IdentifierFromProvider,
 	"exoscale_compute_instance":     config.IdentifierFromProvider,
+	"exoscale_instance_pool":        config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.67.1 TODO: upgrade terraform version in makefile once the new release is out.
+	"exoscale_nlb":                  config.IdentifierFromProvider,
+	"exoscale_nlb_service":          config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

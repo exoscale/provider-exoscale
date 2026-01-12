@@ -19,6 +19,15 @@ func (tr *ElasticIP) Hub() {}
 func (tr *Instance) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *InstancePool) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NLB) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NLBService) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *PrivateNetwork) Hub() {}
 
 // Hub marks this type as a conversion hub.

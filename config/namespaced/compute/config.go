@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/crossplane/upjet/v2/pkg/config"
+import (
+	"github.com/crossplane/upjet/v2/pkg/config"
+)
 
 const shortGroup string = "compute"
 
@@ -72,6 +74,52 @@ func Configure(p *config.Provider) {
 		}
 		r.References["ssh_keys"] = config.Reference{
 			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SSHKey",
+		}
+	})
+
+	p.AddResourceConfigurator("exoscale_instance_pool", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "InstancePool"
+
+		r.References["affinity_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+		}
+		r.References["anti_affinity_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+		}
+		r.References["elastic_ip_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.ElasticIP",
+		}
+		r.References["key_pair"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SSHKey",
+		}
+		r.References["network_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork",
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SecurityGroup",
+		}
+
+		// Ignore the deprecated service_offering, virtual_machines field to avoid conflicts
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{"service_offering", "virtual_machines", "affinity_group_ids"},
+		}
+	})
+
+	p.AddResourceConfigurator("exoscale_nlb", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "NLB"
+	})
+
+	p.AddResourceConfigurator("exoscale_nlb_service", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "NLBService"
+
+		r.References["instance_pool_id"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.InstancePool",
+		}
+		r.References["nlb_id"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.NLB",
 		}
 	})
 }

@@ -13,6 +13,9 @@ import (
 	blockstoragevolume "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/blockstoragevolume"
 	elasticip "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/elasticip"
 	instance "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/instance"
+	instancepool "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/instancepool"
+	nlb "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/nlb"
+	nlbservice "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/nlbservice"
 	privatenetwork "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/privatenetwork"
 	securitygroup "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/securitygroup"
 	securitygrouprules "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/securitygrouprules"
@@ -28,6 +31,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		blockstoragevolume.Setup,
 		elasticip.Setup,
 		instance.Setup,
+		instancepool.Setup,
+		nlb.Setup,
+		nlbservice.Setup,
 		privatenetwork.Setup,
 		securitygroup.Setup,
 		securitygrouprules.Setup,
@@ -49,6 +55,9 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		blockstoragevolume.SetupGated,
 		elasticip.SetupGated,
 		instance.SetupGated,
+		instancepool.SetupGated,
+		nlb.SetupGated,
+		nlbservice.SetupGated,
 		privatenetwork.SetupGated,
 		securitygroup.SetupGated,
 		securitygrouprules.SetupGated,

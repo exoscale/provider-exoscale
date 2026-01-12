@@ -1,0 +1,13 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: InstancePool
+metadata:
+  name: my-instance-pool
+  namespace: crossplane-system
+spec:
+  forProvider:
+    diskSize: 10
+    instanceType: standard.small
+    name: my-instance-pool
+    size: 3
+    templateId: 0cd58ee7-333a-4256-aa6e-288e6dad3a08
+    zone: ch-gva-2

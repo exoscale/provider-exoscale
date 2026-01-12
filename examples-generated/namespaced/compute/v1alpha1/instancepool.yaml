@@ -1,0 +1,17 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: InstancePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: my_instance_pool
+  name: my-instance-pool
+  namespace: crossplane-system
+spec:
+  forProvider:
+    diskSize: 10
+    instanceType: standard.medium
+    name: my-instance-pool
+    size: 3
+    templateId: ${data.exoscale_template.my_template.id}
+    zone: ch-gva-2
