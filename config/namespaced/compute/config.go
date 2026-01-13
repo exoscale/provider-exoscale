@@ -1,8 +1,6 @@
 package repository
 
-import (
-	"github.com/crossplane/upjet/v2/pkg/config"
-)
+import "github.com/crossplane/upjet/v2/pkg/config"
 
 const shortGroup string = "compute"
 
@@ -121,5 +119,10 @@ func Configure(p *config.Provider) {
 		r.References["nlb_id"] = config.Reference{
 			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.NLB",
 		}
+	})
+
+	p.AddResourceConfigurator("exoscale_sks_cluster", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "SKSCluster"
 	})
 }

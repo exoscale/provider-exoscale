@@ -1,0 +1,13 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SKSCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/skscluster
+  labels:
+    testing.upbound.io/example-name: my_sks_cluster
+  name: my-sks-cluster
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-sks-cluster
+    zone: ch-gva-2

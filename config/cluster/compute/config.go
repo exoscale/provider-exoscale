@@ -120,4 +120,9 @@ func Configure(p *config.Provider) {
 			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.NLB",
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_sks_cluster", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "SKSCluster"
+	})
 }

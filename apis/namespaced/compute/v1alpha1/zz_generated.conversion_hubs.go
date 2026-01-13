@@ -37,4 +37,7 @@ func (tr *SecurityGroup) Hub() {}
 func (tr *SecurityGroupRules) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *SKSCluster) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *SSHKey) Hub() {}
