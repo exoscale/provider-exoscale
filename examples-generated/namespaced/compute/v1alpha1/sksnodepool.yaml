@@ -1,0 +1,34 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SKSNodepool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/sksnodepool
+  labels:
+    testing.upbound.io/example-name: my_sks_nodepool
+  name: my-sks-nodepool
+  namespace: crossplane-system
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_sks_cluster
+    instanceType: standard.medium
+    name: my-sks-nodepool
+    size: 3
+    zone: ch-gva-2
+
+---
+
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SKSCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/sksnodepool
+  labels:
+    testing.upbound.io/example-name: my_sks_cluster
+  name: my-sks-cluster
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-sks-cluster
+    zone: ch-gva-2

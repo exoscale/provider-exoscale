@@ -20,6 +20,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_nlb":                  config.IdentifierFromProvider,
 	"exoscale_nlb_service":          config.IdentifierFromProvider,
 	"exoscale_sks_cluster":          config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.67.1 TODO: upgrade terraform version in makefile once the new release is out.
+	"exoscale_sks_nodepool":         config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

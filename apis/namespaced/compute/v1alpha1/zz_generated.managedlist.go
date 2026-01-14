@@ -89,6 +89,15 @@ func (l *SKSClusterList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this SKSNodepoolList.
+func (l *SKSNodepoolList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this SSHKeyList.
 func (l *SSHKeyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
