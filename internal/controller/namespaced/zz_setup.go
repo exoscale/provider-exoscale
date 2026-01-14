@@ -19,6 +19,8 @@ import (
 	privatenetwork "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/privatenetwork"
 	securitygroup "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/securitygroup"
 	securitygrouprules "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/securitygrouprules"
+	skscluster "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/skscluster"
+	sksnodepool "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/sksnodepool"
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/sshkey"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/namespaced/providerconfig"
 )
@@ -37,6 +39,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		privatenetwork.Setup,
 		securitygroup.Setup,
 		securitygrouprules.Setup,
+		skscluster.Setup,
+		sksnodepool.Setup,
 		sshkey.Setup,
 		providerconfig.Setup,
 	} {
@@ -61,6 +65,8 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		privatenetwork.SetupGated,
 		securitygroup.SetupGated,
 		securitygrouprules.SetupGated,
+		skscluster.SetupGated,
+		sksnodepool.SetupGated,
 		sshkey.SetupGated,
 		providerconfig.SetupGated,
 	} {

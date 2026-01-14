@@ -1,0 +1,14 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SKSCluster
+metadata:
+  name: my-sks-cluster
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-sks-cluster
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-sks-cluster
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default

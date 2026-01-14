@@ -1,0 +1,92 @@
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SKSNodepool
+metadata:
+  name: my-sks-nodepool
+  namespace: crossplane-system
+spec:
+  forProvider:
+    clusterIdRef:
+      name: my-sks-cluster
+      namespace: crossplane-system
+    securityGroupIdsSelector:
+      matchLabels:
+        testing.upbound.io/example-name: sks-security-group
+    instanceType: standard.medium
+    name: my-sks-nodepool
+    size: 2
+    zone: ch-gva-2
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SKSCluster
+metadata:
+  name: my-sks-cluster
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-sks-cluster
+    zone: ch-gva-2
+    cni: calico
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroup
+metadata:
+  labels:
+    testing.upbound.io/example-name: sks-security-group
+  name: sks-security-group
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: sks-security-group
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroupRules
+metadata:
+  name: sks-nodeport-services
+  namespace: crossplane-system
+spec:
+  forProvider:
+    cidr: 0.0.0.0/0
+    endPort: 32767
+    startPort: 30000
+    type: INGRESS
+    protocol: TCP
+    securityGroupIdRef:
+      name: sks-security-group
+      namespace: crossplane-system
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroupRules
+metadata:
+  name: sks-kubelet
+  namespace: crossplane-system
+spec:
+  forProvider:
+    cidr: 0.0.0.0/0
+    endPort: 10250
+    startPort: 10250
+    type: INGRESS
+    protocol: TCP
+    securityGroupIdRef:
+      name: sks-security-group
+      namespace: crossplane-system
+
+---
+apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+kind: SecurityGroupRules
+metadata:
+  name: sks-calico-traffic
+  namespace: crossplane-system
+spec:
+  forProvider:
+    cidr: 0.0.0.0/0
+    endPort: 4789
+    startPort: 4789
+    type: INGRESS
+    protocol: UDP
+    securityGroupIdRef:
+      name: sks-security-group
+      namespace: crossplane-system

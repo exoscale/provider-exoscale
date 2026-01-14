@@ -120,4 +120,27 @@ func Configure(p *config.Provider) {
 			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.NLB",
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_sks_cluster", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "SKSCluster"
+	})
+
+	p.AddResourceConfigurator("exoscale_sks_nodepool", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "SKSNodepool"
+
+		r.References["cluster_id"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.SKSCluster",
+		}
+		r.References["anti_affinity_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.AntiAffinityGroup",
+		}
+		r.References["private_network_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.PrivateNetwork",
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.SecurityGroup",
+		}
+	})
 }
