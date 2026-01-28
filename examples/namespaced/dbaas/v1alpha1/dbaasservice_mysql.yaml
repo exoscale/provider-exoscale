@@ -1,0 +1,32 @@
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASService
+metadata:
+  name: my-mysql
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-mysql
+    maintenanceDow: sunday
+    maintenanceTime: 15:00:00
+    terminationProtection: false
+    mysql:
+      adminPasswordSecretRef:
+        name: my-mysql-password
+        key: password
+      adminUsername: admin
+      version: "8"
+    plan: hobbyist-2
+    type: mysql
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-mysql
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-mysql-password
+  namespace: crossplane-system
+type: Opaque
+data:
+  password: MWYyZDFlMmU2N2Rm
