@@ -1,0 +1,17 @@
+# apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+# kind: DBAASService
+# metadata:
+#   name: my-grafana
+#   namespace: default
+# spec:
+#   forProvider:
+#     name: my-grafana
+#     plan: hobbyist-2
+#     type: grafana
+#     zone: ch-gva-2
+#     terminationProtection: false
+#     grafana:
+#       grafanaSettings: |-
+#         {"allow_embedding":true,"disable_gravatar":true}
+#   writeConnectionSecretToRef:
+#     name: my-grafana

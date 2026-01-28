@@ -1,0 +1,19 @@
+# apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+# kind: DBAASService
+# metadata:
+#   name: my-valkey
+#   namespace: default
+# spec:
+#   forProvider:
+#     name: my-valkey
+#     maintenanceDow: sunday
+#     maintenanceTime: 15:00:00
+#     terminationProtection: false
+#     valkey:
+#       ipFilter:
+#         - "0.0.0.0/0"
+#     plan: hobbyist-2
+#     type: valkey
+#     zone: ch-gva-2
+#   writeConnectionSecretToRef:
+#     name: my-valkey
