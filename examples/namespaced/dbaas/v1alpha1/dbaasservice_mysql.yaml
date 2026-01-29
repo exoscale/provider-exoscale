@@ -22,6 +22,21 @@ spec:
     name: my-mysql
 
 ---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASUserMySQL
+metadata:
+  name: test-user
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-mysql
+    username: test-user
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-mysql-test-user
+
+---
 apiVersion: v1
 kind: Secret
 metadata:

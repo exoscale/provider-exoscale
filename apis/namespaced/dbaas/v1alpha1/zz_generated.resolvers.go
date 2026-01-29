@@ -57,6 +57,50 @@ func (mg *DBAASDatabasePG) ResolveReferences(ctx context.Context, c client.Reade
 	return nil
 }
 
+// ResolveReferences of this DBAASUserMySQL.
+func (mg *DBAASUserMySQL) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Service),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.ServiceRef,
+		Selector:     mg.Spec.ForProvider.ServiceSelector,
+		To: reference.To{
+			List:    &DBAASServiceList{},
+			Managed: &DBAASService{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Service")
+	}
+	mg.Spec.ForProvider.Service = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Service),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.ServiceRef,
+		Selector:     mg.Spec.InitProvider.ServiceSelector,
+		To: reference.To{
+			List:    &DBAASServiceList{},
+			Managed: &DBAASService{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Service")
+	}
+	mg.Spec.InitProvider.Service = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this DBAASUserPG.
 func (mg *DBAASUserPG) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)

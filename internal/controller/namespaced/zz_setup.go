@@ -24,6 +24,7 @@ import (
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/sshkey"
 	dbaasdatabasepg "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasdatabasepg"
 	dbaasservice "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasservice"
+	dbaasusermysql "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasusermysql"
 	dbaasuserpg "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasuserpg"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/namespaced/providerconfig"
 )
@@ -47,6 +48,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		sshkey.Setup,
 		dbaasdatabasepg.Setup,
 		dbaasservice.Setup,
+		dbaasusermysql.Setup,
 		dbaasuserpg.Setup,
 		providerconfig.Setup,
 	} {
@@ -76,6 +78,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		sshkey.SetupGated,
 		dbaasdatabasepg.SetupGated,
 		dbaasservice.SetupGated,
+		dbaasusermysql.SetupGated,
 		dbaasuserpg.SetupGated,
 		providerconfig.SetupGated,
 	} {

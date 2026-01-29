@@ -30,4 +30,13 @@ func Configure(p *config.Provider) {
 			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_dbaas_mysql_user", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "DBAASUserMySQL"
+
+		r.References["service"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+		}
+	})
 }

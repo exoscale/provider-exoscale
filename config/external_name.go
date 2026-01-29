@@ -27,6 +27,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_dbaas":             config.IdentifierFromProvider,
 	"exoscale_dbaas_pg_user":     config.IdentifierFromProvider,
 	"exoscale_dbaas_pg_database": config.IdentifierFromProvider,
+	"exoscale_dbaas_mysql_user":  config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
