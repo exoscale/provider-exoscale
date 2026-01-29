@@ -21,4 +21,13 @@ func Configure(p *config.Provider) {
 			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/dbaas/v1alpha1.DBAASService",
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_dbaas_pg_database", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "DBAASDatabasePG"
+
+		r.References["service"] = config.Reference{
+			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/dbaas/v1alpha1.DBAASService",
+		}
+	})
 }

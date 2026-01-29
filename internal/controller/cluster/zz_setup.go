@@ -22,6 +22,7 @@ import (
 	skscluster "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/skscluster"
 	sksnodepool "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/sksnodepool"
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/cluster/compute/sshkey"
+	dbaasdatabasepg "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasdatabasepg"
 	dbaasservice "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasservice"
 	dbaasuserpg "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasuserpg"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/cluster/providerconfig"
@@ -44,6 +45,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		skscluster.Setup,
 		sksnodepool.Setup,
 		sshkey.Setup,
+		dbaasdatabasepg.Setup,
 		dbaasservice.Setup,
 		dbaasuserpg.Setup,
 		providerconfig.Setup,
@@ -72,6 +74,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		skscluster.SetupGated,
 		sksnodepool.SetupGated,
 		sshkey.SetupGated,
+		dbaasdatabasepg.SetupGated,
 		dbaasservice.SetupGated,
 		dbaasuserpg.SetupGated,
 		providerconfig.SetupGated,

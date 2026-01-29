@@ -7,6 +7,9 @@
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *DBAASDatabasePG) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DBAASService) Hub() {}
 
 // Hub marks this type as a conversion hub.
