@@ -37,6 +37,19 @@ spec:
     name: my-mysql-test-user
 
 ---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASDatabaseMySQL
+metadata:
+  name: test-database
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-mysql
+    databaseName: test-database
+    zone: ch-gva-2
+
+---
 apiVersion: v1
 kind: Secret
 metadata:

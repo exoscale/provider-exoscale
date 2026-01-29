@@ -13,6 +13,50 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this DBAASDatabaseMySQL.
+func (mg *DBAASDatabaseMySQL) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Service),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.ServiceRef,
+		Selector:     mg.Spec.ForProvider.ServiceSelector,
+		To: reference.To{
+			List:    &DBAASServiceList{},
+			Managed: &DBAASService{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Service")
+	}
+	mg.Spec.ForProvider.Service = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Service),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.ServiceRef,
+		Selector:     mg.Spec.InitProvider.ServiceSelector,
+		To: reference.To{
+			List:    &DBAASServiceList{},
+			Managed: &DBAASService{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Service")
+	}
+	mg.Spec.InitProvider.Service = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this DBAASDatabasePG.
 func (mg *DBAASDatabasePG) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
