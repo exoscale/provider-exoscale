@@ -22,6 +22,21 @@ spec:
     name: my-postgres
 
 ---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASUserPG
+metadata:
+  name: test-user
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-postgres
+    username: test-user
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-postgres-test-user
+
+---
 apiVersion: v1
 kind: Secret
 metadata:

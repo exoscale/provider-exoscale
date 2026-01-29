@@ -24,7 +24,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_sks_nodepool":         config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > v0.67.2 TODO: upgrade terraform version in makefile once the new release is out.
 
 	// DBAAS resources
-	"exoscale_dbaas": config.IdentifierFromProvider,
+	"exoscale_dbaas":         config.IdentifierFromProvider,
+	"exoscale_dbaas_pg_user": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
