@@ -53,6 +53,15 @@ func (l *DBAASUserMySQLList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this DBAASUserOpenSearchList.
+func (l *DBAASUserOpenSearchList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DBAASUserPGList.
 func (l *DBAASUserPGList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

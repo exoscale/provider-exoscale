@@ -22,4 +22,7 @@ func (tr *DBAASUserKafka) Hub() {}
 func (tr *DBAASUserMySQL) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DBAASUserOpenSearch) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DBAASUserPG) Hub() {}

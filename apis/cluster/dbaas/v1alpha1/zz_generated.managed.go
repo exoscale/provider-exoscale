@@ -258,6 +258,56 @@ func (mg *DBAASUserMySQL) SetWriteConnectionSecretToReference(r *xpv1.SecretRefe
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this DBAASUserOpenSearch.
+func (mg *DBAASUserOpenSearch) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this DBAASUserPG.
 func (mg *DBAASUserPG) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
