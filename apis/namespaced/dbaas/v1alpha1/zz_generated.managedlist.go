@@ -35,6 +35,15 @@ func (l *DBAASServiceList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this DBAASUserKafkaList.
+func (l *DBAASUserKafkaList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DBAASUserMySQLList.
 func (l *DBAASUserMySQLList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

@@ -16,6 +16,9 @@ func (tr *DBAASDatabasePG) Hub() {}
 func (tr *DBAASService) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DBAASUserKafka) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DBAASUserMySQL) Hub() {}
 
 // Hub marks this type as a conversion hub.

@@ -14,3 +14,18 @@ spec:
       version: "4.0"
   writeConnectionSecretToRef:
     name: my-kafka
+
+---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASUserKafka
+metadata:
+  name: test-user
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-kafka
+    username: test-user
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-kafka-test-user

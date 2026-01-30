@@ -25,6 +25,7 @@ import (
 	dbaasdatabasemysql "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasdatabasemysql"
 	dbaasdatabasepg "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasdatabasepg"
 	dbaasservice "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasservice"
+	dbaasuserkafka "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasuserkafka"
 	dbaasusermysql "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasusermysql"
 	dbaasuserpg "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasuserpg"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/namespaced/providerconfig"
@@ -50,6 +51,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		dbaasdatabasemysql.Setup,
 		dbaasdatabasepg.Setup,
 		dbaasservice.Setup,
+		dbaasuserkafka.Setup,
 		dbaasusermysql.Setup,
 		dbaasuserpg.Setup,
 		providerconfig.Setup,
@@ -81,6 +83,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		dbaasdatabasemysql.SetupGated,
 		dbaasdatabasepg.SetupGated,
 		dbaasservice.SetupGated,
+		dbaasuserkafka.SetupGated,
 		dbaasusermysql.SetupGated,
 		dbaasuserpg.SetupGated,
 		providerconfig.SetupGated,
