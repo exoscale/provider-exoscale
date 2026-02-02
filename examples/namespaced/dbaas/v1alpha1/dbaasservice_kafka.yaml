@@ -1,0 +1,31 @@
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASService
+metadata:
+  name: my-kafka
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-kafka
+    plan: business-4
+    type: kafka
+    zone: ch-gva-2
+    terminationProtection: false
+    kafka:
+      version: "4.0"
+  writeConnectionSecretToRef:
+    name: my-kafka
+
+---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASUserKafka
+metadata:
+  name: test-user
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-kafka
+    username: test-user
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-kafka-test-user

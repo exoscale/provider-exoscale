@@ -1,0 +1,60 @@
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASService
+metadata:
+  name: my-postgres
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-postgres
+    maintenanceDow: sunday
+    maintenanceTime: 15:00:00
+    terminationProtection: false
+    pg:
+      adminPasswordSecretRef:
+        name: my-pg-password
+        key: password
+      adminUsername: admin
+      version: "18"
+    plan: hobbyist-2
+    type: pg
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-postgres
+
+---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASUserPG
+metadata:
+  name: test-user
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-postgres
+    username: test-user
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-postgres-test-user
+
+---
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASDatabasePG
+metadata:
+  name: test-database
+  namespace: crossplane-system
+spec:
+  forProvider:
+    serviceRef:
+      name: my-postgres
+    databaseName: test-database
+    zone: ch-gva-2
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-pg-password
+  namespace: crossplane-system
+type: Opaque
+data:
+  password: MWYyZDFlMmU2N2Rm

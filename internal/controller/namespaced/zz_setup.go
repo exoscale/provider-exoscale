@@ -22,6 +22,13 @@ import (
 	skscluster "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/skscluster"
 	sksnodepool "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/sksnodepool"
 	sshkey "github.com/exoscale/provider-exoscale/internal/controller/namespaced/compute/sshkey"
+	dbaasdatabasemysql "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasdatabasemysql"
+	dbaasdatabasepg "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasdatabasepg"
+	dbaasservice "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasservice"
+	dbaasuserkafka "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasuserkafka"
+	dbaasusermysql "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasusermysql"
+	dbaasuseropensearch "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasuseropensearch"
+	dbaasuserpg "github.com/exoscale/provider-exoscale/internal/controller/namespaced/dbaas/dbaasuserpg"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/namespaced/providerconfig"
 )
 
@@ -42,6 +49,13 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		skscluster.Setup,
 		sksnodepool.Setup,
 		sshkey.Setup,
+		dbaasdatabasemysql.Setup,
+		dbaasdatabasepg.Setup,
+		dbaasservice.Setup,
+		dbaasuserkafka.Setup,
+		dbaasusermysql.Setup,
+		dbaasuseropensearch.Setup,
+		dbaasuserpg.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
@@ -68,6 +82,13 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		skscluster.SetupGated,
 		sksnodepool.SetupGated,
 		sshkey.SetupGated,
+		dbaasdatabasemysql.SetupGated,
+		dbaasdatabasepg.SetupGated,
+		dbaasservice.SetupGated,
+		dbaasuserkafka.SetupGated,
+		dbaasusermysql.SetupGated,
+		dbaasuseropensearch.SetupGated,
+		dbaasuserpg.SetupGated,
 		providerconfig.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {
