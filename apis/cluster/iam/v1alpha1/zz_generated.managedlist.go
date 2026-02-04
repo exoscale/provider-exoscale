@@ -8,6 +8,15 @@ package v1alpha1
 
 import resource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 
+// GetItems of this IAMAPIKeyList.
+func (l *IAMAPIKeyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this IAMRoleList.
 func (l *IAMRoleList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

@@ -33,7 +33,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"exoscale_dbaas_opensearch_user": config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.68.x TODO: upgrade terraform version in makefile once the new release is out.
 
 	// IAM
-	"exoscale_iam_role": config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.68.x TODO: upgrade terraform version in makefile once the new release is out.
+	"exoscale_iam_role":    config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.68.x TODO: upgrade terraform version in makefile once the new release is out.
+	"exoscale_iam_api_key": config.IdentifierFromProvider, // only works with terraform-provider-exoscale version > 0.68.x TODO: upgrade terraform version in makefile once the new release is out.
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

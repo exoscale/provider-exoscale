@@ -29,6 +29,7 @@ import (
 	dbaasusermysql "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasusermysql"
 	dbaasuseropensearch "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasuseropensearch"
 	dbaasuserpg "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasuserpg"
+	iamapikey "github.com/exoscale/provider-exoscale/internal/controller/cluster/iam/iamapikey"
 	iamrole "github.com/exoscale/provider-exoscale/internal/controller/cluster/iam/iamrole"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/cluster/providerconfig"
 )
@@ -57,6 +58,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		dbaasusermysql.Setup,
 		dbaasuseropensearch.Setup,
 		dbaasuserpg.Setup,
+		iamapikey.Setup,
 		iamrole.Setup,
 		providerconfig.Setup,
 	} {
@@ -91,6 +93,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		dbaasusermysql.SetupGated,
 		dbaasuseropensearch.SetupGated,
 		dbaasuserpg.SetupGated,
+		iamapikey.SetupGated,
 		iamrole.SetupGated,
 		providerconfig.SetupGated,
 	} {
