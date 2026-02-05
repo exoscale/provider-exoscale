@@ -17,6 +17,15 @@ func (l *IAMAPIKeyList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this IAMOrgPolicyList.
+func (l *IAMOrgPolicyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this IAMRoleList.
 func (l *IAMRoleList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

@@ -21,4 +21,9 @@ func Configure(p *config.Provider) {
 			Type: "github.com/exoscale/provider-exoscale/apis/cluster/iam/v1alpha1.IAMRole",
 		}
 	})
+
+	p.AddResourceConfigurator("exoscale_iam_org_policy", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "IAMOrgPolicy"
+	})
 }

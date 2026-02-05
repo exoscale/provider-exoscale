@@ -90,7 +90,7 @@ type PolicyInitParameters struct {
 	// Default service strategy (`allow` or `deny`).
 	DefaultServiceStrategy *string `json:"defaultServiceStrategy,omitempty" tf:"default_service_strategy,omitempty"`
 
-	Services map[string]ServicesInitParameters `json:"services,omitempty" tf:"services,omitempty"`
+	Services map[string]PolicyServicesInitParameters `json:"services,omitempty" tf:"services,omitempty"`
 }
 
 type PolicyObservation struct {
@@ -98,7 +98,7 @@ type PolicyObservation struct {
 	// Default service strategy (`allow` or `deny`).
 	DefaultServiceStrategy *string `json:"defaultServiceStrategy,omitempty" tf:"default_service_strategy,omitempty"`
 
-	Services map[string]ServicesObservation `json:"services,omitempty" tf:"services,omitempty"`
+	Services map[string]PolicyServicesObservation `json:"services,omitempty" tf:"services,omitempty"`
 }
 
 type PolicyParameters struct {
@@ -108,10 +108,34 @@ type PolicyParameters struct {
 	DefaultServiceStrategy *string `json:"defaultServiceStrategy,omitempty" tf:"default_service_strategy,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Services map[string]ServicesParameters `json:"services,omitempty" tf:"services,omitempty"`
+	Services map[string]PolicyServicesParameters `json:"services,omitempty" tf:"services,omitempty"`
 }
 
-type RulesInitParameters struct {
+type PolicyServicesInitParameters struct {
+	Rules []ServicesRulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
+
+	// Service type (`rules`, `allow`, or `deny`).
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type PolicyServicesObservation struct {
+	Rules []ServicesRulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
+
+	// Service type (`rules`, `allow`, or `deny`).
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type PolicyServicesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Rules []ServicesRulesParameters `json:"rules,omitempty" tf:"rules,omitempty"`
+
+	// Service type (`rules`, `allow`, or `deny`).
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ServicesRulesInitParameters struct {
 
 	// IAM policy rule action (`allow` or `deny`).
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
@@ -122,7 +146,7 @@ type RulesInitParameters struct {
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
-type RulesObservation struct {
+type ServicesRulesObservation struct {
 
 	// IAM policy rule action (`allow` or `deny`).
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
@@ -133,7 +157,7 @@ type RulesObservation struct {
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
-type RulesParameters struct {
+type ServicesRulesParameters struct {
 
 	// IAM policy rule action (`allow` or `deny`).
 	// +kubebuilder:validation:Optional
@@ -145,30 +169,6 @@ type RulesParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Resources []*string `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type ServicesInitParameters struct {
-	Rules []RulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
-
-	// Service type (`rules`, `allow`, or `deny`).
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type ServicesObservation struct {
-	Rules []RulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
-
-	// Service type (`rules`, `allow`, or `deny`).
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type ServicesParameters struct {
-
-	// +kubebuilder:validation:Optional
-	Rules []RulesParameters `json:"rules,omitempty" tf:"rules,omitempty"`
-
-	// Service type (`rules`, `allow`, or `deny`).
-	// +kubebuilder:validation:Optional
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 // IAMRoleSpec defines the desired state of IAMRole

@@ -30,6 +30,7 @@ import (
 	dbaasuseropensearch "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasuseropensearch"
 	dbaasuserpg "github.com/exoscale/provider-exoscale/internal/controller/cluster/dbaas/dbaasuserpg"
 	iamapikey "github.com/exoscale/provider-exoscale/internal/controller/cluster/iam/iamapikey"
+	iamorgpolicy "github.com/exoscale/provider-exoscale/internal/controller/cluster/iam/iamorgpolicy"
 	iamrole "github.com/exoscale/provider-exoscale/internal/controller/cluster/iam/iamrole"
 	providerconfig "github.com/exoscale/provider-exoscale/internal/controller/cluster/providerconfig"
 )
@@ -59,6 +60,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		dbaasuseropensearch.Setup,
 		dbaasuserpg.Setup,
 		iamapikey.Setup,
+		iamorgpolicy.Setup,
 		iamrole.Setup,
 		providerconfig.Setup,
 	} {
@@ -94,6 +96,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		dbaasuseropensearch.SetupGated,
 		dbaasuserpg.SetupGated,
 		iamapikey.SetupGated,
+		iamorgpolicy.SetupGated,
 		iamrole.SetupGated,
 		providerconfig.SetupGated,
 	} {
