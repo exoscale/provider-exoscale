@@ -1,0 +1,11 @@
+apiVersion: iam.exoscale.m.exoscale.ch/v1alpha1
+kind: IAMOrgPolicy
+metadata:
+  name: my-org-policy
+  namespace: crossplane-system
+spec:
+  forProvider:
+    defaultServiceStrategy: allow
+    services:
+      sos:
+        type: deny

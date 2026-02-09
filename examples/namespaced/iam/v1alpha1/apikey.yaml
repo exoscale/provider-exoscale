@@ -1,0 +1,29 @@
+apiVersion: iam.exoscale.m.exoscale.ch/v1alpha1
+kind: IAMRole
+metadata:
+  name: my-role
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-role
+    policy:
+      defaultServiceStrategy: deny
+      services:
+        compute:
+          type: allow
+        sos:
+          type: allow
+
+---
+apiVersion: iam.exoscale.m.exoscale.ch/v1alpha1
+kind: IAMAPIKey
+metadata:
+  name: my-api-key
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: my-api-key
+    roleIdRef:
+      name: my-role
+  writeConnectionSecretToRef:
+    name: my-api-key

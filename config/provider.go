@@ -8,8 +8,10 @@ import (
 
 	clustercompute "github.com/exoscale/provider-exoscale/config/cluster/compute"
 	clusterdbaas "github.com/exoscale/provider-exoscale/config/cluster/dbaas"
+	clusterdiam "github.com/exoscale/provider-exoscale/config/cluster/iam"
 	namespacedcompute "github.com/exoscale/provider-exoscale/config/namespaced/compute"
 	namespaceddbaas "github.com/exoscale/provider-exoscale/config/namespaced/dbaas"
+	namespacediam "github.com/exoscale/provider-exoscale/config/namespaced/iam"
 )
 
 const (
@@ -37,6 +39,7 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		clustercompute.Configure,
 		clusterdbaas.Configure,
+		clusterdiam.Configure,
 	} {
 		configure(pc)
 	}
@@ -62,6 +65,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		// add custom config functions
 		namespacedcompute.Configure,
 		namespaceddbaas.Configure,
+		namespacediam.Configure,
 	} {
 		configure(pc)
 	}

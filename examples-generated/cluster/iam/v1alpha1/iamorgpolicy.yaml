@@ -1,0 +1,14 @@
+apiVersion: iam.exoscale.exoscale.ch/v1alpha1
+kind: IAMOrgPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/iamorgpolicy
+  labels:
+    testing.upbound.io/example-name: org_policy
+  name: org-policy
+spec:
+  forProvider:
+    defaultServiceStrategy: allow
+    services:
+      sos:
+        type: deny

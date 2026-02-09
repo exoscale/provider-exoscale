@@ -1,0 +1,14 @@
+apiVersion: iam.exoscale.exoscale.ch/v1alpha1
+kind: IAMAPIKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/iamapikey
+  labels:
+    testing.upbound.io/example-name: my_api_key
+  name: my-api-key
+spec:
+  forProvider:
+    name: my-api-key
+    roleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_role

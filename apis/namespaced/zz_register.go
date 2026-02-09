@@ -12,6 +12,7 @@ import (
 
 	v1alpha1 "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1"
 	v1alpha1dbaas "github.com/exoscale/provider-exoscale/apis/namespaced/dbaas/v1alpha1"
+	v1alpha1iam "github.com/exoscale/provider-exoscale/apis/namespaced/iam/v1alpha1"
 	v1alpha1namespaced "github.com/exoscale/provider-exoscale/apis/namespaced/v1alpha1"
 	v1beta1 "github.com/exoscale/provider-exoscale/apis/namespaced/v1beta1"
 )
@@ -21,6 +22,7 @@ func init() {
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1alpha1dbaas.SchemeBuilder.AddToScheme,
+		v1alpha1iam.SchemeBuilder.AddToScheme,
 		v1alpha1namespaced.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 	)
