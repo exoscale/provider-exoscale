@@ -2,12 +2,12 @@ apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SKSNodepool
 metadata:
   name: my-sks-nodepool
-  namespace: crossplane-system
+  namespace: default
 spec:
   forProvider:
     clusterIdRef:
       name: my-sks-cluster
-      namespace: crossplane-system
+      namespace: default
     securityGroupIdsSelector:
       matchLabels:
         testing.upbound.io/example-name: sks-security-group
@@ -21,7 +21,7 @@ apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SKSCluster
 metadata:
   name: my-sks-cluster
-  namespace: crossplane-system
+  namespace: default
 spec:
   forProvider:
     name: my-sks-cluster
@@ -35,7 +35,7 @@ metadata:
   labels:
     testing.upbound.io/example-name: sks-security-group
   name: sks-security-group
-  namespace: crossplane-system
+  namespace: default
 spec:
   forProvider:
     name: sks-security-group
@@ -45,7 +45,7 @@ apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
   name: sks-nodeport-services
-  namespace: crossplane-system
+  namespace: default
 spec:
   forProvider:
     cidr: 0.0.0.0/0
@@ -55,14 +55,14 @@ spec:
     protocol: TCP
     securityGroupIdRef:
       name: sks-security-group
-      namespace: crossplane-system
+      namespace: default
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
   name: sks-kubelet
-  namespace: crossplane-system
+  namespace: default
 spec:
   forProvider:
     cidr: 0.0.0.0/0
@@ -72,14 +72,14 @@ spec:
     protocol: TCP
     securityGroupIdRef:
       name: sks-security-group
-      namespace: crossplane-system
+      namespace: default
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
   name: sks-calico-traffic
-  namespace: crossplane-system
+  namespace: default
 spec:
   forProvider:
     cidr: 0.0.0.0/0
@@ -89,4 +89,4 @@ spec:
     protocol: UDP
     securityGroupIdRef:
       name: sks-security-group
-      namespace: crossplane-system
+      namespace: default
