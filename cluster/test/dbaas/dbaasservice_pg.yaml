@@ -1,32 +1,32 @@
-# apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
-# kind: DBAASService
-# metadata:
-#   name: my-postgres
-#   namespace: default
-# spec:
-#   forProvider:
-#     name: my-postgres
-#     maintenanceDow: sunday
-#     maintenanceTime: 15:00:00
-#     terminationProtection: false
-#     pg:
-#       adminPasswordSecretRef:
-#         name: my-pg-password
-#         key: password
-#       adminUsername: admin
-#       version: "18"
-#     plan: hobbyist-2
-#     type: pg
-#     zone: ch-gva-2
-#   writeConnectionSecretToRef:
-#     name: my-postgres
+apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
+kind: DBAASService
+metadata:
+  name: my-postgres
+  namespace: default
+spec:
+  forProvider:
+    name: my-postgres
+    maintenanceDow: sunday
+    maintenanceTime: 15:00:00
+    terminationProtection: false
+    pg:
+      adminPasswordSecretRef:
+        name: my-pg-password
+        key: password
+      adminUsername: admin
+      version: "18"
+    plan: hobbyist-2
+    type: pg
+    zone: ch-gva-2
+  writeConnectionSecretToRef:
+    name: my-postgres
 
-# ---
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#   name: my-pg-password
-#   namespace: default
-# type: Opaque
-# data:
-#   password: MWYyZDFlMmU2N2Rm
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-pg-password
+  namespace: default
+type: Opaque
+data:
+  password: MWYyZDFlMmU2N2Rm
