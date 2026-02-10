@@ -154,10 +154,10 @@ resources:
             admin_password: (String, Sensitive) A custom administrator account password (may only be set at creation time).
             admin_username: (String) A custom administrator account username (may only be set at creation time).
             backup_schedule: (String) The automated backup schedule (HH:MM).
-            ca_certificate: (String) CA Certificate required to reach a DBaaS service through a TLS-protected connection.
+            ca_certificate: (String, Sensitive) CA Certificate required to reach a DBaaS service through a TLS-protected connection.
             create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The creation date of the database service.
-            dashboards: (Block, Optional) OpenSearch Dashboards settings (see below for nested schema)
+            dashboards: (Attributes) OpenSearch Dashboards settings (see below for nested schema)
             delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             disk_size: (Number) The disk size of the database service.
             enable_cert_auth: (Boolean) Enable certificate-based authentication method.
@@ -167,13 +167,13 @@ resources:
             enable_schema_registry: (Boolean) Enable Schema Registry.
             enabled: '(Boolean) Enable or disable OpenSearch Dashboards (default: true).'
             fork_from_service: (String) ❗ Service name
-            grafana: (Block, Optional) grafana database service type specific arguments. Structure is documented below. (see below for nested schema)
+            grafana: (Attributes) grafana database service type specific arguments. Structure is documented below. (see below for nested schema)
             grafana_settings: (String) Grafana configuration settings in JSON format (exo dbaas type show grafana --settings=grafana for reference).
             id: (String) The ID of this resource.
-            index_pattern: '(Block List) (can be used multiple times) Allows you to create glob style patterns and set a max number of indexes matching this pattern you want to keep. Creating indexes exceeding this value will cause the oldest one to get deleted. You could for example create a pattern looking like ''logs.?'' and then create index logs.1, logs.2 etc, it will delete logs.1 once you create logs.6. Do note ''logs.?'' does not apply to logs.10. Note: Setting max_index_count to 0 will do nothing and the pattern gets ignored. (see below for nested schema)'
-            index_template: (Block, Optional) Template settings for all new indexes (see below for nested schema)
+            index_pattern: '(Attributes List) (can be used multiple times) Allows you to create glob style patterns and set a max number of indexes matching this pattern you want to keep. Creating indexes exceeding this value will cause the oldest one to get deleted. You could for example create a pattern looking like ''logs.?'' and then create index logs.1, logs.2 etc, it will delete logs.1 once you create logs.6. Do note ''logs.?'' does not apply to logs.10. Note: Setting max_index_count to 0 will do nothing and the pattern gets ignored. (see below for nested schema)'
+            index_template: (Attributes) Template settings for all new indexes (see below for nested schema)
             ip_filter: (Set of String) A list of CIDR blocks to allow incoming connections from.
-            kafka: (Block, Optional) kafka database service type specific arguments. Structure is documented below. (see below for nested schema)
+            kafka: (Attributes) kafka database service type specific arguments. Structure is documented below. (see below for nested schema)
             kafka_connect_settings: (String) Kafka Connect configuration settings in JSON format (exo dbaas type show kafka --settings=kafka-connect for reference).
             kafka_rest_settings: (String) Kafka REST configuration settings in JSON format (exo dbaas type show kafka --settings=kafka-rest for reference).
             kafka_settings: (String) Kafka configuration settings in JSON format (exo dbaas type show kafka --settings=kafka for reference).
@@ -183,7 +183,7 @@ resources:
             mapping_nested_objects_limit: (Number) The maximum number of nested JSON objects that a single document can contain across all nested types. This limit helps to prevent out of memory errors when a document contains too many nested objects. (Default is 10000. Minimum value is 0, maximum value is 100000.)
             max_index_count: (Number, Deprecated) Maximum number of indexes to keep (Minimum value is 0)
             max_old_space_size: '(Number) Limits the maximum amount of memory (in MiB) the OpenSearch Dashboards process can use. This sets the max_old_space_size option of the nodejs running the OpenSearch Dashboards. Note: the memory reserved by OpenSearch Dashboards is not available for OpenSearch. (default: 128).'
-            mysql: (Block, Optional) mysql database service type specific arguments. Structure is documented below. (see below for nested schema)
+            mysql: (Attributes) mysql database service type specific arguments. Structure is documented below. (see below for nested schema)
             mysql_settings: (String) MySQL configuration settings in JSON format (exo dbaas type show mysql --settings=mysql for reference).
             name: (String) ❗ The name of the database service.
             node_cpus: (Number) The number of CPUs of the database service.
@@ -191,9 +191,9 @@ resources:
             nodes: (Number) The number of nodes of the database service.
             number_of_replicas: (Number) The number of replicas each primary shard has. (Minimum value is 0, maximum value is 29)
             number_of_shards: (Number) The number of primary shards that an index should have. (Minimum value is 1, maximum value is 1024.)
-            opensearch: (Block, Optional) opensearch database service type specific arguments. Structure is documented below. (see below for nested schema)
+            opensearch: (Attributes) opensearch database service type specific arguments. Structure is documented below. (see below for nested schema)
             pattern: (String) fnmatch pattern
-            pg: (Block, Optional) pg database service type specific arguments. Structure is documented below. (see below for nested schema)
+            pg: (Attributes) pg database service type specific arguments. Structure is documented below. (see below for nested schema)
             pg_settings: (String) PostgreSQL configuration settings in JSON format (exo dbaas type show pg --settings=pg for reference).
             pgbouncer_settings: (String) PgBouncer configuration settings in JSON format (exo dbaas type show pg --settings=pgbouncer for reference).
             pglookout_settings: (String) pglookout configuration settings in JSON format (exo dbaas type show pg --settings=pglookout for reference).
@@ -210,7 +210,7 @@ resources:
             type: (String) ❗ The type of the database service (kafka, mysql, opensearch, pg, valkey, grafana).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
-            valkey: (Block, Optional) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
+            valkey: (Attributes) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
             valkey_settings: (String) Valkey configuration settings in JSON format (exo dbaas type show valkey --settings=valkey for reference).
             version: (String) Kafka major version (exo dbaas type show kafka for reference; may only be set at creation time).
             zone: (String) ❗ The Exoscale Zone name.
@@ -230,10 +230,10 @@ resources:
             admin_password: (String, Sensitive) A custom administrator account password (may only be set at creation time).
             admin_username: (String) A custom administrator account username (may only be set at creation time).
             backup_schedule: (String) The automated backup schedule (HH:MM).
-            ca_certificate: (String) CA Certificate required to reach a DBaaS service through a TLS-protected connection.
+            ca_certificate: (String, Sensitive) CA Certificate required to reach a DBaaS service through a TLS-protected connection.
             create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The creation date of the database service.
-            dashboards: (Block, Optional) OpenSearch Dashboards settings (see below for nested schema)
+            dashboards: (Attributes) OpenSearch Dashboards settings (see below for nested schema)
             delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             disk_size: (Number) The disk size of the database service.
             enable_cert_auth: (Boolean) Enable certificate-based authentication method.
@@ -243,13 +243,13 @@ resources:
             enable_schema_registry: (Boolean) Enable Schema Registry.
             enabled: '(Boolean) Enable or disable OpenSearch Dashboards (default: true).'
             fork_from_service: (String) ❗ Service name
-            grafana: (Block, Optional) grafana database service type specific arguments. Structure is documented below. (see below for nested schema)
+            grafana: (Attributes) grafana database service type specific arguments. Structure is documented below. (see below for nested schema)
             grafana_settings: (String) Grafana configuration settings in JSON format (exo dbaas type show grafana --settings=grafana for reference).
             id: (String) The ID of this resource.
-            index_pattern: '(Block List) (can be used multiple times) Allows you to create glob style patterns and set a max number of indexes matching this pattern you want to keep. Creating indexes exceeding this value will cause the oldest one to get deleted. You could for example create a pattern looking like ''logs.?'' and then create index logs.1, logs.2 etc, it will delete logs.1 once you create logs.6. Do note ''logs.?'' does not apply to logs.10. Note: Setting max_index_count to 0 will do nothing and the pattern gets ignored. (see below for nested schema)'
-            index_template: (Block, Optional) Template settings for all new indexes (see below for nested schema)
+            index_pattern: '(Attributes List) (can be used multiple times) Allows you to create glob style patterns and set a max number of indexes matching this pattern you want to keep. Creating indexes exceeding this value will cause the oldest one to get deleted. You could for example create a pattern looking like ''logs.?'' and then create index logs.1, logs.2 etc, it will delete logs.1 once you create logs.6. Do note ''logs.?'' does not apply to logs.10. Note: Setting max_index_count to 0 will do nothing and the pattern gets ignored. (see below for nested schema)'
+            index_template: (Attributes) Template settings for all new indexes (see below for nested schema)
             ip_filter: (Set of String) A list of CIDR blocks to allow incoming connections from.
-            kafka: (Block, Optional) kafka database service type specific arguments. Structure is documented below. (see below for nested schema)
+            kafka: (Attributes) kafka database service type specific arguments. Structure is documented below. (see below for nested schema)
             kafka_connect_settings: (String) Kafka Connect configuration settings in JSON format (exo dbaas type show kafka --settings=kafka-connect for reference).
             kafka_rest_settings: (String) Kafka REST configuration settings in JSON format (exo dbaas type show kafka --settings=kafka-rest for reference).
             kafka_settings: (String) Kafka configuration settings in JSON format (exo dbaas type show kafka --settings=kafka for reference).
@@ -259,7 +259,7 @@ resources:
             mapping_nested_objects_limit: (Number) The maximum number of nested JSON objects that a single document can contain across all nested types. This limit helps to prevent out of memory errors when a document contains too many nested objects. (Default is 10000. Minimum value is 0, maximum value is 100000.)
             max_index_count: (Number, Deprecated) Maximum number of indexes to keep (Minimum value is 0)
             max_old_space_size: '(Number) Limits the maximum amount of memory (in MiB) the OpenSearch Dashboards process can use. This sets the max_old_space_size option of the nodejs running the OpenSearch Dashboards. Note: the memory reserved by OpenSearch Dashboards is not available for OpenSearch. (default: 128).'
-            mysql: (Block, Optional) mysql database service type specific arguments. Structure is documented below. (see below for nested schema)
+            mysql: (Attributes) mysql database service type specific arguments. Structure is documented below. (see below for nested schema)
             mysql_settings: (String) MySQL configuration settings in JSON format (exo dbaas type show mysql --settings=mysql for reference).
             name: (String) ❗ The name of the database service.
             node_cpus: (Number) The number of CPUs of the database service.
@@ -267,9 +267,9 @@ resources:
             nodes: (Number) The number of nodes of the database service.
             number_of_replicas: (Number) The number of replicas each primary shard has. (Minimum value is 0, maximum value is 29)
             number_of_shards: (Number) The number of primary shards that an index should have. (Minimum value is 1, maximum value is 1024.)
-            opensearch: (Block, Optional) opensearch database service type specific arguments. Structure is documented below. (see below for nested schema)
+            opensearch: (Attributes) opensearch database service type specific arguments. Structure is documented below. (see below for nested schema)
             pattern: (String) fnmatch pattern
-            pg: (Block, Optional) pg database service type specific arguments. Structure is documented below. (see below for nested schema)
+            pg: (Attributes) pg database service type specific arguments. Structure is documented below. (see below for nested schema)
             pg_settings: (String) PostgreSQL configuration settings in JSON format (exo dbaas type show pg --settings=pg for reference).
             pgbouncer_settings: (String) PgBouncer configuration settings in JSON format (exo dbaas type show pg --settings=pgbouncer for reference).
             pglookout_settings: (String) pglookout configuration settings in JSON format (exo dbaas type show pg --settings=pglookout for reference).
@@ -286,7 +286,7 @@ resources:
             type: (String) ❗ The type of the database service (kafka, mysql, opensearch, pg, valkey, grafana).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
-            valkey: (Block, Optional) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
+            valkey: (Attributes) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
             valkey_settings: (String) Valkey configuration settings in JSON format (exo dbaas type show valkey --settings=valkey for reference).
             version: (String) Kafka major version (exo dbaas type show kafka for reference; may only be set at creation time).
             zone: (String) ❗ The Exoscale Zone name.
@@ -959,13 +959,13 @@ resources:
                 }
         argumentDocs:
             addons: (Set of String, Deprecated)
-            aggregation_ca: (String) The CA certificate (in PEM format) for TLS communications between the control plane and the aggregation layer (e.g. metrics-server).
+            aggregation_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between the control plane and the aggregation layer (e.g. metrics-server).
             audit: '(Block List, Max: 1) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)'
             auto_upgrade: (Boolean) Enable automatic upgrading of the control plane version.
             bearer_token: (String, Sensitive) The optional bearer token to include in the request header
             client_id: (String) The OpenID client ID.
             cni: (String) The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
-            control_plane_ca: (String) The CA certificate (in PEM format) for TLS communications between control plane components.
+            control_plane_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between control plane components.
             create: (String)
             created_at: (String) The cluster creation date.
             delete: (String)
@@ -982,7 +982,7 @@ resources:
             id: (String) The SKS cluster ID.
             initial_backoff: (String) The Initial Backoff to wait before sending data to the remote server (default '10s')
             issuer_url: (String) The OpenID provider URL.
-            kubelet_ca: (String) The CA certificate (in PEM format) for TLS communications between kubelets and the control plane.
+            kubelet_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between kubelets and the control plane.
             labels: (Map of String) A map of key/value labels.
             metrics_server: '(Boolean) Deploy the Kubernetes Metrics Server in the control plane (boolean; default: true; may only be set at creation time).'
             name: (String) The SKS cluster name.
