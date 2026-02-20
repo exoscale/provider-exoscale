@@ -3,8 +3,8 @@ kind: SSHKey
 metadata:
   annotations:
   labels:
-    testing.upbound.io/example-name: my-ssh-key
-  name: my-ssh-key
+    testing.upbound.io/example-name: ssh-key-${data.suffix}
+  name: ssh-key-${data.suffix}
   namespace: default
 spec:
   forProvider:

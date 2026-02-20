@@ -1,17 +1,17 @@
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroup
 metadata:
-  name: my-security-group
+  name: security-group-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: my-security-group
+    name: security-group-${data.suffix}
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
-  name: my-security-group-rule
+  name: security-group-rule-${data.suffix}
   namespace: default
 spec:
   forProvider:
@@ -19,7 +19,7 @@ spec:
     endPort: 22
     protocol: TCP
     securityGroupIdRef:
-      name: my-security-group
+      name: security-group-${data.suffix}
       namespace: default
     startPort: 22
     type: INGRESS

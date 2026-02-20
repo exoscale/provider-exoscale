@@ -55,9 +55,14 @@ jobs:
         id: run-uptest
         env:
           UPTEST_CLOUD_CREDENTIALS: ${{ secrets.UPTEST_CLOUD_CREDENTIALS }}
-          UPTEST_UPDATE_PARAMETER: ""
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          make e2e UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',')
+          mkdir -p .work
+          cat > .work/uptest_datasource.yaml << EOF
+          zone: ch-gva-2
+          suffix: ${COMMIT_SHA::7}
+          EOF
+          make e2e UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',') UPTEST_DATASOURCE_PATH=./.work/uptest_datasource.yaml
 
       - name: Cleanup
         if: always()

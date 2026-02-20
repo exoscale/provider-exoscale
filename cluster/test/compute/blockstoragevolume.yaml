@@ -1,10 +1,10 @@
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: BlockStorageVolume
 metadata:
-  name: my-block-storage
+  name: block-storage-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: my-block-storage
+    name: block-storage-${data.suffix}
     size: 20
-    zone: ch-gva-2
+    zone: ${data.zone}
