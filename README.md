@@ -31,10 +31,19 @@ make run
 
 Run e2e test
 ```Bash
-&> export EXOSCALE_API_KEY=...
-&> export EXOSCALE_API_SECRET=...
+$> export EXOSCALE_API_KEY=...
+$> export EXOSCALE_API_SECRET=...
+$> mkdir -p .work
+$> cat > .work/uptest_datasource.yaml << EOF
+zone: ch-gva-2
+suffix: local
+EOF
 
-$> make e2e PROVIDER_NAME=provider-exoscale UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',') UPTEST_CLOUD_CREDENTIALS="{\"key\": \"$EXOSCALE_API_KEY\", \"secret\": \"$EXOSCALE_API_SECRET\"}"
+$> make e2e \
+ PROVIDER_NAME=provider-exoscale \
+ UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',') \
+ UPTEST_CLOUD_CREDENTIALS="{\"key\": \"$EXOSCALE_API_KEY\", \"secret\": \"$EXOSCALE_API_SECRET\"}" \
+ UPTEST_DATASOURCE_PATH=./.work/uptest_datasource.yaml
 ```
 
 Build, push, and install:

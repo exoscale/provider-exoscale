@@ -1,31 +1,31 @@
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SKSNodepool
 metadata:
-  name: my-sks-nodepool
+  name: sks-nodepool-${data.suffix}
   namespace: default
 spec:
   forProvider:
     clusterIdRef:
-      name: my-sks-cluster
+      name: sks-cluster-${data.suffix}
       namespace: default
     securityGroupIdsSelector:
       matchLabels:
-        testing.upbound.io/example-name: sks-security-group
+        testing.upbound.io/example-name: sks-security-group-${data.suffix}
     instanceType: standard.medium
-    name: my-sks-nodepool
+    name: sks-nodepool-${data.suffix}
     size: 2
-    zone: ch-gva-2
+    zone: ${data.zone}
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SKSCluster
 metadata:
-  name: my-sks-cluster
+  name: sks-cluster-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: my-sks-cluster
-    zone: ch-gva-2
+    name: sks-cluster-${data.suffix}
+    zone: ${data.zone}
     cni: calico
 
 ---
@@ -33,18 +33,18 @@ apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroup
 metadata:
   labels:
-    testing.upbound.io/example-name: sks-security-group
-  name: sks-security-group
+    testing.upbound.io/example-name: sks-security-group-${data.suffix}
+  name: sks-security-group-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: sks-security-group
+    name: sks-security-group-${data.suffix}
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
-  name: sks-nodeport-services
+  name: sks-nodeport-services-${data.suffix}
   namespace: default
 spec:
   forProvider:
@@ -54,14 +54,14 @@ spec:
     type: INGRESS
     protocol: TCP
     securityGroupIdRef:
-      name: sks-security-group
+      name: sks-security-group-${data.suffix}
       namespace: default
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
-  name: sks-kubelet
+  name: sks-kubelet-${data.suffix}
   namespace: default
 spec:
   forProvider:
@@ -71,14 +71,14 @@ spec:
     type: INGRESS
     protocol: TCP
     securityGroupIdRef:
-      name: sks-security-group
+      name: sks-security-group-${data.suffix}
       namespace: default
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
-  name: sks-calico-traffic
+  name: sks-calico-traffic-${data.suffix}
   namespace: default
 spec:
   forProvider:
@@ -88,5 +88,5 @@ spec:
     type: INGRESS
     protocol: UDP
     securityGroupIdRef:
-      name: sks-security-group
+      name: sks-security-group-${data.suffix}
       namespace: default

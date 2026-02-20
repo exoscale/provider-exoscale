@@ -1,11 +1,11 @@
 apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
 kind: DBAASService
 metadata:
-  name: my-valkey
+  name: valkey-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: my-valkey
+    name: valkey-${data.suffix}
     maintenanceDow: sunday
     maintenanceTime: 15:00:00
     terminationProtection: false
@@ -14,6 +14,6 @@ spec:
         - "0.0.0.0/0"
     plan: hobbyist-2
     type: valkey
-    zone: ch-gva-2
+    zone: ${data.zone}
   writeConnectionSecretToRef:
-    name: my-valkey
+    name: valkey-${data.suffix}

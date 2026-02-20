@@ -1,9 +1,9 @@
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: PrivateNetwork
 metadata:
-  name: my-private-network
+  name: private-network-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: my-private-network
-    zone: ch-gva-2
+    name: private-network-${data.suffix}
+    zone: ${data.zone}

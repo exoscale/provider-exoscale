@@ -1,31 +1,31 @@
 apiVersion: dbaas.exoscale.m.exoscale.ch/v1alpha1
 kind: DBAASService
 metadata:
-  name: my-mysql
+  name: mysql-${data.suffix}
   namespace: default
 spec:
   forProvider:
-    name: my-mysql
+    name: mysql-${data.suffix}
     maintenanceDow: sunday
     maintenanceTime: 15:00:00
     terminationProtection: false
     mysql:
       adminPasswordSecretRef:
-        name: my-mysql-password
+        name: mysql-password-${data.suffix}
         key: password
       adminUsername: admin
       version: "8"
     plan: hobbyist-2
     type: mysql
-    zone: ch-gva-2
+    zone: ${data.zone}
   writeConnectionSecretToRef:
-    name: my-mysql
+    name: mysql-${data.suffix}
 
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-mysql-password
+  name: mysql-password-${data.suffix}
   namespace: default
 type: Opaque
 data:
