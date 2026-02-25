@@ -51,7 +51,6 @@ jobs:
           BRANCH_NAME: ${{ env.BRANCH }}
           REGISTRY_ORGS: docker.io/exoscale
           XPKG_REG_ORGS: docker.io/exoscale
-          XPKG_REG_ORGS_NO_PROMOTE: docker.io/exoscale
           VERSION: ${{ github.ref_name }}
         run: |
           make build.all publish
