@@ -54,15 +54,19 @@ jobs:
       - name: Run Uptest
         id: run-uptest
         env:
-          UPTEST_CLOUD_CREDENTIALS: ${{ secrets.UPTEST_CLOUD_CREDENTIALS }}
           COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          EXOSCALE_API_KEY: ${{ secrets.EXOSCALE_API_KEY }}
+          EXOSCALE_API_SECRET: ${{ secrets.EXOSCALE_API_SECRET }}
         run: |
           mkdir -p .work
           cat > .work/uptest_datasource.yaml << EOF
           zone: ch-gva-2
           suffix: ${COMMIT_SHA::7}
           EOF
-          make e2e UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',') UPTEST_DATASOURCE_PATH=./.work/uptest_datasource.yaml
+          make e2e \
+          UPTEST_EXAMPLE_LIST=$(find cluster/test/*/*.yaml | tr '\n' ',') \
+          UPTEST_DATASOURCE_PATH=./.work/uptest_datasource.yaml \
+          UPTEST_CLOUD_CREDENTIALS="{\"key\": \"$EXOSCALE_API_KEY\", \"secret\": \"$EXOSCALE_API_SECRET\"}"
 
       - name: Cleanup
         if: always()
