@@ -14,30 +14,41 @@ spec:
     templateId: 0cd58ee7-333a-4256-aa6e-288e6dad3a08
     type: standard.small
     zone: ch-gva-2
-    sshKeysSelector:
-      matchLabels:
-        testing.upbound.io/example-name: my-ssh-key-1
+    ## uncomment if you want to add your ssh-key
+    # sshKeysSelector:
+    #   matchLabels:
+    #     testing.upbound.io/example-name: my-ssh-key-1
     securityGroupIdsSelector:
       matchLabels:
         testing.upbound.io/example-name: security-group-1
+    userData: |
+      #cloud-config
+      package_upgrade: true
+      packages:
+        - nginx
+      runcmd:
+        - systemctl enable nginx
+        - systemctl start nginx
+        - echo "Hello from Exoscale!" > /var/www/html/index.html
   providerConfigRef:
     kind: ClusterProviderConfig
     name: default
 
 ---
-apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
-kind: SSHKey
-metadata:
-  labels:
-    testing.upbound.io/example-name: my-ssh-key-1
-  name: my-ssh-key-1
-  namespace: crossplane-system
-spec:
-  forProvider:
-    publicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJeNWlMhGQ/Tos4G99M+cazT24B1soxbNe57chciK+mm quentin.albertone@exoscale.ch"
-  providerConfigRef:
-    kind: ClusterProviderConfig
-    name: default
+## uncomment if you want to add your ssh-key + add your ssh-key
+# apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+# kind: SSHKey
+# metadata:
+#   labels:
+#     testing.upbound.io/example-name: my-ssh-key-1
+#   name: my-ssh-key-1
+#   namespace: crossplane-system
+# spec:
+#   forProvider:
+#     publicKey: "...."
+#   providerConfigRef:
+#     kind: ClusterProviderConfig
+#     name: default
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
@@ -49,23 +60,44 @@ metadata:
   namespace: crossplane-system
 spec:
   forProvider:
-    name: my-security-group
+    name: security-group-1
+
+---
+## uncomment if you want to ssh into your instance
+# apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
+# kind: SecurityGroupRules
+# metadata:
+#   name: allow-ssh
+#   namespace: crossplane-system
+# spec:
+#   forProvider:
+#     cidr: 0.0.0.0/0
+#     endPort: 22
+#     protocol: TCP
+#     securityGroupIdRef:
+#       name: security-group-1
+#       namespace: crossplane-system
+#     startPort: 22
+#     type: INGRESS
+#   providerConfigRef:
+#     kind: ClusterProviderConfig
+#     name: default
 
 ---
 apiVersion: compute.exoscale.m.exoscale.ch/v1alpha1
 kind: SecurityGroupRules
 metadata:
-  name: allows-ssh
+  name: allow-http
   namespace: crossplane-system
 spec:
   forProvider:
     cidr: 0.0.0.0/0
-    endPort: 22
+    endPort: 80
     protocol: TCP
     securityGroupIdRef:
       name: security-group-1
       namespace: crossplane-system
-    startPort: 22
+    startPort: 80
     type: INGRESS
   providerConfigRef:
     kind: ClusterProviderConfig
