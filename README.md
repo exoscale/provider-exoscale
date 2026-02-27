@@ -100,22 +100,11 @@ Once the provider is configured, you can start provisioning Exoscale resources.
 Ready-to-use examples for every supported resource are available in the
 [`examples/namespaced/`](examples/namespaced/) directory.
 
-<<<<<<< HEAD
-For instance, to create a security group:
-
-```bash
-$> kubectl apply -f examples/namespaced/compute/v1alpha1/securitygroup.yaml
-```
-
-=======
->>>>>>> 32cf914 (feat: update doc)
 Monitor the status of your managed resources:
 
 ```bash
 $> kubectl get managed -A
 ```
-<<<<<<< HEAD
-=======
 
 To create an instance:
 
@@ -132,7 +121,6 @@ $> watch curl $VM_PUBLIC_IP ## might need 1-2 min
 ## clean up
 $> kubectl delete -f examples/namespaced/compute/v1alpha1/instance.yaml
 ```
->>>>>>> 32cf914 (feat: update doc)
 
 ## Developing
 
