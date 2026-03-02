@@ -78,5 +78,5 @@ jobs:
           UPBOUND_ROBOT_TOKEN: ${{ secrets.UPBOUND_ROBOT_TOKEN }}
           VERSION: ${{ github.ref_name }}
         run: |
-          up login --token $UPBOUND_ROBOT_TOKEN
-          up alpha xpkg append --extensions-root=./extensions xpkg.upbound.io/exoscale/provider-exoscale:${{ github.ref_name }}
+          up login --token $UPBOUND_ROBOT_TOKEN --account exoscale
+          up alpha xpkg append --extensions-root=./extensions xpkg.upbound.io/exoscale/provider-exoscale:$VERSION
