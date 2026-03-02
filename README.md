@@ -156,6 +156,8 @@ a new resource, renaming a field, or changing defaults), make sure to:
    [`cluster/test/`](cluster/test/) to cover the changes. These manifests are
    used by `make e2e` and must reflect the latest resource specifications.
 
+> Don't forget to describe your changes in the [release note](./extensions/release-notes/release_notes.md)
+
 ### End-to-End Tests
 
 ```bash
