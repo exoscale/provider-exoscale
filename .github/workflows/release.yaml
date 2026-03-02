@@ -18,6 +18,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Login to Upbound Registry
+        uses: docker/login-action@v3
+        with:
+          registry: xpkg.upbound.io
+          username: ${{ secrets.UPBOUND_ROBOT_USERNAME }}
+          password: ${{ secrets.UPBOUND_ROBOT_TOKEN }}
+
+      - name: Install up CLI (>= v0.39.0 for alpha append)
+        run: |
+          set -euxo pipefail
+          # Download installer script (produces local ./up binary)
+          curl -sL https://cli.upbound.io | sh
+          mkdir -p "$HOME/bin"
+          mv up "$HOME/bin/up"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          up version
+
       - name: Setup QEMU
         uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3.7.0
         with:
@@ -49,8 +66,17 @@ jobs:
       - name: Build and Publish
         env:
           BRANCH_NAME: ${{ env.BRANCH }}
-          REGISTRY_ORGS: docker.io/exoscale
-          XPKG_REG_ORGS: docker.io/exoscale
+          REGISTRY_ORGS: docker.io/exoscale xpkg.upbound.io/exoscale
+          XPKG_REG_ORGS: docker.io/exoscale xpkg.upbound.io/exoscale
+          XPKG_REG_ORGS_NO_PROMOTE: xpkg.upbound.io/exoscale
           VERSION: ${{ github.ref_name }}
         run: |
           make build.all publish
+
+      - name: Append Marketplace Extension Assets
+        env:
+          UPBOUND_ROBOT_TOKEN: ${{ secrets.UPBOUND_ROBOT_TOKEN }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          up login --token $UPBOUND_ROBOT_TOKEN
+          up alpha xpkg append --extensions-root=./extensions xpkg.upbound.io/exoscale/provider-exoscale:${{ github.ref_name }}
