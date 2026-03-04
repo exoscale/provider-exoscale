@@ -52,7 +52,7 @@ kind: Provider
 metadata:
   name: provider-exoscale
 spec:
-  package: docker.io/exoscale/provider-exoscale:latest
+  package: xpkg.upbound.io/exoscale/provider-exoscale:<latest-version>
 EOF
 
 $> kubectl wait provider provider-exoscale \
@@ -103,7 +103,7 @@ Ready-to-use examples for every supported resource are available in the
 Monitor the status of your managed resources:
 
 ```bash
-$> kubectl get managed -A
+$> watch kubectl get managed -A
 ```
 
 To create an instance:

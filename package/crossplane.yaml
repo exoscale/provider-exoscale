@@ -2,6 +2,10 @@ apiVersion: meta.pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-exoscale
+  annotations:
+    meta.crossplane.io/license: Mozilla Public License 2.0
+    meta.crossplane.io/maintainer: Exoscale
+    meta.crossplane.io/source: https://github.com/exoscale/provider-exoscale
 spec:
   capabilities:
     - SafeStart
