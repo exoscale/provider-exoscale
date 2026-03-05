@@ -1,0 +1,261 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "baseBranches": [
+    "main"
+  ],
+  "ignorePaths": [
+    "design/**"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy",
+    "gomodUpdateImportPaths"
+  ],
+  "semanticCommits": "disabled",
+  "labels": [
+    "automated",
+    "dependencies"
+  ],
+  "reviewers": [
+    "team:giza"
+  ],
+  "schedule": [
+    "* 8 * * 1"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Bump Go version in workflows",
+      "fileMatch": [
+        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "GO_VERSION: '(?<currentValue>.*?)'\\n"
+      ],
+      "datasourceTemplate": "golang-version",
+      "depNameTemplate": "golang"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump golangci-lint version in workflows",
+      "fileMatch": [
+        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "GOLANGCI_VERSION: '(?<currentValue>.*?)'\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "golangci/golangci-lint"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump Docker Buildx version in workflows",
+      "fileMatch": [
+        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "DOCKER_BUILDX_VERSION: '(?<currentValue>.*?)'\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "docker/buildx"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump golangci-lint version in the Makefile",
+      "fileMatch": [
+        "^Makefile$",
+        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "GOLANGCILINT_VERSION \\??= (?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "golangci/golangci-lint",
+      "extractVersionTemplate": "^(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump up CLI version in the Makefile",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "UP_VERSION \\??= (?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "upbound/up"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump Uptest version in the Makefile",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "UPTEST_VERSION \\??= (?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "crossplane/uptest"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump kind version in the Makefile",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "KIND_VERSION \\??= (?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "kubernetes-sigs/kind"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump Crossplane version in the Makefile",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "CROSSPLANE_VERSION \\??= (?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "crossplane/crossplane",
+      "extractVersionTemplate": "^(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump Crossplane CLI version in the Makefile",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "CROSSPLANE_CLI_VERSION ??= (?<currentValue>.*?)\\n"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "crossplane/crossplane"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security",
+      "automated",
+      "dependencies"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "go"
+      ],
+      "matchDepTypes": [
+        "indirect"
+      ],
+      "enabled": false
+    },
+    {
+      "matchDatasources": [
+        "go"
+      ],
+      "matchDepNames": [
+        "k8s.io/client-go"
+      ],
+      "allowedVersions": "<1.0"
+    },
+    {
+      "matchDatasources": [
+        "go"
+      ],
+      "groupName": "kubernetes patches",
+      "matchUpdateTypes": [
+        "patch",
+        "digest"
+      ],
+      "matchPackagePrefixes": [
+        "k8s.io",
+        "sigs.k8s.io"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "go"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "matchPackagePrefixes": [
+        "k8s.io",
+        "sigs.k8s.io"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "enabled": false,
+      "excludePackagePrefixes": [
+        "k8s.io",
+        "sigs.k8s.io"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "enabled": false,
+      "excludePackagePrefixes": [
+        "k8s.io",
+        "sigs.k8s.io"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "groupName": "all non-major go dependencies"
+    },
+    {
+      "matchDepTypes": [
+        "action"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "all non-major github action",
+      "pinDigests": true
+    },
+    {
+      "matchDepNames": [
+        "crossplane/crossplane"
+      ],
+      "groupName": "crossplane versions in CI",
+      "groupSlug": "crossplane-in-ci"
+    },
+    {
+      "matchDepNames": [
+        "golangci/golangci-lint"
+      ],
+      "groupName": "golangci-lint versions in CI",
+      "groupSlug": "golangci-lint-in-ci"
+    },
+    {
+      "matchDepTypes": [
+        "action"
+      ],
+      "pinDigests": true
+    }
+  ]
+}
