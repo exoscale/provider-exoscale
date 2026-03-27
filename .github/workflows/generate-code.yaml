@@ -1,0 +1,91 @@
+name: Generate provider
+
+on:
+  workflow_dispatch:
+    inputs:
+      terraform_provider_version:
+        description: The exoscale terraform provider version (ex. 0.68.0)
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          submodules: true
+
+      - name: Setup Go
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5.6.0
+        with:
+          go-version-file: go.mod
+
+      - name: Generate crossplane provider from terraform
+        env:
+          TERRAFORM_PROVIDER_VERSION: ${{ inputs.terraform_provider_version }}
+        run: make generate
+
+      - name: Update default terraform provider version
+        env:
+          TERRAFORM_PROVIDER_VERSION: ${{ inputs.terraform_provider_version }}
+        run: sed -i "s/^export TERRAFORM_PROVIDER_VERSION ?= .*/export TERRAFORM_PROVIDER_VERSION ?= ${TERRAFORM_PROVIDER_VERSION}/" Makefile
+
+      - name: Update release note
+        env:
+          TERRAFORM_PROVIDER_VERSION: ${{ inputs.terraform_provider_version }}
+        run: |
+          python3 << 'PYEOF'
+          import re, os
+
+          tf_version = os.environ['TERRAFORM_PROVIDER_VERSION']
+          filename = "extensions/release-notes/release_notes.md"
+          new_line = f"- automatic: bump terraform provider version {tf_version}\n"
+
+          with open(filename) as f:
+              content = f.read()
+
+          if "## UNRELEASED" not in content:
+              unreleased = f"\n## UNRELEASED\n\n### IMPROVEMENTS:\n{new_line}\n### BUG FIXES:\n\n### BREAKING CHANGES:\n\n### FEATURES:\n"
+              content = content.replace("# Release Notes\n", "# Release Notes\n" + unreleased, 1)
+          else:
+              def add_to_improvements(m):
+                  return re.sub(r'(### IMPROVEMENTS:\n)', r'\g<1>' + new_line, m.group(0), count=1)
+              content = re.sub(r'## UNRELEASED.*?(?=\n## )', add_to_improvements, content, flags=re.DOTALL)
+
+          with open(filename, 'w') as f:
+              f.write(content)
+          PYEOF
+
+      - name: Commit and push changes
+        id: create_pr
+        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
+        with:
+          commit-message: "chore: bump terraform provider ${{ inputs.terraform_provider_version }}"
+          author: "Exoscale <operation+build@exoscale.net>"
+          committer: "Exoscale <operation+build@exoscale.net>"
+          branch: chore/bump-terraform-provider-version
+          delete-branch: true
+          title: "chore: bump terraform provider ${{ inputs.terraform_provider_version }}"
+          body: |
+            A new terraform provider was released, this PR build a new crossplane provider.
+            Once approved and merged, don't forget to tag the commit on main to release a new crossplane provider version
+          base: main
+          labels: |
+            automated
+            new-terraform-version
+          team-reviewers: giza
+          branch-suffix: timestamp
+
+      - name: Trigger CI on new PR
+        if: steps.create_pr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run ci.yml --ref ${{ steps.create_pr.outputs.pull-request-branch }}
+          gh workflow run e2e.yaml --ref ${{ steps.create_pr.outputs.pull-request-branch }}
