@@ -5,6 +5,7 @@
 ### IMPROVEMENTS:
 
 ### BUG FIXES:
+- allow terraform provider init with upgrade #29
 
 ### BREAKING CHANGES:
 
