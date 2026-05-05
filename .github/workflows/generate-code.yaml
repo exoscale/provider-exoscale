@@ -69,6 +69,7 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: bump terraform provider ${{ inputs.terraform_provider_version }}"
           author: "Exoscale <operation+build@exoscale.net>"
           committer: "Exoscale <operation+build@exoscale.net>"
@@ -79,15 +80,8 @@ jobs:
             A new terraform provider was released, this PR build a new crossplane provider.
             Once approved and merged, don't forget to tag the commit on main to release a new crossplane provider version
           base: main
+          team-reviewers: giza
           labels: |
             automated
             new-terraform-version
           branch-suffix: timestamp
-
-      - name: Trigger CI on new PR
-        if: steps.create_pr.outputs.pull-request-number
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh workflow run ci.yml --ref ${{ steps.create_pr.outputs.pull-request-branch }}
-          gh workflow run e2e.yaml --ref ${{ steps.create_pr.outputs.pull-request-branch }}
