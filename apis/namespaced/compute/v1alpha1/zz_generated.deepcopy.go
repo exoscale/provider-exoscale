@@ -4093,6 +4093,11 @@ func (in *SKSClusterInitParameters) DeepCopyInto(out *SKSClusterInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.CreateDefaultSecurityGroup != nil {
+		in, out := &in.CreateDefaultSecurityGroup, &out.CreateDefaultSecurityGroup
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -4252,8 +4257,18 @@ func (in *SKSClusterObservation) DeepCopyInto(out *SKSClusterObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CreateDefaultSecurityGroup != nil {
+		in, out := &in.CreateDefaultSecurityGroup, &out.CreateDefaultSecurityGroup
+		*out = new(bool)
+		**out = **in
+	}
 	if in.CreatedAt != nil {
 		in, out := &in.CreatedAt, &out.CreatedAt
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefaultSecurityGroupID != nil {
+		in, out := &in.DefaultSecurityGroupID, &out.DefaultSecurityGroupID
 		*out = new(string)
 		**out = **in
 	}
@@ -4408,6 +4423,11 @@ func (in *SKSClusterParameters) DeepCopyInto(out *SKSClusterParameters) {
 	if in.Cni != nil {
 		in, out := &in.Cni, &out.Cni
 		*out = new(string)
+		**out = **in
+	}
+	if in.CreateDefaultSecurityGroup != nil {
+		in, out := &in.CreateDefaultSecurityGroup, &out.CreateDefaultSecurityGroup
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Description != nil {
@@ -5584,11 +5604,6 @@ func (in *SecurityGroupRulesInitParameters) DeepCopyInto(out *SecurityGroupRules
 		*out = new(string)
 		**out = **in
 	}
-	if in.SecurityGroup != nil {
-		in, out := &in.SecurityGroup, &out.SecurityGroup
-		*out = new(string)
-		**out = **in
-	}
 	if in.SecurityGroupID != nil {
 		in, out := &in.SecurityGroupID, &out.SecurityGroupID
 		*out = new(string)
@@ -5611,11 +5626,6 @@ func (in *SecurityGroupRulesInitParameters) DeepCopyInto(out *SecurityGroupRules
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.UserSecurityGroup != nil {
-		in, out := &in.UserSecurityGroup, &out.UserSecurityGroup
 		*out = new(string)
 		**out = **in
 	}
@@ -5711,11 +5721,6 @@ func (in *SecurityGroupRulesObservation) DeepCopyInto(out *SecurityGroupRulesObs
 		*out = new(string)
 		**out = **in
 	}
-	if in.SecurityGroup != nil {
-		in, out := &in.SecurityGroup, &out.SecurityGroup
-		*out = new(string)
-		**out = **in
-	}
 	if in.SecurityGroupID != nil {
 		in, out := &in.SecurityGroupID, &out.SecurityGroupID
 		*out = new(string)
@@ -5728,11 +5733,6 @@ func (in *SecurityGroupRulesObservation) DeepCopyInto(out *SecurityGroupRulesObs
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.UserSecurityGroup != nil {
-		in, out := &in.UserSecurityGroup, &out.UserSecurityGroup
 		*out = new(string)
 		**out = **in
 	}
@@ -5791,11 +5791,6 @@ func (in *SecurityGroupRulesParameters) DeepCopyInto(out *SecurityGroupRulesPara
 		*out = new(string)
 		**out = **in
 	}
-	if in.SecurityGroup != nil {
-		in, out := &in.SecurityGroup, &out.SecurityGroup
-		*out = new(string)
-		**out = **in
-	}
 	if in.SecurityGroupID != nil {
 		in, out := &in.SecurityGroupID, &out.SecurityGroupID
 		*out = new(string)
@@ -5818,11 +5813,6 @@ func (in *SecurityGroupRulesParameters) DeepCopyInto(out *SecurityGroupRulesPara
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.UserSecurityGroup != nil {
-		in, out := &in.UserSecurityGroup, &out.UserSecurityGroup
 		*out = new(string)
 		**out = **in
 	}

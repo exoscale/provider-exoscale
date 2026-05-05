@@ -2728,9 +2728,34 @@ func (in *PgInitParameters) DeepCopyInto(out *PgInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RecoveryBackupTime != nil {
+		in, out := &in.RecoveryBackupTime, &out.RecoveryBackupTime
+		*out = new(string)
+		**out = **in
+	}
+	if in.SharedBuffersPercentage != nil {
+		in, out := &in.SharedBuffersPercentage, &out.SharedBuffersPercentage
+		*out = new(float64)
+		**out = **in
+	}
+	if in.TimescaledbSettings != nil {
+		in, out := &in.TimescaledbSettings, &out.TimescaledbSettings
+		*out = new(string)
+		**out = **in
+	}
+	if in.Variant != nil {
+		in, out := &in.Variant, &out.Variant
+		*out = new(string)
+		**out = **in
+	}
 	if in.Version != nil {
 		in, out := &in.Version, &out.Version
 		*out = new(string)
+		**out = **in
+	}
+	if in.WorkMem != nil {
+		in, out := &in.WorkMem, &out.WorkMem
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -2784,9 +2809,34 @@ func (in *PgObservation) DeepCopyInto(out *PgObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RecoveryBackupTime != nil {
+		in, out := &in.RecoveryBackupTime, &out.RecoveryBackupTime
+		*out = new(string)
+		**out = **in
+	}
+	if in.SharedBuffersPercentage != nil {
+		in, out := &in.SharedBuffersPercentage, &out.SharedBuffersPercentage
+		*out = new(float64)
+		**out = **in
+	}
+	if in.TimescaledbSettings != nil {
+		in, out := &in.TimescaledbSettings, &out.TimescaledbSettings
+		*out = new(string)
+		**out = **in
+	}
+	if in.Variant != nil {
+		in, out := &in.Variant, &out.Variant
+		*out = new(string)
+		**out = **in
+	}
 	if in.Version != nil {
 		in, out := &in.Version, &out.Version
 		*out = new(string)
+		**out = **in
+	}
+	if in.WorkMem != nil {
+		in, out := &in.WorkMem, &out.WorkMem
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -2845,9 +2895,34 @@ func (in *PgParameters) DeepCopyInto(out *PgParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RecoveryBackupTime != nil {
+		in, out := &in.RecoveryBackupTime, &out.RecoveryBackupTime
+		*out = new(string)
+		**out = **in
+	}
+	if in.SharedBuffersPercentage != nil {
+		in, out := &in.SharedBuffersPercentage, &out.SharedBuffersPercentage
+		*out = new(float64)
+		**out = **in
+	}
+	if in.TimescaledbSettings != nil {
+		in, out := &in.TimescaledbSettings, &out.TimescaledbSettings
+		*out = new(string)
+		**out = **in
+	}
+	if in.Variant != nil {
+		in, out := &in.Variant, &out.Variant
+		*out = new(string)
+		**out = **in
+	}
 	if in.Version != nil {
 		in, out := &in.Version, &out.Version
 		*out = new(string)
+		**out = **in
+	}
+	if in.WorkMem != nil {
+		in, out := &in.WorkMem, &out.WorkMem
+		*out = new(float64)
 		**out = **in
 	}
 }
