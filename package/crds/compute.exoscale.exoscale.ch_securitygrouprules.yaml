@@ -34,9 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SecurityGroupRules is the Schema for the SecurityGroupRuless
-          API. Manage Exoscale Security Group https://community.exoscale.com/product/networking/security-group/
-          Rules.
+        description: 'SecurityGroupRules is the Schema for the SecurityGroupRuless
+          API. Manage Exoscale Security Groups https://community.exoscale.com/product/compute/instances/quick-start/#firewall-rules---security-groups
+          rules. Parent resource: exoscalesecuritygroup_rule ./security_group.md.'
         properties:
           apiVersion:
             description: |-
@@ -76,43 +76,38 @@ spec:
                 properties:
                   cidr:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group/user_security_group_id).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group`/`user_security_group_id`).
+                      (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group_id).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group_id`).
                     type: string
                   description:
                     description: |-
-                      form text describing the security group rule.
-                      ❗ A free-form text describing the security group rule.
+                      form text describing the the Security Group rule.
+                      ❗ A free-form text describing the the Security Group rule.
                     type: string
                   endPort:
                     description: |-
-                      (Number) ❗ A TCP/UDP port range to match.
-                      ❗ A `TCP`/`UDP` port range to match.
+                      (Number) ❗The end port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+                      ❗The end port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
                     type: number
                   icmpCode:
                     description: |-
-                      (Number) ❗ An ICMP/ICMPv6 type/code to match.
-                      ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+                      (Number) ❗An ICMP/ICMPv6 code to match.
+                      ❗An ICMP/ICMPv6 [code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
                     type: number
                   icmpType:
                     description: |-
-                      (Number) ❗ An ICMP/ICMPv6 type/code to match.
-                      ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+                      (Number) ❗An ICMP/ICMPv6 type to match.
+                      ❗An ICMP/ICMPv6 [type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
                     type: number
                   protocol:
                     description: |-
-                      (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE, IPIP or ALL)
-                      ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE`, `IPIP` or `ALL`)
+                      (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE or IPIP)
+                      ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE` or `IPIP`)
                     type: string
                   publicSecurityGroup:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group/user_security_group_id).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group`/`user_security_group_id`).
-                    type: string
-                  securityGroup:
-                    description: |-
-                      (String, Deprecated) ❗ The parent security group name. Please use the security_group_id argument along the exoscale_security_group data source instead.
-                      ❗ The parent security group name. Please use the `security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
+                      (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group_id).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group_id`).
                     type: string
                   securityGroupId:
                     description: |-
@@ -197,23 +192,18 @@ spec:
                     type: object
                   startPort:
                     description: |-
-                      (Number) ❗ A TCP/UDP port range to match.
-                      ❗ A `TCP`/`UDP` port range to match.
+                      (Number) ❗A start port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+                      ❗A start port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
                     type: number
                   type:
                     description: |-
                       (String) ❗ The traffic direction to match (INGRESS or EGRESS).
                       ❗ The traffic direction to match (`INGRESS` or `EGRESS`).
                     type: string
-                  userSecurityGroup:
-                    description: |-
-                      (String, Deprecated) ❗ An (INGRESS) source / (EGRESS) destination security group name to match (conflicts with cidr/public_security_group/user_security_group_id). Please use the user_security_group_id argument along the exoscale_security_group data source instead.
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination security group name to match (conflicts with `cidr`/`public_security_group`/`user_security_group_id`). Please use the `user_security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-                    type: string
                   userSecurityGroupId:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination security group ID to match (conflicts with cidr/public_security_group/user_security_group)).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination security group ID to match (conflicts with `cidr`/`public_security_group`/`user_security_group)`).
+                      (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) user security group ID to match (conflicts with `cidr`/`public_security_group`).
                     type: string
                 type: object
               initProvider:
@@ -231,43 +221,38 @@ spec:
                 properties:
                   cidr:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group/user_security_group_id).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group`/`user_security_group_id`).
+                      (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group_id).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group_id`).
                     type: string
                   description:
                     description: |-
-                      form text describing the security group rule.
-                      ❗ A free-form text describing the security group rule.
+                      form text describing the the Security Group rule.
+                      ❗ A free-form text describing the the Security Group rule.
                     type: string
                   endPort:
                     description: |-
-                      (Number) ❗ A TCP/UDP port range to match.
-                      ❗ A `TCP`/`UDP` port range to match.
+                      (Number) ❗The end port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+                      ❗The end port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
                     type: number
                   icmpCode:
                     description: |-
-                      (Number) ❗ An ICMP/ICMPv6 type/code to match.
-                      ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+                      (Number) ❗An ICMP/ICMPv6 code to match.
+                      ❗An ICMP/ICMPv6 [code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
                     type: number
                   icmpType:
                     description: |-
-                      (Number) ❗ An ICMP/ICMPv6 type/code to match.
-                      ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+                      (Number) ❗An ICMP/ICMPv6 type to match.
+                      ❗An ICMP/ICMPv6 [type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
                     type: number
                   protocol:
                     description: |-
-                      (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE, IPIP or ALL)
-                      ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE`, `IPIP` or `ALL`)
+                      (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE or IPIP)
+                      ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE` or `IPIP`)
                     type: string
                   publicSecurityGroup:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group/user_security_group_id).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group`/`user_security_group_id`).
-                    type: string
-                  securityGroup:
-                    description: |-
-                      (String, Deprecated) ❗ The parent security group name. Please use the security_group_id argument along the exoscale_security_group data source instead.
-                      ❗ The parent security group name. Please use the `security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
+                      (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group_id).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group_id`).
                     type: string
                   securityGroupId:
                     description: |-
@@ -352,23 +337,18 @@ spec:
                     type: object
                   startPort:
                     description: |-
-                      (Number) ❗ A TCP/UDP port range to match.
-                      ❗ A `TCP`/`UDP` port range to match.
+                      (Number) ❗A start port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+                      ❗A start port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
                     type: number
                   type:
                     description: |-
                       (String) ❗ The traffic direction to match (INGRESS or EGRESS).
                       ❗ The traffic direction to match (`INGRESS` or `EGRESS`).
                     type: string
-                  userSecurityGroup:
-                    description: |-
-                      (String, Deprecated) ❗ An (INGRESS) source / (EGRESS) destination security group name to match (conflicts with cidr/public_security_group/user_security_group_id). Please use the user_security_group_id argument along the exoscale_security_group data source instead.
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination security group name to match (conflicts with `cidr`/`public_security_group`/`user_security_group_id`). Please use the `user_security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-                    type: string
                   userSecurityGroupId:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination security group ID to match (conflicts with cidr/public_security_group/user_security_group)).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination security group ID to match (conflicts with `cidr`/`public_security_group`/`user_security_group)`).
+                      (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) user security group ID to match (conflicts with `cidr`/`public_security_group`).
                     type: string
                 type: object
               managementPolicies:
@@ -469,46 +449,41 @@ spec:
                 properties:
                   cidr:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group/user_security_group_id).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group`/`user_security_group_id`).
+                      (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group_id).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group_id`).
                     type: string
                   description:
                     description: |-
-                      form text describing the security group rule.
-                      ❗ A free-form text describing the security group rule.
+                      form text describing the the Security Group rule.
+                      ❗ A free-form text describing the the Security Group rule.
                     type: string
                   endPort:
                     description: |-
-                      (Number) ❗ A TCP/UDP port range to match.
-                      ❗ A `TCP`/`UDP` port range to match.
+                      (Number) ❗The end port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+                      ❗The end port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
                     type: number
                   icmpCode:
                     description: |-
-                      (Number) ❗ An ICMP/ICMPv6 type/code to match.
-                      ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+                      (Number) ❗An ICMP/ICMPv6 code to match.
+                      ❗An ICMP/ICMPv6 [code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
                     type: number
                   icmpType:
                     description: |-
-                      (Number) ❗ An ICMP/ICMPv6 type/code to match.
-                      ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+                      (Number) ❗An ICMP/ICMPv6 type to match.
+                      ❗An ICMP/ICMPv6 [type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
                     type: number
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String) The ID of the Security Group rule.
                     type: string
                   protocol:
                     description: |-
-                      (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE, IPIP or ALL)
-                      ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE`, `IPIP` or `ALL`)
+                      (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE or IPIP)
+                      ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE` or `IPIP`)
                     type: string
                   publicSecurityGroup:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group/user_security_group_id).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group`/`user_security_group_id`).
-                    type: string
-                  securityGroup:
-                    description: |-
-                      (String, Deprecated) ❗ The parent security group name. Please use the security_group_id argument along the exoscale_security_group data source instead.
-                      ❗ The parent security group name. Please use the `security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
+                      (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group_id).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group_id`).
                     type: string
                   securityGroupId:
                     description: |-
@@ -517,23 +492,18 @@ spec:
                     type: string
                   startPort:
                     description: |-
-                      (Number) ❗ A TCP/UDP port range to match.
-                      ❗ A `TCP`/`UDP` port range to match.
+                      (Number) ❗A start port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+                      ❗A start port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
                     type: number
                   type:
                     description: |-
                       (String) ❗ The traffic direction to match (INGRESS or EGRESS).
                       ❗ The traffic direction to match (`INGRESS` or `EGRESS`).
                     type: string
-                  userSecurityGroup:
-                    description: |-
-                      (String, Deprecated) ❗ An (INGRESS) source / (EGRESS) destination security group name to match (conflicts with cidr/public_security_group/user_security_group_id). Please use the user_security_group_id argument along the exoscale_security_group data source instead.
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination security group name to match (conflicts with `cidr`/`public_security_group`/`user_security_group_id`). Please use the `user_security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-                    type: string
                   userSecurityGroupId:
                     description: |-
-                      (String) ❗ An (INGRESS) source / (EGRESS) destination security group ID to match (conflicts with cidr/public_security_group/user_security_group)).
-                      ❗ An (`INGRESS`) source / (`EGRESS`) destination security group ID to match (conflicts with `cidr`/`public_security_group`/`user_security_group)`).
+                      (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
+                      ❗ An (`INGRESS`) source / (`EGRESS`) user security group ID to match (conflicts with `cidr`/`public_security_group`).
                     type: string
                 type: object
               conditions:

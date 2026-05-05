@@ -323,10 +323,35 @@ spec:
                         description: pglookout configuration settings in JSON format
                           (`exo dbaas type show pg --settings=pglookout` for reference).
                         type: string
+                      recoveryBackupTime:
+                        description: ISO time of a backup to recover from. May only
+                          be set at creation time.
+                        type: string
+                      sharedBuffersPercentage:
+                        description: Percentage of total RAM that the database server
+                          uses for shared memory buffers. Valid range is 20-60, which
+                          corresponds to 20% - 60%. This setting adjusts the shared_buffers
+                          configuration value.
+                        type: number
+                      timescaledbSettings:
+                        description: TimescaleDB extension configuration settings
+                          in JSON format (`exo dbaas type show pg --settings=timescaledb`
+                          for reference).
+                        type: string
+                      variant:
+                        description: PostgreSQL variant (`timescale` or `aiven`).
+                          May only be set at creation time.
+                        type: string
                       version:
                         description: PostgreSQL major version (`exo dbaas type show
                           pg` for reference; may only be set at creation time).
                         type: string
+                      workMem:
+                        description: Sets the maximum amount of memory to be used
+                          by a query operation (such as a sort or hash table) before
+                          writing to temporary disk files, in MB. Default is 1MB +
+                          0.075% of total RAM (up to 32MB).
+                        type: number
                     type: object
                   plan:
                     description: The plan of the database service (use the [Exoscale
@@ -624,10 +649,35 @@ spec:
                         description: pglookout configuration settings in JSON format
                           (`exo dbaas type show pg --settings=pglookout` for reference).
                         type: string
+                      recoveryBackupTime:
+                        description: ISO time of a backup to recover from. May only
+                          be set at creation time.
+                        type: string
+                      sharedBuffersPercentage:
+                        description: Percentage of total RAM that the database server
+                          uses for shared memory buffers. Valid range is 20-60, which
+                          corresponds to 20% - 60%. This setting adjusts the shared_buffers
+                          configuration value.
+                        type: number
+                      timescaledbSettings:
+                        description: TimescaleDB extension configuration settings
+                          in JSON format (`exo dbaas type show pg --settings=timescaledb`
+                          for reference).
+                        type: string
+                      variant:
+                        description: PostgreSQL variant (`timescale` or `aiven`).
+                          May only be set at creation time.
+                        type: string
                       version:
                         description: PostgreSQL major version (`exo dbaas type show
                           pg` for reference; may only be set at creation time).
                         type: string
+                      workMem:
+                        description: Sets the maximum amount of memory to be used
+                          by a query operation (such as a sort or hash table) before
+                          writing to temporary disk files, in MB. Default is 1MB +
+                          0.075% of total RAM (up to 32MB).
+                        type: number
                     type: object
                   plan:
                     description: The plan of the database service (use the [Exoscale
@@ -1001,10 +1051,35 @@ spec:
                         description: pglookout configuration settings in JSON format
                           (`exo dbaas type show pg --settings=pglookout` for reference).
                         type: string
+                      recoveryBackupTime:
+                        description: ISO time of a backup to recover from. May only
+                          be set at creation time.
+                        type: string
+                      sharedBuffersPercentage:
+                        description: Percentage of total RAM that the database server
+                          uses for shared memory buffers. Valid range is 20-60, which
+                          corresponds to 20% - 60%. This setting adjusts the shared_buffers
+                          configuration value.
+                        type: number
+                      timescaledbSettings:
+                        description: TimescaleDB extension configuration settings
+                          in JSON format (`exo dbaas type show pg --settings=timescaledb`
+                          for reference).
+                        type: string
+                      variant:
+                        description: PostgreSQL variant (`timescale` or `aiven`).
+                          May only be set at creation time.
+                        type: string
                       version:
                         description: PostgreSQL major version (`exo dbaas type show
                           pg` for reference; may only be set at creation time).
                         type: string
+                      workMem:
+                        description: Sets the maximum amount of memory to be used
+                          by a query operation (such as a sort or hash table) before
+                          writing to temporary disk files, in MB. Default is 1MB +
+                          0.075% of total RAM (up to 32MB).
+                        type: number
                     type: object
                   plan:
                     description: The plan of the database service (use the [Exoscale

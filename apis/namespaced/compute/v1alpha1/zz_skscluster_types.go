@@ -192,6 +192,10 @@ type SKSClusterInitParameters struct {
 	// The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
 	Cni *string `json:"cni,omitempty" tf:"cni,omitempty"`
 
+	// hoc security group based on the choice of the selected CNI (may only be set at creation time).
+	// ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
+	CreateDefaultSecurityGroup *bool `json:"createDefaultSecurityGroup,omitempty" tf:"create_default_security_group,omitempty"`
+
 	// form text describing the cluster.
 	// A free-form text describing the cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -265,9 +269,17 @@ type SKSClusterObservation struct {
 	// The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
 	Cni *string `json:"cni,omitempty" tf:"cni,omitempty"`
 
+	// hoc security group based on the choice of the selected CNI (may only be set at creation time).
+	// ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
+	CreateDefaultSecurityGroup *bool `json:"createDefaultSecurityGroup,omitempty" tf:"create_default_security_group,omitempty"`
+
 	// (String) The cluster creation date.
 	// The cluster creation date.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// hoc default security group (when create_default_security_group was set at creation time).
+	// The ID of the cluster's ad-hoc default security group (when `create_default_security_group` was set at creation time).
+	DefaultSecurityGroupID *string `json:"defaultSecurityGroupId,omitempty" tf:"default_security_group_id,omitempty"`
 
 	// form text describing the cluster.
 	// A free-form text describing the cluster.
@@ -361,6 +373,11 @@ type SKSClusterParameters struct {
 	// The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
 	// +kubebuilder:validation:Optional
 	Cni *string `json:"cni,omitempty" tf:"cni,omitempty"`
+
+	// hoc security group based on the choice of the selected CNI (may only be set at creation time).
+	// ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
+	// +kubebuilder:validation:Optional
+	CreateDefaultSecurityGroup *bool `json:"createDefaultSecurityGroup,omitempty" tf:"create_default_security_group,omitempty"`
 
 	// form text describing the cluster.
 	// A free-form text describing the cluster.
