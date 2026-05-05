@@ -34,8 +34,12 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SecurityGroup is the Schema for the SecurityGroups API. Manage
-          Exoscale Security Groups.
+        description: 'SecurityGroup is the Schema for the SecurityGroups API. Manage
+          Exoscale Security Groups https://community.exoscale.com/product/compute/instances/quick-start/#firewall-rules---security-groups.
+          Security Groups are firewall rules. Each Security Group may be attached
+          to one or many compute instances. Individual firewall rules are configured
+          using linked resource: exoscalesecuritygroup_rule ./security_group_rule.md.
+          Corresponding data source: exoscalesecuritygroup ../data_sources/security_group.md.'
         properties:
           apiVersion:
             description: |-
@@ -75,8 +79,8 @@ spec:
                 properties:
                   description:
                     description: |-
-                      form text describing the group.
-                      ❗ A free-form text describing the group.
+                      form text describing the the Security Group.
+                      ❗ A free-form text describing the the Security Group.
                     type: string
                   externalSources:
                     description: |-
@@ -88,8 +92,8 @@ spec:
                     x-kubernetes-list-type: set
                   name:
                     description: |-
-                      (String) ❗ The security group name.
-                      ❗ The security group name.
+                      (String) ❗ The name of the Security Group.
+                      ❗ The name of the Security Group.
                     type: string
                 type: object
               initProvider:
@@ -107,8 +111,8 @@ spec:
                 properties:
                   description:
                     description: |-
-                      form text describing the group.
-                      ❗ A free-form text describing the group.
+                      form text describing the the Security Group.
+                      ❗ A free-form text describing the the Security Group.
                     type: string
                   externalSources:
                     description: |-
@@ -120,8 +124,8 @@ spec:
                     x-kubernetes-list-type: set
                   name:
                     description: |-
-                      (String) ❗ The security group name.
-                      ❗ The security group name.
+                      (String) ❗ The name of the Security Group.
+                      ❗ The name of the Security Group.
                     type: string
                 type: object
               managementPolicies:
@@ -222,8 +226,8 @@ spec:
                 properties:
                   description:
                     description: |-
-                      form text describing the group.
-                      ❗ A free-form text describing the group.
+                      form text describing the the Security Group.
+                      ❗ A free-form text describing the the Security Group.
                     type: string
                   externalSources:
                     description: |-
@@ -234,12 +238,12 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String) The ID of the Security Group.
                     type: string
                   name:
                     description: |-
-                      (String) ❗ The security group name.
-                      ❗ The security group name.
+                      (String) ❗ The name of the Security Group.
+                      ❗ The name of the Security Group.
                     type: string
                 type: object
               conditions:

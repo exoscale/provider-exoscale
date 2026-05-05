@@ -15,37 +15,33 @@ import (
 
 type SecurityGroupRulesInitParameters struct {
 
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group/user_security_group_id).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group`/`user_security_group_id`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group_id).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group_id`).
 	Cidr *string `json:"cidr,omitempty" tf:"cidr,omitempty"`
 
-	// form text describing the security group rule.
-	// ❗ A free-form text describing the security group rule.
+	// form text describing the the Security Group rule.
+	// ❗ A free-form text describing the the Security Group rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Number) ❗ A TCP/UDP port range to match.
-	// ❗ A `TCP`/`UDP` port range to match.
+	// (Number) ❗The end port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+	// ❗The end port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
 	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
 
-	// (Number) ❗ An ICMP/ICMPv6 type/code to match.
-	// ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+	// (Number) ❗An ICMP/ICMPv6 code to match.
+	// ❗An ICMP/ICMPv6 [code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
 	IcmpCode *float64 `json:"icmpCode,omitempty" tf:"icmp_code,omitempty"`
 
-	// (Number) ❗ An ICMP/ICMPv6 type/code to match.
-	// ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+	// (Number) ❗An ICMP/ICMPv6 type to match.
+	// ❗An ICMP/ICMPv6 [type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
 	IcmpType *float64 `json:"icmpType,omitempty" tf:"icmp_type,omitempty"`
 
-	// (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE, IPIP or ALL)
-	// ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE`, `IPIP` or `ALL`)
+	// (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE or IPIP)
+	// ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE` or `IPIP`)
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group/user_security_group_id).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group`/`user_security_group_id`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group_id).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group_id`).
 	PublicSecurityGroup *string `json:"publicSecurityGroup,omitempty" tf:"public_security_group,omitempty"`
-
-	// (String, Deprecated) ❗ The parent security group name. Please use the security_group_id argument along the exoscale_security_group data source instead.
-	// ❗ The parent security group name. Please use the `security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-	SecurityGroup *string `json:"securityGroup,omitempty" tf:"security_group,omitempty"`
 
 	// (String) ❗ The parent exoscale_security_group ID.
 	// ❗ The parent [exoscale_security_group](./security_group.md) ID.
@@ -60,122 +56,105 @@ type SecurityGroupRulesInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// (Number) ❗ A TCP/UDP port range to match.
-	// ❗ A `TCP`/`UDP` port range to match.
+	// (Number) ❗A start port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+	// ❗A start port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
 	StartPort *float64 `json:"startPort,omitempty" tf:"start_port,omitempty"`
 
 	// (String) ❗ The traffic direction to match (INGRESS or EGRESS).
 	// ❗ The traffic direction to match (`INGRESS` or `EGRESS`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String, Deprecated) ❗ An (INGRESS) source / (EGRESS) destination security group name to match (conflicts with cidr/public_security_group/user_security_group_id). Please use the user_security_group_id argument along the exoscale_security_group data source instead.
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination security group name to match (conflicts with `cidr`/`public_security_group`/`user_security_group_id`). Please use the `user_security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-	UserSecurityGroup *string `json:"userSecurityGroup,omitempty" tf:"user_security_group,omitempty"`
-
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination security group ID to match (conflicts with cidr/public_security_group/user_security_group)).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination security group ID to match (conflicts with `cidr`/`public_security_group`/`user_security_group)`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) user security group ID to match (conflicts with `cidr`/`public_security_group`).
 	UserSecurityGroupID *string `json:"userSecurityGroupId,omitempty" tf:"user_security_group_id,omitempty"`
 }
 
 type SecurityGroupRulesObservation struct {
 
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group/user_security_group_id).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group`/`user_security_group_id`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group_id).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group_id`).
 	Cidr *string `json:"cidr,omitempty" tf:"cidr,omitempty"`
 
-	// form text describing the security group rule.
-	// ❗ A free-form text describing the security group rule.
+	// form text describing the the Security Group rule.
+	// ❗ A free-form text describing the the Security Group rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Number) ❗ A TCP/UDP port range to match.
-	// ❗ A `TCP`/`UDP` port range to match.
+	// (Number) ❗The end port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+	// ❗The end port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
 	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) The ID of the Security Group rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Number) ❗ An ICMP/ICMPv6 type/code to match.
-	// ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+	// (Number) ❗An ICMP/ICMPv6 code to match.
+	// ❗An ICMP/ICMPv6 [code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
 	IcmpCode *float64 `json:"icmpCode,omitempty" tf:"icmp_code,omitempty"`
 
-	// (Number) ❗ An ICMP/ICMPv6 type/code to match.
-	// ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+	// (Number) ❗An ICMP/ICMPv6 type to match.
+	// ❗An ICMP/ICMPv6 [type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
 	IcmpType *float64 `json:"icmpType,omitempty" tf:"icmp_type,omitempty"`
 
-	// (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE, IPIP or ALL)
-	// ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE`, `IPIP` or `ALL`)
+	// (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE or IPIP)
+	// ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE` or `IPIP`)
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group/user_security_group_id).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group`/`user_security_group_id`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group_id).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group_id`).
 	PublicSecurityGroup *string `json:"publicSecurityGroup,omitempty" tf:"public_security_group,omitempty"`
-
-	// (String, Deprecated) ❗ The parent security group name. Please use the security_group_id argument along the exoscale_security_group data source instead.
-	// ❗ The parent security group name. Please use the `security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-	SecurityGroup *string `json:"securityGroup,omitempty" tf:"security_group,omitempty"`
 
 	// (String) ❗ The parent exoscale_security_group ID.
 	// ❗ The parent [exoscale_security_group](./security_group.md) ID.
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
-	// (Number) ❗ A TCP/UDP port range to match.
-	// ❗ A `TCP`/`UDP` port range to match.
+	// (Number) ❗A start port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+	// ❗A start port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
 	StartPort *float64 `json:"startPort,omitempty" tf:"start_port,omitempty"`
 
 	// (String) ❗ The traffic direction to match (INGRESS or EGRESS).
 	// ❗ The traffic direction to match (`INGRESS` or `EGRESS`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String, Deprecated) ❗ An (INGRESS) source / (EGRESS) destination security group name to match (conflicts with cidr/public_security_group/user_security_group_id). Please use the user_security_group_id argument along the exoscale_security_group data source instead.
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination security group name to match (conflicts with `cidr`/`public_security_group`/`user_security_group_id`). Please use the `user_security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-	UserSecurityGroup *string `json:"userSecurityGroup,omitempty" tf:"user_security_group,omitempty"`
-
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination security group ID to match (conflicts with cidr/public_security_group/user_security_group)).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination security group ID to match (conflicts with `cidr`/`public_security_group`/`user_security_group)`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) user security group ID to match (conflicts with `cidr`/`public_security_group`).
 	UserSecurityGroupID *string `json:"userSecurityGroupId,omitempty" tf:"user_security_group_id,omitempty"`
 }
 
 type SecurityGroupRulesParameters struct {
 
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group/user_security_group_id).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group`/`user_security_group_id`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) destination IP subnet (in CIDR notation) to match (conflicts with public_security_group/user_security_group_id).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) destination IP subnet (in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) to match (conflicts with `public_security_group`/`user_security_group_id`).
 	// +kubebuilder:validation:Optional
 	Cidr *string `json:"cidr,omitempty" tf:"cidr,omitempty"`
 
-	// form text describing the security group rule.
-	// ❗ A free-form text describing the security group rule.
+	// form text describing the the Security Group rule.
+	// ❗ A free-form text describing the the Security Group rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Number) ❗ A TCP/UDP port range to match.
-	// ❗ A `TCP`/`UDP` port range to match.
+	// (Number) ❗The end port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+	// ❗The end port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
 	// +kubebuilder:validation:Optional
 	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
 
-	// (Number) ❗ An ICMP/ICMPv6 type/code to match.
-	// ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+	// (Number) ❗An ICMP/ICMPv6 code to match.
+	// ❗An ICMP/ICMPv6 [code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
 	// +kubebuilder:validation:Optional
 	IcmpCode *float64 `json:"icmpCode,omitempty" tf:"icmp_code,omitempty"`
 
-	// (Number) ❗ An ICMP/ICMPv6 type/code to match.
-	// ❗ An ICMP/ICMPv6 [type/code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
+	// (Number) ❗An ICMP/ICMPv6 type to match.
+	// ❗An ICMP/ICMPv6 [type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages) to match.
 	// +kubebuilder:validation:Optional
 	IcmpType *float64 `json:"icmpType,omitempty" tf:"icmp_type,omitempty"`
 
-	// (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE, IPIP or ALL)
-	// ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE`, `IPIP` or `ALL`)
+	// (String) ❗ The network protocol to match (TCP, UDP, ICMP, ICMPv6, AH, ESP, GRE or IPIP)
+	// ❗ The network protocol to match (`TCP`, `UDP`, `ICMP`, `ICMPv6`, `AH`, `ESP`, `GRE` or `IPIP`)
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group/user_security_group_id).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group`/`user_security_group_id`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) destination public security group name to match (conflicts with cidr/user_security_group_id).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) destination public security group name to match (conflicts with `cidr`/`user_security_group_id`).
 	// +kubebuilder:validation:Optional
 	PublicSecurityGroup *string `json:"publicSecurityGroup,omitempty" tf:"public_security_group,omitempty"`
-
-	// (String, Deprecated) ❗ The parent security group name. Please use the security_group_id argument along the exoscale_security_group data source instead.
-	// ❗ The parent security group name. Please use the `security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-	// +kubebuilder:validation:Optional
-	SecurityGroup *string `json:"securityGroup,omitempty" tf:"security_group,omitempty"`
 
 	// (String) ❗ The parent exoscale_security_group ID.
 	// ❗ The parent [exoscale_security_group](./security_group.md) ID.
@@ -191,8 +170,8 @@ type SecurityGroupRulesParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// (Number) ❗ A TCP/UDP port range to match.
-	// ❗ A `TCP`/`UDP` port range to match.
+	// (Number) ❗A start port number in the TCP/UDP port range to match (conflicts with icmp_type/icmp_code).
+	// ❗A start port number in the `TCP`/`UDP` port range to match (conflicts with `icmp_type`/`icmp_code`).
 	// +kubebuilder:validation:Optional
 	StartPort *float64 `json:"startPort,omitempty" tf:"start_port,omitempty"`
 
@@ -201,13 +180,8 @@ type SecurityGroupRulesParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String, Deprecated) ❗ An (INGRESS) source / (EGRESS) destination security group name to match (conflicts with cidr/public_security_group/user_security_group_id). Please use the user_security_group_id argument along the exoscale_security_group data source instead.
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination security group name to match (conflicts with `cidr`/`public_security_group`/`user_security_group_id`). Please use the `user_security_group_id` argument along the [exoscale_security_group](../data-sources/security_group.md) data source instead.
-	// +kubebuilder:validation:Optional
-	UserSecurityGroup *string `json:"userSecurityGroup,omitempty" tf:"user_security_group,omitempty"`
-
-	// (String) ❗ An (INGRESS) source / (EGRESS) destination security group ID to match (conflicts with cidr/public_security_group/user_security_group)).
-	// ❗ An (`INGRESS`) source / (`EGRESS`) destination security group ID to match (conflicts with `cidr`/`public_security_group`/`user_security_group)`).
+	// (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
+	// ❗ An (`INGRESS`) source / (`EGRESS`) user security group ID to match (conflicts with `cidr`/`public_security_group`).
 	// +kubebuilder:validation:Optional
 	UserSecurityGroupID *string `json:"userSecurityGroupId,omitempty" tf:"user_security_group_id,omitempty"`
 }
@@ -239,7 +213,7 @@ type SecurityGroupRulesStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityGroupRules is the Schema for the SecurityGroupRuless API. Manage Exoscale Security Group https://community.exoscale.com/product/networking/security-group/ Rules.
+// SecurityGroupRules is the Schema for the SecurityGroupRuless API. Manage Exoscale Security Groups https://community.exoscale.com/product/compute/instances/quick-start/#firewall-rules---security-groups rules. Parent resource: exoscalesecuritygroup_rule ./security_group.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -62,7 +62,8 @@ spec:
                     description: A free-form text describing the IAM Role
                     type: string
                   editable:
-                    description: Defines if IAM Role Policy is editable or not.
+                    description: Defines if IAM Role Policy is editable or not. Defaults
+                      to `true`. This attribute cannot be changed after creation.
                     type: boolean
                   labels:
                     additionalProperties:
@@ -126,7 +127,8 @@ spec:
                     description: A free-form text describing the IAM Role
                     type: string
                   editable:
-                    description: Defines if IAM Role Policy is editable or not.
+                    description: Defines if IAM Role Policy is editable or not. Defaults
+                      to `true`. This attribute cannot be changed after creation.
                     type: boolean
                   labels:
                     additionalProperties:
@@ -245,7 +247,8 @@ spec:
                     description: A free-form text describing the IAM Role
                     type: string
                   editable:
-                    description: Defines if IAM Role Policy is editable or not.
+                    description: Defines if IAM Role Policy is editable or not. Defaults
+                      to `true`. This attribute cannot be changed after creation.
                     type: boolean
                   id:
                     type: string

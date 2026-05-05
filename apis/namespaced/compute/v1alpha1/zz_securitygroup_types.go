@@ -16,8 +16,8 @@ import (
 
 type SecurityGroupInitParameters struct {
 
-	// form text describing the group.
-	// ❗ A free-form text describing the group.
+	// form text describing the the Security Group.
+	// ❗ A free-form text describing the the Security Group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Set of String) A list of external network sources, in CIDR notation.
@@ -25,15 +25,15 @@ type SecurityGroupInitParameters struct {
 	// +listType=set
 	ExternalSources []*string `json:"externalSources,omitempty" tf:"external_sources,omitempty"`
 
-	// (String) ❗ The security group name.
-	// ❗ The security group name.
+	// (String) ❗ The name of the Security Group.
+	// ❗ The name of the Security Group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type SecurityGroupObservation struct {
 
-	// form text describing the group.
-	// ❗ A free-form text describing the group.
+	// form text describing the the Security Group.
+	// ❗ A free-form text describing the the Security Group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Set of String) A list of external network sources, in CIDR notation.
@@ -41,18 +41,18 @@ type SecurityGroupObservation struct {
 	// +listType=set
 	ExternalSources []*string `json:"externalSources,omitempty" tf:"external_sources,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) The ID of the Security Group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) ❗ The security group name.
-	// ❗ The security group name.
+	// (String) ❗ The name of the Security Group.
+	// ❗ The name of the Security Group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type SecurityGroupParameters struct {
 
-	// form text describing the group.
-	// ❗ A free-form text describing the group.
+	// form text describing the the Security Group.
+	// ❗ A free-form text describing the the Security Group.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -62,8 +62,8 @@ type SecurityGroupParameters struct {
 	// +listType=set
 	ExternalSources []*string `json:"externalSources,omitempty" tf:"external_sources,omitempty"`
 
-	// (String) ❗ The security group name.
-	// ❗ The security group name.
+	// (String) ❗ The name of the Security Group.
+	// ❗ The name of the Security Group.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -95,7 +95,7 @@ type SecurityGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityGroup is the Schema for the SecurityGroups API. Manage Exoscale Security Groups.
+// SecurityGroup is the Schema for the SecurityGroups API. Manage Exoscale Security Groups https://community.exoscale.com/product/compute/instances/quick-start/#firewall-rules---security-groups. Security Groups are firewall rules. Each Security Group may be attached to one or many compute instances. Individual firewall rules are configured using linked resource: exoscalesecuritygroup_rule ./security_group_rule.md. Corresponding data source: exoscalesecuritygroup ../data_sources/security_group.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

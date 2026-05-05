@@ -622,8 +622,23 @@ type PgInitParameters struct {
 	// pglookout configuration settings in JSON format (`exo dbaas type show pg --settings=pglookout` for reference).
 	PglookoutSettings *string `json:"pglookoutSettings,omitempty" tf:"pglookout_settings,omitempty"`
 
+	// ISO time of a backup to recover from. May only be set at creation time.
+	RecoveryBackupTime *string `json:"recoveryBackupTime,omitempty" tf:"recovery_backup_time,omitempty"`
+
+	// Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60, which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.
+	SharedBuffersPercentage *float64 `json:"sharedBuffersPercentage,omitempty" tf:"shared_buffers_percentage,omitempty"`
+
+	// TimescaleDB extension configuration settings in JSON format (`exo dbaas type show pg --settings=timescaledb` for reference).
+	TimescaledbSettings *string `json:"timescaledbSettings,omitempty" tf:"timescaledb_settings,omitempty"`
+
+	// PostgreSQL variant (`timescale` or `aiven`). May only be set at creation time.
+	Variant *string `json:"variant,omitempty" tf:"variant,omitempty"`
+
 	// PostgreSQL major version (`exo dbaas type show pg` for reference; may only be set at creation time).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
+	WorkMem *float64 `json:"workMem,omitempty" tf:"work_mem,omitempty"`
 }
 
 type PgObservation struct {
@@ -647,8 +662,23 @@ type PgObservation struct {
 	// pglookout configuration settings in JSON format (`exo dbaas type show pg --settings=pglookout` for reference).
 	PglookoutSettings *string `json:"pglookoutSettings,omitempty" tf:"pglookout_settings,omitempty"`
 
+	// ISO time of a backup to recover from. May only be set at creation time.
+	RecoveryBackupTime *string `json:"recoveryBackupTime,omitempty" tf:"recovery_backup_time,omitempty"`
+
+	// Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60, which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.
+	SharedBuffersPercentage *float64 `json:"sharedBuffersPercentage,omitempty" tf:"shared_buffers_percentage,omitempty"`
+
+	// TimescaleDB extension configuration settings in JSON format (`exo dbaas type show pg --settings=timescaledb` for reference).
+	TimescaledbSettings *string `json:"timescaledbSettings,omitempty" tf:"timescaledb_settings,omitempty"`
+
+	// PostgreSQL variant (`timescale` or `aiven`). May only be set at creation time.
+	Variant *string `json:"variant,omitempty" tf:"variant,omitempty"`
+
 	// PostgreSQL major version (`exo dbaas type show pg` for reference; may only be set at creation time).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
+	WorkMem *float64 `json:"workMem,omitempty" tf:"work_mem,omitempty"`
 }
 
 type PgParameters struct {
@@ -682,9 +712,29 @@ type PgParameters struct {
 	// +kubebuilder:validation:Optional
 	PglookoutSettings *string `json:"pglookoutSettings,omitempty" tf:"pglookout_settings,omitempty"`
 
+	// ISO time of a backup to recover from. May only be set at creation time.
+	// +kubebuilder:validation:Optional
+	RecoveryBackupTime *string `json:"recoveryBackupTime,omitempty" tf:"recovery_backup_time,omitempty"`
+
+	// Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60, which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.
+	// +kubebuilder:validation:Optional
+	SharedBuffersPercentage *float64 `json:"sharedBuffersPercentage,omitempty" tf:"shared_buffers_percentage,omitempty"`
+
+	// TimescaleDB extension configuration settings in JSON format (`exo dbaas type show pg --settings=timescaledb` for reference).
+	// +kubebuilder:validation:Optional
+	TimescaledbSettings *string `json:"timescaledbSettings,omitempty" tf:"timescaledb_settings,omitempty"`
+
+	// PostgreSQL variant (`timescale` or `aiven`). May only be set at creation time.
+	// +kubebuilder:validation:Optional
+	Variant *string `json:"variant,omitempty" tf:"variant,omitempty"`
+
 	// PostgreSQL major version (`exo dbaas type show pg` for reference; may only be set at creation time).
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
+	// +kubebuilder:validation:Optional
+	WorkMem *float64 `json:"workMem,omitempty" tf:"work_mem,omitempty"`
 }
 
 type ValkeyInitParameters struct {
