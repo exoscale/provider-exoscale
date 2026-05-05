@@ -18,7 +18,7 @@ type IAMRoleInitParameters struct {
 	// A free-form text describing the IAM Role
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Defines if IAM Role Policy is editable or not.
+	// Defines if IAM Role Policy is editable or not. Defaults to `true`. This attribute cannot be changed after creation.
 	Editable *bool `json:"editable,omitempty" tf:"editable,omitempty"`
 
 	// IAM Role labels.
@@ -39,7 +39,7 @@ type IAMRoleObservation struct {
 	// A free-form text describing the IAM Role
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Defines if IAM Role Policy is editable or not.
+	// Defines if IAM Role Policy is editable or not. Defaults to `true`. This attribute cannot be changed after creation.
 	Editable *bool `json:"editable,omitempty" tf:"editable,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -63,7 +63,7 @@ type IAMRoleParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Defines if IAM Role Policy is editable or not.
+	// Defines if IAM Role Policy is editable or not. Defaults to `true`. This attribute cannot be changed after creation.
 	// +kubebuilder:validation:Optional
 	Editable *bool `json:"editable,omitempty" tf:"editable,omitempty"`
 

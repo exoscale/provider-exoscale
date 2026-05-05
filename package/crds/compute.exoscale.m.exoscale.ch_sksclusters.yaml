@@ -113,6 +113,11 @@ spec:
                       (String) The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
                       The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
                     type: string
+                  createDefaultSecurityGroup:
+                    description: |-
+                      hoc security group based on the choice of the selected CNI (may only be set at creation time).
+                      ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
+                    type: boolean
                   description:
                     description: |-
                       form text describing the cluster.
@@ -292,6 +297,11 @@ spec:
                       (String) The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
                       The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
                     type: string
+                  createDefaultSecurityGroup:
+                    description: |-
+                      hoc security group based on the choice of the selected CNI (may only be set at creation time).
+                      ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
+                    type: boolean
                   description:
                     description: |-
                       form text describing the cluster.
@@ -516,10 +526,20 @@ spec:
                       (String) The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
                       The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
                     type: string
+                  createDefaultSecurityGroup:
+                    description: |-
+                      hoc security group based on the choice of the selected CNI (may only be set at creation time).
+                      ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
+                    type: boolean
                   createdAt:
                     description: |-
                       (String) The cluster creation date.
                       The cluster creation date.
+                    type: string
+                  defaultSecurityGroupId:
+                    description: |-
+                      hoc default security group (when create_default_security_group was set at creation time).
+                      The ID of the cluster's ad-hoc default security group (when `create_default_security_group` was set at creation time).
                     type: string
                   description:
                     description: |-
