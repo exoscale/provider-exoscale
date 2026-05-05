@@ -82,7 +82,6 @@ jobs:
           labels: |
             automated
             new-terraform-version
-          team-reviewers: giza
           branch-suffix: timestamp
 
       - name: Trigger CI on new PR
