@@ -1,9 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "main"
   ],
   "ignorePaths": [
@@ -28,8 +28,8 @@
     {
       "customType": "regex",
       "description": "Bump Go version in workflows",
-      "fileMatch": [
-        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      "managerFilePatterns": [
+        "/^\\.github\\/workflows\\/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
         "GO_VERSION: '(?<currentValue>.*?)'\\n"
@@ -40,8 +40,8 @@
     {
       "customType": "regex",
       "description": "Bump golangci-lint version in workflows",
-      "fileMatch": [
-        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      "managerFilePatterns": [
+        "/^\\.github\\/workflows\\/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
         "GOLANGCI_VERSION: '(?<currentValue>.*?)'\\n"
@@ -52,8 +52,8 @@
     {
       "customType": "regex",
       "description": "Bump Docker Buildx version in workflows",
-      "fileMatch": [
-        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      "managerFilePatterns": [
+        "/^\\.github\\/workflows\\/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
         "DOCKER_BUILDX_VERSION: '(?<currentValue>.*?)'\\n"
@@ -64,9 +64,9 @@
     {
       "customType": "regex",
       "description": "Bump golangci-lint version in the Makefile",
-      "fileMatch": [
-        "^Makefile$",
-        "^\\.github\\/workflows\\/[^/]+\\.ya?ml$"
+      "managerFilePatterns": [
+        "/^Makefile$/",
+        "/^\\.github\\/workflows\\/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
         "GOLANGCILINT_VERSION \\??= (?<currentValue>.*?)\\n"
@@ -78,8 +78,8 @@
     {
       "customType": "regex",
       "description": "Bump up CLI version in the Makefile",
-      "fileMatch": [
-        "^Makefile$"
+      "managerFilePatterns": [
+        "/^Makefile$/"
       ],
       "matchStrings": [
         "UP_VERSION \\??= (?<currentValue>.*?)\\n"
@@ -90,8 +90,8 @@
     {
       "customType": "regex",
       "description": "Bump Uptest version in the Makefile",
-      "fileMatch": [
-        "^Makefile$"
+      "managerFilePatterns": [
+        "/^Makefile$/"
       ],
       "matchStrings": [
         "UPTEST_VERSION \\??= (?<currentValue>.*?)\\n"
@@ -102,8 +102,8 @@
     {
       "customType": "regex",
       "description": "Bump kind version in the Makefile",
-      "fileMatch": [
-        "^Makefile$"
+      "managerFilePatterns": [
+        "/^Makefile$/"
       ],
       "matchStrings": [
         "KIND_VERSION \\??= (?<currentValue>.*?)\\n"
@@ -114,8 +114,8 @@
     {
       "customType": "regex",
       "description": "Bump Crossplane version in the Makefile",
-      "fileMatch": [
-        "^Makefile$"
+      "managerFilePatterns": [
+        "/^Makefile$/"
       ],
       "matchStrings": [
         "CROSSPLANE_VERSION \\??= (?<currentValue>.*?)\\n"
@@ -127,8 +127,8 @@
     {
       "customType": "regex",
       "description": "Bump Crossplane CLI version in the Makefile",
-      "fileMatch": [
-        "^Makefile$"
+      "managerFilePatterns": [
+        "/^Makefile$/"
       ],
       "matchStrings": [
         "CROSSPLANE_CLI_VERSION ??= (?<currentValue>.*?)\\n"
@@ -173,9 +173,9 @@
         "patch",
         "digest"
       ],
-      "matchPackagePrefixes": [
-        "k8s.io",
-        "sigs.k8s.io"
+      "matchPackageNames": [
+        "k8s.io{/,}**",
+        "sigs.k8s.io{/,}**"
       ]
     },
     {
@@ -186,45 +186,41 @@
         "major",
         "minor"
       ],
-      "matchPackagePrefixes": [
-        "k8s.io",
-        "sigs.k8s.io"
+      "matchPackageNames": [
+        "k8s.io{/,}**",
+        "sigs.k8s.io{/,}**"
       ]
     },
     {
       "matchDatasources": [
         "go"
       ],
-      "matchPackagePatterns": [
-        "*"
-      ],
       "enabled": false,
-      "excludePackagePrefixes": [
-        "k8s.io",
-        "sigs.k8s.io"
-      ],
       "matchUpdateTypes": [
         "major"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!k8s.io{/,}**",
+        "!sigs.k8s.io{/,}**"
       ]
     },
     {
       "matchDatasources": [
         "go"
       ],
-      "matchPackagePatterns": [
-        "*"
-      ],
       "enabled": false,
-      "excludePackagePrefixes": [
-        "k8s.io",
-        "sigs.k8s.io"
-      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "digest"
       ],
-      "groupName": "all non-major go dependencies"
+      "groupName": "all non-major go dependencies",
+      "matchPackageNames": [
+        "*",
+        "!k8s.io{/,}**",
+        "!sigs.k8s.io{/,}**"
+      ]
     },
     {
       "matchDepTypes": [
