@@ -200,7 +200,6 @@
         "major"
       ],
       "matchPackageNames": [
-        "*",
         "!k8s.io{/,}**",
         "!sigs.k8s.io{/,}**"
       ]
@@ -217,7 +216,6 @@
       ],
       "groupName": "all non-major go dependencies",
       "matchPackageNames": [
-        "*",
         "!k8s.io{/,}**",
         "!sigs.k8s.io{/,}**"
       ]
