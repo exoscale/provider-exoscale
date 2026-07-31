@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       terraform_provider_version:
-        description: The exoscale terraform provider version (ex. 0.68.0)
-        required: true
+        description: The exoscale terraform provider version (ex. 0.68.0). Leave empty to use the latest version available on the Terraform registry.
+        required: false
         type: string
+  schedule:
+    - cron: "0 3 1,15 * *"
 
 concurrency:
   group: ${{ github.workflow }}
@@ -21,27 +23,54 @@ jobs:
         with:
           submodules: true
 
+      - name: Resolve terraform provider version
+        id: resolve_version
+        env:
+          INPUT_VERSION: ${{ inputs.terraform_provider_version }}
+        run: |
+          if [ -n "${INPUT_VERSION}" ]; then
+            version="${INPUT_VERSION}"
+          else
+            # Query the Terraform registry itself, since that's what `make generate`
+            # relies on: the GitHub release feed can be ahead of what the registry
+            # actually has indexed and ready to serve.
+            version=$(curl -fsSL https://registry.terraform.io/v1/providers/exoscale/exoscale/versions | jq -r '.versions[].version' | sort -V | tail -n1)
+          fi
+          current=$(sed -nr 's/^export TERRAFORM_PROVIDER_VERSION \?= (.+)/\1/p' Makefile)
+          echo "Latest available version: ${version} (current: ${current})"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          if [ "${version}" = "${current}" ]; then
+            echo "up_to_date=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "up_to_date=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup Go
+        if: steps.resolve_version.outputs.up_to_date != 'true'
         uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5.6.0
         with:
           go-version-file: go.mod
       - name: Install goimports
+        if: steps.resolve_version.outputs.up_to_date != 'true'
         run: |
           go install golang.org/x/tools/cmd/goimports@latest
 
       - name: Generate crossplane provider from terraform
+        if: steps.resolve_version.outputs.up_to_date != 'true'
         env:
-          TERRAFORM_PROVIDER_VERSION: ${{ inputs.terraform_provider_version }}
+          TERRAFORM_PROVIDER_VERSION: ${{ steps.resolve_version.outputs.version }}
         run: make generate
 
       - name: Update default terraform provider version
+        if: steps.resolve_version.outputs.up_to_date != 'true'
         env:
-          TERRAFORM_PROVIDER_VERSION: ${{ inputs.terraform_provider_version }}
+          TERRAFORM_PROVIDER_VERSION: ${{ steps.resolve_version.outputs.version }}
         run: sed -i "s/^export TERRAFORM_PROVIDER_VERSION ?= .*/export TERRAFORM_PROVIDER_VERSION ?= ${TERRAFORM_PROVIDER_VERSION}/" Makefile
 
       - name: Update release note
+        if: steps.resolve_version.outputs.up_to_date != 'true'
         env:
-          TERRAFORM_PROVIDER_VERSION: ${{ inputs.terraform_provider_version }}
+          TERRAFORM_PROVIDER_VERSION: ${{ steps.resolve_version.outputs.version }}
         run: |
           python3 << 'PYEOF'
           import re, os
@@ -67,14 +96,15 @@ jobs:
 
       - name: Commit and push changes
         id: create_pr
+        if: steps.resolve_version.outputs.up_to_date != 'true'
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          commit-message: "chore: bump terraform provider ${{ inputs.terraform_provider_version }}"
+          commit-message: "chore: bump terraform provider ${{ steps.resolve_version.outputs.version }}"
           author: "Exoscale <operation+build@exoscale.net>"
           committer: "Exoscale <operation+build@exoscale.net>"
           branch: chore/bump-terraform-provider-version
           delete-branch: true
-          title: "chore: bump terraform provider ${{ inputs.terraform_provider_version }}"
+          title: "chore: bump terraform provider ${{ steps.resolve_version.outputs.version }}"
           body: |
             A new terraform provider was released, this PR build a new crossplane provider.
             Once approved and merged, don't forget to tag the commit on main to release a new crossplane provider version
@@ -83,11 +113,3 @@ jobs:
             automated
             new-terraform-version
           branch-suffix: timestamp
-
-      - name: Trigger CI on new PR
-        if: steps.create_pr.outputs.pull-request-number
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh workflow run ci.yml --ref ${{ steps.create_pr.outputs.pull-request-branch }}
-          gh workflow run e2e.yaml --ref ${{ steps.create_pr.outputs.pull-request-branch }}
