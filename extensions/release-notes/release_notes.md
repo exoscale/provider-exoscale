@@ -3,11 +3,12 @@
 ## UNRELEASED
 
 ### IMPROVEMENTS:
-- feat: bump terraform provider version 0.71.0
+- feat: bump terraform provider version 0.71.0 #49
 - automatic: bump terraform provider version 0.69.2
 - automatic: bump terraform provider version 0.69.1
 
 ### BUG FIXES:
+- fix: make pull-doc to get the latest version during provider version bump #49
 - allow terraform provider init with upgrade #29
 
 ### BREAKING CHANGES:

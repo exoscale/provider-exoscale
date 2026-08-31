@@ -77,7 +77,7 @@ type InstanceInitParameters struct {
 	// Enable TPM on the instance (boolean; default: `false`). Can not be disabled after the creation. **WARNING**: enabling this attribute stops/restarts the instance.
 	EnableTpm *bool `json:"enableTpm,omitempty" tf:"enable_tpm,omitempty"`
 
-	// (Boolean) Enable IPv6 on the instance (boolean; default: false).
+	// (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
 	// Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
@@ -134,7 +134,7 @@ type InstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (String) The instance state (running or stopped; default: running).
+	// (String) The instance state (running or stopped). If omitted, instance will start and reach running state.
 	// The instance state (`running` or `stopped`). If omitted, instance will start and reach `running` state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
@@ -199,7 +199,7 @@ type InstanceObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean) Enable IPv6 on the instance (boolean; default: false).
+	// (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
 	// Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
@@ -255,7 +255,7 @@ type InstanceObservation struct {
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// (String) The instance state (running or stopped; default: running).
+	// (String) The instance state (running or stopped). If omitted, instance will start and reach running state.
 	// The instance state (`running` or `stopped`). If omitted, instance will start and reach `running` state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
@@ -348,7 +348,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableTpm *bool `json:"enableTpm,omitempty" tf:"enable_tpm,omitempty"`
 
-	// (Boolean) Enable IPv6 on the instance (boolean; default: false).
+	// (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
 	// Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
 	// +kubebuilder:validation:Optional
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
@@ -414,7 +414,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (String) The instance state (running or stopped; default: running).
+	// (String) The instance state (running or stopped). If omitted, instance will start and reach running state.
 	// The instance state (`running` or `stopped`). If omitted, instance will start and reach `running` state.
 	// +kubebuilder:validation:Optional
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
