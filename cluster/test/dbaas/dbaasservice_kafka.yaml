@@ -11,6 +11,6 @@ spec:
     zone: ${data.zone}
     terminationProtection: false
     kafka:
-      version: "4.0"
+      version: "4.2"
   writeConnectionSecretToRef:
     name: kafka-${data.suffix}

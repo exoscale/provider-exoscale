@@ -11,7 +11,7 @@ spec:
     zone: ch-gva-2
     terminationProtection: false
     kafka:
-      version: "4.0"
+      version: "4.2"
   writeConnectionSecretToRef:
     name: my-kafka
 

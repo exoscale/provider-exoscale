@@ -14,7 +14,7 @@ spec:
         name: my-mysql-password
         key: password
       adminUsername: admin
-      version: "8"
+      version: "8.4"
     plan: hobbyist-2
     type: mysql
     zone: ch-gva-2

@@ -1100,6 +1100,9 @@ spec:
                   updatedAt:
                     description: The date of the latest database service update.
                     type: string
+                  uri:
+                    description: The service uri stripped from credentials
+                    type: string
                   valkey:
                     properties:
                       ipFilter:

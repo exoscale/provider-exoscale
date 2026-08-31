@@ -366,7 +366,7 @@ spec:
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on the instance (boolean; default: false).
-                      Enable IPv6 on the instance (boolean; default: `false`).
+                      Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
                     type: boolean
                   labels:
                     additionalProperties:
@@ -666,7 +666,7 @@ spec:
                   state:
                     description: |-
                       (String) The instance state (running or stopped; default: running).
-                      The instance state (`running` or `stopped`; default: `running`).
+                      The instance state (`running` or `stopped`). If omitted, instance will start and reach `running` state.
                     type: string
                   templateId:
                     description: |-
@@ -990,7 +990,7 @@ spec:
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on the instance (boolean; default: false).
-                      Enable IPv6 on the instance (boolean; default: `false`).
+                      Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
                     type: boolean
                   labels:
                     additionalProperties:
@@ -1290,7 +1290,7 @@ spec:
                   state:
                     description: |-
                       (String) The instance state (running or stopped; default: running).
-                      The instance state (`running` or `stopped`; default: `running`).
+                      The instance state (`running` or `stopped`). If omitted, instance will start and reach `running` state.
                     type: string
                   templateId:
                     description: |-
@@ -1485,7 +1485,7 @@ spec:
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on the instance (boolean; default: false).
-                      Enable IPv6 on the instance (boolean; default: `false`).
+                      Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
                     type: boolean
                   ipv6Address:
                     description: |-
@@ -1580,7 +1580,7 @@ spec:
                   state:
                     description: |-
                       (String) The instance state (running or stopped; default: running).
-                      The instance state (`running` or `stopped`; default: `running`).
+                      The instance state (`running` or `stopped`). If omitted, instance will start and reach `running` state.
                     type: string
                   templateId:
                     description: |-

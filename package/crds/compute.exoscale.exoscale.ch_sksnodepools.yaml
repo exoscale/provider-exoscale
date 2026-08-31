@@ -307,6 +307,15 @@ spec:
                       (String) The SKS node pool name.
                       The SKS node pool name.
                     type: string
+                  nvidiaMigProfile:
+                    description: 'The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)
+                      profile to enable on the managed GPUs. The GPU family is inferred
+                      from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`,
+                      `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts
+                      `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`,
+                      `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`,
+                      `4g.96gb`, `2g.48gb+gfx`.'
+                    type: string
                   privateNetworkIds:
                     description: |-
                       (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
@@ -750,6 +759,15 @@ spec:
                       (String) The SKS node pool name.
                       The SKS node pool name.
                     type: string
+                  nvidiaMigProfile:
+                    description: 'The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)
+                      profile to enable on the managed GPUs. The GPU family is inferred
+                      from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`,
+                      `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts
+                      `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`,
+                      `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`,
+                      `4g.96gb`, `2g.48gb+gfx`.'
+                    type: string
                   privateNetworkIds:
                     description: |-
                       (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
@@ -1145,6 +1163,15 @@ spec:
                     description: |-
                       (String) The SKS node pool name.
                       The SKS node pool name.
+                    type: string
+                  nvidiaMigProfile:
+                    description: 'The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)
+                      profile to enable on the managed GPUs. The GPU family is inferred
+                      from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`,
+                      `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts
+                      `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`,
+                      `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`,
+                      `4g.96gb`, `2g.48gb+gfx`.'
                     type: string
                   privateNetworkIds:
                     description: |-
