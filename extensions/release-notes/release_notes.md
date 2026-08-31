@@ -3,6 +3,7 @@
 ## UNRELEASED
 
 ### IMPROVEMENTS:
+- feat: bump terraform provider version 0.71.0
 - automatic: bump terraform provider version 0.69.2
 - automatic: bump terraform provider version 0.69.1
 
