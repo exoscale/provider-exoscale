@@ -693,6 +693,11 @@ func (in *DBAASServiceObservation) DeepCopyInto(out *DBAASServiceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.URI != nil {
+		in, out := &in.URI, &out.URI
+		*out = new(string)
+		**out = **in
+	}
 	if in.UpdatedAt != nil {
 		in, out := &in.UpdatedAt, &out.UpdatedAt
 		*out = new(string)

@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PrivateNetwork is the Schema for the PrivateNetworks API. Manage
-          Exoscale Private Networks.
+        description: 'PrivateNetwork is the Schema for the PrivateNetworks API. Manage
+          Exoscale Private Networks https://community.exoscale.com/product/networking/private-network.
+          Corresponding data source: exoscaleprivatenetwork ../data-sources/private_network.md.'
         properties:
           apiVersion:
             description: |-

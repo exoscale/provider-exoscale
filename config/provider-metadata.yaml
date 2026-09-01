@@ -93,7 +93,7 @@ resources:
             enable_tpm: '(Boolean) Enable TPM on the instance (boolean; default: false). Can not be disabled after the creation. WARNING: enabling this attribute stops/restarts the instance.'
             id: (String) The ID of this resource.
             ip_address: (String) The IPv4 address to request as static DHCP lease if the network interface is attached to a managed private network.
-            ipv6: '(Boolean) Enable IPv6 on the instance (boolean; default: false).'
+            ipv6: '(Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.'
             ipv6_address: (String) The instance (main network interface) IPv6 address (if enabled).
             labels: (Map of String) A map of key/value labels.
             mac_address: (String) MAC address
@@ -108,7 +108,7 @@ resources:
             security_group_ids: (Set of String) A list of exoscale_security_group (IDs) to attach to the instance.
             ssh_key: (String, Deprecated) ❗ The exoscale_ssh_key (name) to authorize in the instance (may only be set at creation time).
             ssh_keys: (Set of String) ❗ The list of exoscale_ssh_key (name) to authorize in the instance (may only be set at creation time).
-            state: '(String) The instance state (running or stopped; default: running).'
+            state: (String) The instance state (running or stopped). If omitted, instance will start and reach running state.
             template_id: (String) ❗ The exoscale_template (ID) to use when creating the instance.
             timeouts: (Block, Optional) (see below for nested schema)
             type: '(String) The instance type (<family>.<size>, e.g. standard.medium; use the Exoscale CLI - exo compute instance-type list - for the list of available types). WARNING: updating this attribute stops/restarts the instance.'
@@ -211,6 +211,7 @@ resources:
             type: (String) ❗ The type of the database service (kafka, mysql, opensearch, pg, valkey, grafana).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
+            uri: (String) The service uri stripped from credentials
             valkey: (Attributes) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
             valkey_settings: (String) Valkey configuration settings in JSON format (exo dbaas type show valkey --settings=valkey for reference).
             variant: (String) PostgreSQL variant (timescale or aiven). May only be set at creation time.
@@ -292,11 +293,132 @@ resources:
             type: (String) ❗ The type of the database service (kafka, mysql, opensearch, pg, valkey, grafana).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
+            uri: (String) The service uri stripped from credentials
             valkey: (Attributes) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
             valkey_settings: (String) Valkey configuration settings in JSON format (exo dbaas type show valkey --settings=valkey for reference).
             variant: (String) PostgreSQL variant (timescale or aiven). May only be set at creation time.
             version: (String) Kafka major version (exo dbaas type show kafka for reference; may only be set at creation time).
             work_mem: (Number) Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_external_endpoint_datadog Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale DBaaS External Endpoint https://community.exoscale.com/documentation/dbaas/ for Datadog integration.
+        name: exoscale_dbaas_external_endpoint_datadog Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_external_endpoint_datadog Resource - terraform-provider-exoscale
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            datadog_api_key: (String, Sensitive) ❗ Datadog API key.
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of this resource.
+            name: (String) ❗ The endpoint name.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            site: (String) Datadog site (datadoghq.com, datadoghq.eu, us3.datadoghq.com, us5.datadoghq.com, ap1.datadoghq.com, ddog-gov.com).
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_external_endpoint_elasticsearch Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale DBaaS External Endpoint https://community.exoscale.com/documentation/dbaas/ for Elasticsearch logs integration.
+        name: exoscale_dbaas_external_endpoint_elasticsearch Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_external_endpoint_elasticsearch Resource - terraform-provider-exoscale
+        argumentDocs:
+            ca: (String, Sensitive) PEM encoded CA certificate.
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of this resource.
+            index_days_max: (Number) Maximum number of days of logs to keep (1-10000).
+            index_prefix: (String) Elasticsearch index prefix.
+            name: (String) ❗ The endpoint name.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            timeout: (Number) Elasticsearch request timeout in seconds (10-120).
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            url: (String) Elasticsearch connection URL.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_external_endpoint_opensearch Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale DBaaS External Endpoint https://community.exoscale.com/documentation/dbaas/ for OpenSearch logs integration.
+        name: exoscale_dbaas_external_endpoint_opensearch Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_external_endpoint_opensearch Resource - terraform-provider-exoscale
+        argumentDocs:
+            ca: (String, Sensitive) PEM encoded CA certificate.
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of this resource.
+            index_days_max: (Number) Maximum number of days of logs to keep (1-10000).
+            index_prefix: (String) OpenSearch index prefix.
+            name: (String) ❗ The endpoint name.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            timeout: (Number) OpenSearch request timeout in seconds (10-120).
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            url: (String) OpenSearch connection URL.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_external_endpoint_prometheus Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale DBaaS External Endpoint https://community.exoscale.com/documentation/dbaas/ for Prometheus metrics integration.
+        name: exoscale_dbaas_external_endpoint_prometheus Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_external_endpoint_prometheus Resource - terraform-provider-exoscale
+        argumentDocs:
+            basic_auth_password: (String, Sensitive) Prometheus basic auth password (8-64 characters). Not returned by the API after creation.
+            basic_auth_username: (String) Prometheus basic auth username (5-32 characters).
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of this resource.
+            name: (String) ❗ The endpoint name.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_external_endpoint_rsyslog Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale DBaaS External Endpoint https://community.exoscale.com/documentation/dbaas/ for Rsyslog logs integration.
+        name: exoscale_dbaas_external_endpoint_rsyslog Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_external_endpoint_rsyslog Resource - terraform-provider-exoscale
+        argumentDocs:
+            ca: (String, Sensitive) PEM encoded CA certificate.
+            cert: (String, Sensitive) PEM encoded client certificate.
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            format: (String) Syslog message format (rfc3164, rfc5424, custom).
+            id: (String) The ID of this resource.
+            key: (String, Sensitive) PEM encoded client key.
+            logline: (String) Custom syslog message format (required when format is custom).
+            max_message_size: (Number) Rsyslog max message size (2048-2147483647).
+            name: (String) ❗ The endpoint name.
+            port: (Number) Rsyslog server port (1-65535).
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            sd: (String) Structured data block for log message.
+            server: (String) Rsyslog server IP address or hostname.
+            timeouts: (Block, Optional) (see below for nested schema)
+            tls: (Boolean) Require TLS.
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_external_integration Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale DBaaS External Integrations https://community.exoscale.com/documentation/dbaas/ — attach a DBaaS service to an external endpoint for log/metrics forwarding.
+        name: exoscale_dbaas_external_integration Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_external_integration Resource - terraform-provider-exoscale
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String) Integration description.
+            dest_endpoint_id: (String) ❗ The UUID of the external endpoint to attach the integration to.
+            dest_endpoint_name: (String) Name of the destination endpoint.
+            id: (String) The ID of this resource (integration UUID).
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            source_service_name: (String) ❗ The name of the DBaaS service to integrate.
+            source_service_type: (String) Type of the source DBaaS service.
+            status: (String) Integration status.
+            timeouts: (Block, Optional) (see below for nested schema)
+            type: (String) ❗ The type of the external endpoint.
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements: []
     exoscale_dbaas_kafka_user Resource - terraform-provider-exoscale:
@@ -431,9 +553,27 @@ resources:
             username: (String) ❗ The name of the user for this service.
             zone: (String) ❗ The Exoscale Zone name.
         importStatements: []
+    exoscale_dbaas_valkey_user Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage service users for a Valkey Exoscale Database Services (DBaaS) https://community.exoscale.com/documentation/dbaas/.
+        name: exoscale_dbaas_valkey_user Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_valkey_user Resource - terraform-provider-exoscale
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of this resource, computed as service/username
+            password: (String, Sensitive) The password of the service user.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            service: (String) ❗ The name of the database service.
+            timeouts: (Block, Optional) (see below for nested schema)
+            type: (String) The type of the service user.
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            username: (String) ❗ The name of the user for this service.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
     exoscale_domain:
         subCategory: ""
-        description: Manage Exoscale DNS Domains.
+        description: 'Manage Exoscale DNS https://community.exoscale.com/product/networking/dns/ Domains. Corresponding data source: exoscale_domain ../data-sources/domain.md.'
         name: exoscale_domain
         title: exoscale_domain Resource - terraform-provider-exoscale
         examples:
@@ -443,16 +583,13 @@ resources:
                   "name": "my.domain"
                 }
         argumentDocs:
-            auto_renew: (Boolean, Deprecated) Whether the DNS domain has automatic renewal enabled (boolean).
-            create: (String)
-            delete: (String)
-            expires_on: (String, Deprecated) The domain expiration date, if known.
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             id: (String) The ID of this resource.
             name: (String) ❗ The DNS domain name.
-            read: (String)
-            state: (String, Deprecated) The domain state.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             timeouts: (Block, Optional) (see below for nested schema)
-            token: (String, Deprecated) A security token that can be used as an alternative way to manage DNS domains via the Exoscale API.
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
             - |-
               terraform import \
@@ -498,25 +635,25 @@ resources:
         argumentDocs:
             content: (String) The record value. Format follows specific record type. For example SRV record format would be <weight> <port> <target>
             content_normalized: (String) The normalized value of the record
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             domain: (String) ❗ The parent exoscale_domain to attach the record to.
             hostname: (String) The record Fully Qualified Domain Name (FQDN). Useful for aliasing A/AAAA records with CNAME.
             id: (String) The ID of this resource.
             name: (String) The record name, Leave blank ("") to create a root record (similar to using @ in a DNS zone file).
             prio: (Number) The record priority (for types that support it; minimum 0).
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             record_type: (String) ❗ The record type (A, AAAA, ALIAS, CAA, CNAME, HINFO, MX, NAPTR, NS, POOL, SPF, SRV, SSHFP, TXT, URL).
             timeouts: (Block, Optional) (see below for nested schema)
             ttl: '(Number) The record TTL (seconds; minimum 0; default: 3600).'
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
             - |-
-              # An existing DNS domain record may be imported by `<ID>`:
+              # An existing DNS domain record may be imported by `<domain-id>@<record-id>`:
 
               terraform import \
                 exoscale_domain_record.my_host \
-                f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+                0a1ecf9d-99e7-40ea-83e7-1666017a2dd0@f81d4fae-7dec-11d0-a765-00a0c91e6bf6
     exoscale_elastic_ip:
         subCategory: ""
         description: Manage Exoscale Elastic IPs (EIP).
@@ -762,6 +899,25 @@ resources:
               terraform import \
                 exoscale_instance_pool.my_instance_pool \
                 f81d4fae-7dec-11d0-a765-00a0c91e6bf6@ch-gva-2
+    exoscale_kms_key Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage Exoscale KMS Keys.
+        name: exoscale_kms_key Resource - terraform-provider-exoscale
+        title: exoscale_kms_key Resource - terraform-provider-exoscale
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String) ❗ A description of the KMS Key.
+            id: (String) The ID of this resource.
+            multi_zone: (Boolean) ❗ Whether the key is replicated across multiple zones.
+            name: (String) ❗ The name of the KMS Key.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            status: (String) The current status of the KMS Key.
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            usage: (String) ❗ The key usage purpose (e.g. encrypt-decrypt).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
     exoscale_nlb:
         subCategory: ""
         description: Manage Exoscale Network Load Balancers (NLB).
@@ -862,7 +1018,7 @@ resources:
                 f81d4fae-7dec-11d0-a765-00a0c91e6bf6/9ecc6b8b-73d4-4211-8ced-f7f29bb79524@ch-gva-2
     exoscale_private_network:
         subCategory: ""
-        description: Manage Exoscale Private Networks.
+        description: 'Manage Exoscale Private Networks https://community.exoscale.com/product/networking/private-network. Corresponding data source: exoscaleprivatenetwork ../data-sources/private_network.md.'
         name: exoscale_private_network
         title: exoscale_private_network Resource - terraform-provider-exoscale
         examples:
@@ -882,18 +1038,18 @@ resources:
                   "zone": "ch-gva-2"
                 }
         argumentDocs:
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) A free-form text describing the network.
             end_ip: (String) (For managed Privnets) The first/last IPv4 addresses used by the DHCP service for dynamic leases.
             id: (String) The ID of this resource.
             labels: (Map of String) A map of key/value labels.
             name: (String) The private network name.
             netmask: (String) (For managed Privnets) The network mask defining the IPv4 network allowed for static leases.
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             start_ip: (String) (For managed Privnets) The first/last IPv4 addresses used by the DHCP service for dynamic leases.
             timeouts: (Block, Optional) (see below for nested schema)
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
             - |-
@@ -969,11 +1125,11 @@ resources:
             user_security_group_id: (String) ❗ An (INGRESS) source / (EGRESS) user security group ID to match (conflicts with cidr/public_security_group).
         importStatements:
             - |-
-              # An existing security group rule may be imported by `<security-group-ID>/<security-group-rule-ID>`:
+              # An existing security group rule may be imported by `<security-group-ID>@<security-group-rule-ID>`:
 
               terraform import \
                 exoscale_security_group_rule.my_security_group_rule \
-                f81d4fae-7dec-11d0-a765-00a0c91e6bf6/9ecc6b8b-73d4-4211-8ced-f7f29bb79524
+                f81d4fae-7dec-11d0-a765-00a0c91e6bf6@9ecc6b8b-73d4-4211-8ced-f7f29bb79524
     exoscale_sks_cluster:
         subCategory: ""
         description: Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Clusters.
@@ -1119,6 +1275,7 @@ resources:
             low_threshold: (Number) The percent of disk usage before which image garbage collection is never run
             min_age: (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
             name: (String) The SKS node pool name.
+            nvidia_mig_profile: '(String) The NVIDIA Multi-Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.'
             private_network_ids: (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
             read: (String)
             security_group_ids: (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.

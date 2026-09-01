@@ -99,6 +99,9 @@ type DBAASServiceObservation struct {
 	// ❗ The type of the database service (`kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
+	// The service uri stripped from credentials
+	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
+
 	// The date of the latest database service update.
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 

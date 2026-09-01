@@ -128,6 +128,10 @@ type SKSNodepoolInitParameters struct {
 	// The SKS node pool name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.
+	// The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) profile to enable on the managed GPUs. The GPU family is inferred from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`, `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`, `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`, `4g.96gb`, `2g.48gb+gfx`.
+	NvidiaMigProfile *string `json:"nvidiaMigProfile,omitempty" tf:"nvidia_mig_profile,omitempty"`
+
 	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
 	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork
@@ -231,6 +235,10 @@ type SKSNodepoolObservation struct {
 	// (String) The SKS node pool name.
 	// The SKS node pool name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.
+	// The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) profile to enable on the managed GPUs. The GPU family is inferred from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`, `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`, `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`, `4g.96gb`, `2g.48gb+gfx`.
+	NvidiaMigProfile *string `json:"nvidiaMigProfile,omitempty" tf:"nvidia_mig_profile,omitempty"`
 
 	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
 	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances.
@@ -347,6 +355,11 @@ type SKSNodepoolParameters struct {
 	// The SKS node pool name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.
+	// The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) profile to enable on the managed GPUs. The GPU family is inferred from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`, `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`, `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`, `4g.96gb`, `2g.48gb+gfx`.
+	// +kubebuilder:validation:Optional
+	NvidiaMigProfile *string `json:"nvidiaMigProfile,omitempty" tf:"nvidia_mig_profile,omitempty"`
 
 	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
 	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances.

@@ -4687,6 +4687,11 @@ func (in *SKSNodepoolInitParameters) DeepCopyInto(out *SKSNodepoolInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.NvidiaMigProfile != nil {
+		in, out := &in.NvidiaMigProfile, &out.NvidiaMigProfile
+		*out = new(string)
+		**out = **in
+	}
 	if in.PrivateNetworkIds != nil {
 		in, out := &in.PrivateNetworkIds, &out.PrivateNetworkIds
 		*out = make([]*string, len(*in))
@@ -4900,6 +4905,11 @@ func (in *SKSNodepoolObservation) DeepCopyInto(out *SKSNodepoolObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NvidiaMigProfile != nil {
+		in, out := &in.NvidiaMigProfile, &out.NvidiaMigProfile
+		*out = new(string)
+		**out = **in
+	}
 	if in.PrivateNetworkIds != nil {
 		in, out := &in.PrivateNetworkIds, &out.PrivateNetworkIds
 		*out = make([]*string, len(*in))
@@ -5076,6 +5086,11 @@ func (in *SKSNodepoolParameters) DeepCopyInto(out *SKSNodepoolParameters) {
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+	if in.NvidiaMigProfile != nil {
+		in, out := &in.NvidiaMigProfile, &out.NvidiaMigProfile
 		*out = new(string)
 		**out = **in
 	}

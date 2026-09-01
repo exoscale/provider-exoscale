@@ -12,7 +12,7 @@ TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAF
 
 export TERRAFORM_PROVIDER_SOURCE ?= exoscale/exoscale
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/exoscale/terraform-provider-exoscale
-export TERRAFORM_PROVIDER_VERSION ?= 0.69.2
+export TERRAFORM_PROVIDER_VERSION ?= 0.71.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-exoscale
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://github.com/exoscale/terraform-provider-exoscale/releases/download/v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-exoscale_$(TERRAFORM_PROVIDER_VERSION)
@@ -130,8 +130,10 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(OK) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 
 pull-docs:
-	@if [ ! -d "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" ]; then \
-  		mkdir -p "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
+	@CHECKED_OUT_TAG=$$(git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" describe --tags --exact-match 2>/dev/null); \
+	if [ "$$CHECKED_OUT_TAG" != "v$(TERRAFORM_PROVIDER_VERSION)" ]; then \
+		rm -rf "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
+		mkdir -p "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
 		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)"; \
 	fi
 	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"

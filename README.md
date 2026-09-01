@@ -135,6 +135,7 @@ $> make generate
 Run the provider locally against an existing Kubernetes cluster:
 
 ```bash
+$> kubectl apply -f package/crds
 $> make run
 ```
 
