@@ -1,6 +1,6 @@
 # Release Notes
 
-## UNRELEASED
+## v0.1.1 - terraform release: 0.71.0
 
 ### IMPROVEMENTS:
 - feat: bump terraform provider version 0.71.0 #49
