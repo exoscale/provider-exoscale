@@ -1,5 +1,10 @@
 # Release Notes
 
+## Unreleased
+
+### FEATURES:
+- Publish per-resource DBaaS `endpoint`, `host`, `port`, `uri`, `jdbc-uri`, `dbname`, `username`, `password`, and `clusterCA` aliases in connection secrets when available.
+
 ## v0.1.1 - terraform release: 0.71.0
 
 ### IMPROVEMENTS:
