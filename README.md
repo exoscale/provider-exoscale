@@ -122,6 +122,21 @@ $> watch curl $VM_PUBLIC_IP ## might need 1-2 min
 $> kubectl delete -f examples/namespaced/compute/v1alpha1/instance.yaml
 ```
 
+### DBaaS Connection Secrets
+
+DBaaS resources publish the following aliases when
+`writeConnectionSecretToRef` is configured:
+
+| Resource | Additional keys |
+|----------|-----------------|
+| `DBAASService` | `endpoint`, `host`, `port`, `uri`, `clusterCA`, and, for PostgreSQL, `dbname` and `jdbc-uri`. Explicit administrator credentials are also published as `username` and `password`. |
+| DBaaS user | `username`, `password` |
+| DBaaS database | `dbname` |
+
+Existing `attribute.*` keys remain available. Each managed resource owns its
+own Secret. A database does not select a user, so use a Crossplane Composition
+to combine service, user, and database details into one application Secret.
+
 ## Developing
 
 > Based on the [Upjet documentation](https://github.com/crossplane/upjet/tree/de59389582c8675a9b2a72a840e084285a3dfb90/docs).
