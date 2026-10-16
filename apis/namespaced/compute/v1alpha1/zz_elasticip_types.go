@@ -24,9 +24,8 @@ type ElasticIPInitParameters struct {
 	// A free-form text describing the Elastic IP (EIP).
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)
-	// Healthcheck configuration for *managed* EIPs. It can not be added to an existing *Unmanaged* EIP.
-	Healthcheck []HealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
+	// (Attributes) Healthcheck configuration for managed EIPs. ❗ Adding it to or removing it from an existing EIP forces the creation of a new resource (an unmanaged EIP can not become managed and vice versa). (see below for nested schema)
+	Healthcheck *HealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
@@ -56,9 +55,8 @@ type ElasticIPObservation struct {
 	// A free-form text describing the Elastic IP (EIP).
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)
-	// Healthcheck configuration for *managed* EIPs. It can not be added to an existing *Unmanaged* EIP.
-	Healthcheck []HealthcheckObservation `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
+	// (Attributes) Healthcheck configuration for managed EIPs. ❗ Adding it to or removing it from an existing EIP forces the creation of a new resource (an unmanaged EIP can not become managed and vice versa). (see below for nested schema)
+	Healthcheck *HealthcheckObservation `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -93,10 +91,9 @@ type ElasticIPParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)
-	// Healthcheck configuration for *managed* EIPs. It can not be added to an existing *Unmanaged* EIP.
+	// (Attributes) Healthcheck configuration for managed EIPs. ❗ Adding it to or removing it from an existing EIP forces the creation of a new resource (an unmanaged EIP can not become managed and vice versa). (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	Healthcheck []HealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
+	Healthcheck *HealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.

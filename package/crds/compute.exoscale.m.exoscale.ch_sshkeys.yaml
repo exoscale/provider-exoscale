@@ -158,7 +158,7 @@ spec:
                       The SSH key unique identifier.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String) The SSH key name.
                     type: string
                   publicKey:
                     description: |-
