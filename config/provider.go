@@ -43,6 +43,7 @@ func GetProvider() *ujconfig.Provider {
 	} {
 		configure(pc)
 	}
+	configureDBAASConnectionDetails(pc)
 
 	pc.ConfigureResources()
 	return pc
@@ -69,6 +70,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 	} {
 		configure(pc)
 	}
+	configureDBAASConnectionDetails(pc)
 
 	pc.ConfigureResources()
 	return pc
