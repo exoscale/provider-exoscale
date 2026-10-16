@@ -114,9 +114,12 @@ type SKSNodepoolInitParameters struct {
 	// The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
-	// Configuration for this nodepool's kubelet image garbage collector
-	KubeletImageGc []KubeletImageGcInitParameters `json:"kubeletImageGc,omitempty" tf:"kubelet_image_gc,omitempty"`
+	// (Attributes) Configuration for this nodepool's kubelet image garbage collector. (see below for nested schema)
+	KubeletImageGc *KubeletImageGcInitParameters `json:"kubeletImageGc,omitempty" tf:"kubelet_image_gc,omitempty"`
+
+	// (Number) The maximum number of pods per node (default is 110).
+	// The maximum number of pods per node (default is 110).
+	KubeletMaxPods *float64 `json:"kubeletMaxPods,omitempty" tf:"kubelet_max_pods,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
@@ -146,7 +149,7 @@ type SKSNodepoolInitParameters struct {
 	PrivateNetworkIdsSelector *v1.Selector `json:"privateNetworkIdsSelector,omitempty" tf:"-"`
 
 	// (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
-	// A list of [exoscale_security_group](./security_group.md) (IDs) to be attached to the managed instances.
+	// A list of exoscale_security_group (IDs) to be attached to the managed instances.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -222,9 +225,12 @@ type SKSNodepoolObservation struct {
 	// The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
-	// Configuration for this nodepool's kubelet image garbage collector
-	KubeletImageGc []KubeletImageGcObservation `json:"kubeletImageGc,omitempty" tf:"kubelet_image_gc,omitempty"`
+	// (Attributes) Configuration for this nodepool's kubelet image garbage collector. (see below for nested schema)
+	KubeletImageGc *KubeletImageGcObservation `json:"kubeletImageGc,omitempty" tf:"kubelet_image_gc,omitempty"`
+
+	// (Number) The maximum number of pods per node (default is 110).
+	// The maximum number of pods per node (default is 110).
+	KubeletMaxPods *float64 `json:"kubeletMaxPods,omitempty" tf:"kubelet_max_pods,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
@@ -245,7 +251,7 @@ type SKSNodepoolObservation struct {
 	PrivateNetworkIds []*string `json:"privateNetworkIds,omitempty" tf:"private_network_ids,omitempty"`
 
 	// (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
-	// A list of [exoscale_security_group](./security_group.md) (IDs) to be attached to the managed instances.
+	// A list of exoscale_security_group (IDs) to be attached to the managed instances.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -339,10 +345,14 @@ type SKSNodepoolParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
-	// Configuration for this nodepool's kubelet image garbage collector
+	// (Attributes) Configuration for this nodepool's kubelet image garbage collector. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	KubeletImageGc []KubeletImageGcParameters `json:"kubeletImageGc,omitempty" tf:"kubelet_image_gc,omitempty"`
+	KubeletImageGc *KubeletImageGcParameters `json:"kubeletImageGc,omitempty" tf:"kubelet_image_gc,omitempty"`
+
+	// (Number) The maximum number of pods per node (default is 110).
+	// The maximum number of pods per node (default is 110).
+	// +kubebuilder:validation:Optional
+	KubeletMaxPods *float64 `json:"kubeletMaxPods,omitempty" tf:"kubelet_max_pods,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
@@ -376,7 +386,7 @@ type SKSNodepoolParameters struct {
 	PrivateNetworkIdsSelector *v1.Selector `json:"privateNetworkIdsSelector,omitempty" tf:"-"`
 
 	// (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
-	// A list of [exoscale_security_group](./security_group.md) (IDs) to be attached to the managed instances.
+	// A list of exoscale_security_group (IDs) to be attached to the managed instances.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -438,7 +448,7 @@ type SKSNodepoolStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SKSNodepool is the Schema for the SKSNodepools API. Manage Exoscale Scalable Kubernetes Service (SKS) Node Pools.
+// SKSNodepool is the Schema for the SKSNodepools API. Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Node Pools. Corresponding data source: exoscalesksnodepool ../data-sources/sks_nodepool.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

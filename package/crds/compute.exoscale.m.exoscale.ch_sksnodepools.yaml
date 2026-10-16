@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SKSNodepool is the Schema for the SKSNodepools API. Manage Exoscale
-          Scalable Kubernetes Service (SKS) Node Pools.
+        description: 'SKSNodepool is the Schema for the SKSNodepools API. Manage Exoscale
+          Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/
+          Node Pools. Corresponding data source: exoscalesksnodepool ../data-sources/sks_nodepool.md.'
         properties:
           apiVersion:
             description: |-
@@ -270,28 +271,30 @@ spec:
                       Enable IPV6 for the nodepool nodes
                     type: boolean
                   kubeletImageGc:
+                    description: (Attributes) Configuration for this nodepool's kubelet
+                      image garbage collector. (see below for nested schema)
+                    properties:
+                      highThreshold:
+                        description: |-
+                          (Number) The percent of disk usage after which image garbage collection is always run
+                          The percent of disk usage after which image garbage collection is always run
+                        type: number
+                      lowThreshold:
+                        description: |-
+                          (Number) The percent of disk usage before which image garbage collection is never run
+                          The percent of disk usage before which image garbage collection is never run
+                        type: number
+                      minAge:
+                        description: |-
+                          (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
+                          The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
+                        type: string
+                    type: object
+                  kubeletMaxPods:
                     description: |-
-                      (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
-                      Configuration for this nodepool's kubelet image garbage collector
-                    items:
-                      properties:
-                        highThreshold:
-                          description: |-
-                            (Number) The percent of disk usage after which image garbage collection is always run
-                            The percent of disk usage after which image garbage collection is always run
-                          type: number
-                        lowThreshold:
-                          description: |-
-                            (Number) The percent of disk usage before which image garbage collection is never run
-                            The percent of disk usage before which image garbage collection is never run
-                          type: number
-                        minAge:
-                          description: |-
-                            (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
-                            The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
-                          type: string
-                      type: object
-                    type: array
+                      (Number) The maximum number of pods per node (default is 110).
+                      The maximum number of pods per node (default is 110).
+                    type: number
                   labels:
                     additionalProperties:
                       type: string
@@ -406,7 +409,7 @@ spec:
                   securityGroupIds:
                     description: |-
                       (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
-                      A list of [exoscale_security_group](./security_group.md) (IDs) to be attached to the managed instances.
+                      A list of exoscale_security_group (IDs) to be attached to the managed instances.
                     items:
                       type: string
                     type: array
@@ -742,28 +745,30 @@ spec:
                       Enable IPV6 for the nodepool nodes
                     type: boolean
                   kubeletImageGc:
+                    description: (Attributes) Configuration for this nodepool's kubelet
+                      image garbage collector. (see below for nested schema)
+                    properties:
+                      highThreshold:
+                        description: |-
+                          (Number) The percent of disk usage after which image garbage collection is always run
+                          The percent of disk usage after which image garbage collection is always run
+                        type: number
+                      lowThreshold:
+                        description: |-
+                          (Number) The percent of disk usage before which image garbage collection is never run
+                          The percent of disk usage before which image garbage collection is never run
+                        type: number
+                      minAge:
+                        description: |-
+                          (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
+                          The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
+                        type: string
+                    type: object
+                  kubeletMaxPods:
                     description: |-
-                      (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
-                      Configuration for this nodepool's kubelet image garbage collector
-                    items:
-                      properties:
-                        highThreshold:
-                          description: |-
-                            (Number) The percent of disk usage after which image garbage collection is always run
-                            The percent of disk usage after which image garbage collection is always run
-                          type: number
-                        lowThreshold:
-                          description: |-
-                            (Number) The percent of disk usage before which image garbage collection is never run
-                            The percent of disk usage before which image garbage collection is never run
-                          type: number
-                        minAge:
-                          description: |-
-                            (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
-                            The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
-                          type: string
-                      type: object
-                    type: array
+                      (Number) The maximum number of pods per node (default is 110).
+                      The maximum number of pods per node (default is 110).
+                    type: number
                   labels:
                     additionalProperties:
                       type: string
@@ -878,7 +883,7 @@ spec:
                   securityGroupIds:
                     description: |-
                       (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
-                      A list of [exoscale_security_group](./security_group.md) (IDs) to be attached to the managed instances.
+                      A list of exoscale_security_group (IDs) to be attached to the managed instances.
                     items:
                       type: string
                     type: array
@@ -1127,28 +1132,30 @@ spec:
                       Enable IPV6 for the nodepool nodes
                     type: boolean
                   kubeletImageGc:
+                    description: (Attributes) Configuration for this nodepool's kubelet
+                      image garbage collector. (see below for nested schema)
+                    properties:
+                      highThreshold:
+                        description: |-
+                          (Number) The percent of disk usage after which image garbage collection is always run
+                          The percent of disk usage after which image garbage collection is always run
+                        type: number
+                      lowThreshold:
+                        description: |-
+                          (Number) The percent of disk usage before which image garbage collection is never run
+                          The percent of disk usage before which image garbage collection is never run
+                        type: number
+                      minAge:
+                        description: |-
+                          (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
+                          The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
+                        type: string
+                    type: object
+                  kubeletMaxPods:
                     description: |-
-                      (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
-                      Configuration for this nodepool's kubelet image garbage collector
-                    items:
-                      properties:
-                        highThreshold:
-                          description: |-
-                            (Number) The percent of disk usage after which image garbage collection is always run
-                            The percent of disk usage after which image garbage collection is always run
-                          type: number
-                        lowThreshold:
-                          description: |-
-                            (Number) The percent of disk usage before which image garbage collection is never run
-                            The percent of disk usage before which image garbage collection is never run
-                          type: number
-                        minAge:
-                          description: |-
-                            (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
-                            The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
-                          type: string
-                      type: object
-                    type: array
+                      (Number) The maximum number of pods per node (default is 110).
+                      The maximum number of pods per node (default is 110).
+                    type: number
                   labels:
                     additionalProperties:
                       type: string
@@ -1178,7 +1185,7 @@ spec:
                   securityGroupIds:
                     description: |-
                       (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
-                      A list of [exoscale_security_group](./security_group.md) (IDs) to be attached to the managed instances.
+                      A list of exoscale_security_group (IDs) to be attached to the managed instances.
                     items:
                       type: string
                     type: array

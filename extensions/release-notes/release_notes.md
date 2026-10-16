@@ -1,5 +1,16 @@
 # Release Notes
 
+## UNRELEASED
+
+### IMPROVEMENTS:
+- automatic: bump terraform provider version 0.75.0
+
+### BUG FIXES:
+
+### BREAKING CHANGES:
+
+### FEATURES:
+
 ## v0.1.1 - terraform release: 0.71.0
 
 ### IMPROVEMENTS:

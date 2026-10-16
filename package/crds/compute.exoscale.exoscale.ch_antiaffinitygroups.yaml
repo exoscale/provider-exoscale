@@ -211,7 +211,7 @@ spec:
                       ❗ A free-form text describing the group.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: affinity group ID.
                     type: string
                   name:
                     description: |-

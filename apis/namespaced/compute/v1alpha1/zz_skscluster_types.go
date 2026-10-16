@@ -28,8 +28,8 @@ type AuditInitParameters struct {
 	// The Endpoint URL for the Webserver responsible of processing Audit events
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// (String) The Initial Backoff to wait before sending data to the remote server (default '10s')
-	// The Initial Backoff to wait before sending data to the remote server (default '10s')
+	// (String) The Initial Backoff to wait before sending data to the remote server (default 10s)
+	// The Initial Backoff to wait before sending data to the remote server (default `10s`)
 	InitialBackoff *string `json:"initialBackoff,omitempty" tf:"initial_backoff,omitempty"`
 }
 
@@ -43,8 +43,8 @@ type AuditObservation struct {
 	// The Endpoint URL for the Webserver responsible of processing Audit events
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// (String) The Initial Backoff to wait before sending data to the remote server (default '10s')
-	// The Initial Backoff to wait before sending data to the remote server (default '10s')
+	// (String) The Initial Backoff to wait before sending data to the remote server (default 10s)
+	// The Initial Backoff to wait before sending data to the remote server (default `10s`)
 	InitialBackoff *string `json:"initialBackoff,omitempty" tf:"initial_backoff,omitempty"`
 }
 
@@ -65,8 +65,8 @@ type AuditParameters struct {
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// (String) The Initial Backoff to wait before sending data to the remote server (default '10s')
-	// The Initial Backoff to wait before sending data to the remote server (default '10s')
+	// (String) The Initial Backoff to wait before sending data to the remote server (default 10s)
+	// The Initial Backoff to wait before sending data to the remote server (default `10s`)
 	// +kubebuilder:validation:Optional
 	InitialBackoff *string `json:"initialBackoff,omitempty" tf:"initial_backoff,omitempty"`
 }
@@ -176,11 +176,7 @@ type OidcParameters struct {
 
 type SKSClusterInitParameters struct {
 
-	// (Set of String, Deprecated)
-	// +listType=set
-	Addons []*string `json:"addons,omitempty" tf:"addons,omitempty"`
-
-	// (Block List, Max: 1) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
+	// (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
 	// Parameters for Kubernetes Audit configuration (may only be enabled at creation time)
 	Audit []AuditInitParameters `json:"audit,omitempty" tf:"audit,omitempty"`
 
@@ -221,6 +217,11 @@ type SKSClusterInitParameters struct {
 	// +listType=set
 	FeatureGates []*string `json:"featureGates,omitempty" tf:"feature_gates,omitempty"`
 
+	// (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// +listType=set
+	KarpenterFeatureGates []*string `json:"karpenterFeatureGates,omitempty" tf:"karpenter_feature_gates,omitempty"`
+
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
 	// +mapType=granular
@@ -234,7 +235,7 @@ type SKSClusterInitParameters struct {
 	// The SKS cluster name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block List, Max: 1) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
+	// (Block List) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
 	// An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below.
 	Oidc []OidcInitParameters `json:"oidc,omitempty" tf:"oidc,omitempty"`
 
@@ -253,11 +254,7 @@ type SKSClusterInitParameters struct {
 
 type SKSClusterObservation struct {
 
-	// (Set of String, Deprecated)
-	// +listType=set
-	Addons []*string `json:"addons,omitempty" tf:"addons,omitempty"`
-
-	// (Block List, Max: 1) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
+	// (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
 	// Parameters for Kubernetes Audit configuration (may only be enabled at creation time)
 	Audit []AuditObservation `json:"audit,omitempty" tf:"audit,omitempty"`
 
@@ -313,6 +310,11 @@ type SKSClusterObservation struct {
 	// (String) The SKS cluster ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// +listType=set
+	KarpenterFeatureGates []*string `json:"karpenterFeatureGates,omitempty" tf:"karpenter_feature_gates,omitempty"`
+
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
 	// +mapType=granular
@@ -331,7 +333,7 @@ type SKSClusterObservation struct {
 	// +listType=set
 	Nodepools []*string `json:"nodepools,omitempty" tf:"nodepools,omitempty"`
 
-	// (Block List, Max: 1) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
+	// (Block List) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
 	// An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below.
 	Oidc []OidcObservation `json:"oidc,omitempty" tf:"oidc,omitempty"`
 
@@ -354,12 +356,7 @@ type SKSClusterObservation struct {
 
 type SKSClusterParameters struct {
 
-	// (Set of String, Deprecated)
-	// +kubebuilder:validation:Optional
-	// +listType=set
-	Addons []*string `json:"addons,omitempty" tf:"addons,omitempty"`
-
-	// (Block List, Max: 1) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
+	// (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
 	// Parameters for Kubernetes Audit configuration (may only be enabled at creation time)
 	// +kubebuilder:validation:Optional
 	Audit []AuditParameters `json:"audit,omitempty" tf:"audit,omitempty"`
@@ -410,6 +407,12 @@ type SKSClusterParameters struct {
 	// +listType=set
 	FeatureGates []*string `json:"featureGates,omitempty" tf:"feature_gates,omitempty"`
 
+	// (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	KarpenterFeatureGates []*string `json:"karpenterFeatureGates,omitempty" tf:"karpenter_feature_gates,omitempty"`
+
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
 	// +kubebuilder:validation:Optional
@@ -426,7 +429,7 @@ type SKSClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block List, Max: 1) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
+	// (Block List) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
 	// An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below.
 	// +kubebuilder:validation:Optional
 	Oidc []OidcParameters `json:"oidc,omitempty" tf:"oidc,omitempty"`
@@ -474,7 +477,7 @@ type SKSClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SKSCluster is the Schema for the SKSClusters API. Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Clusters.
+// SKSCluster is the Schema for the SKSClusters API. Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Clusters. Corresponding data source: exoscaleskscluster ../data-sources/sks_cluster.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

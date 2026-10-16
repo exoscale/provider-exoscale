@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: NLB is the Schema for the NLBs API. Manage Exoscale Network Load
-          Balancers (NLB).
+        description: 'NLB is the Schema for the NLBs API. Manage Exoscale Network
+          Load Balancers (NLB) https://community.exoscale.com/product/networking/nlb/.
+          Corresponding data source: exoscale_nlb ../data-sources/nlb.md.'
         properties:
           apiVersion:
             description: |-
@@ -73,6 +74,11 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  addressFamily:
+                    description: |-
+                      (String) ❗ The NLB address family (inet4|inet6; default: inet4).
+                      ❗ The NLB address family (`inet4`|`inet6`; default: `inet4`).
+                    type: string
                   description:
                     description: |-
                       form text describing the NLB.
@@ -110,6 +116,11 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  addressFamily:
+                    description: |-
+                      (String) ❗ The NLB address family (inet4|inet6; default: inet4).
+                      ❗ The NLB address family (`inet4`|`inet6`; default: `inet4`).
+                    type: string
                   description:
                     description: |-
                       form text describing the NLB.
@@ -234,6 +245,11 @@ spec:
             properties:
               atProvider:
                 properties:
+                  addressFamily:
+                    description: |-
+                      (String) ❗ The NLB address family (inet4|inet6; default: inet4).
+                      ❗ The NLB address family (`inet4`|`inet6`; default: `inet4`).
+                    type: string
                   createdAt:
                     description: |-
                       (String) The NLB creation date.
@@ -249,8 +265,8 @@ spec:
                     type: string
                   ipAddress:
                     description: |-
-                      (String) The NLB IPv4 address.
-                      The NLB IPv4 address.
+                      (String) The NLB public IP address (IPv4 or IPv6, depending on address_family).
+                      The NLB public IP address (IPv4 or IPv6, depending on `address_family`).
                     type: string
                   labels:
                     additionalProperties:
@@ -267,8 +283,8 @@ spec:
                     type: string
                   services:
                     description: |-
-                      (Set of String) The list of the exoscale_nlb_service (names).
-                      The list of the [exoscale_nlb_service](./nlb_service.md) (names).
+                      (Set of String) The list of the exoscale_nlb_service (IDs).
+                      The list of the [exoscale_nlb_service](./nlb_service.md) (IDs).
                     items:
                       type: string
                     type: array
