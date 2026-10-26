@@ -153,6 +153,8 @@ resources:
             admin_username: (String) A custom administrator account username (may only be set at creation time).
             backup_schedule: (String) The automated backup schedule (HH:MM).
             ca_certificate: (String, Sensitive) CA Certificate required to reach a DBaaS service through a TLS-protected connection.
+            clickhouse: (Attributes) clickhouse database service type specific arguments. Structure is documented below. (see below for nested schema)
+            clickhouse_settings: (String) ClickHouse configuration settings in JSON format (exo dbaas type show clickhouse --settings=clickhouse for reference).
             create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The creation date of the database service.
             dashboards: (Attributes) OpenSearch Dashboards settings (see below for nested schema)
@@ -164,7 +166,7 @@ resources:
             enable_sasl_auth: (Boolean) Enable SASL-based authentication method.
             enable_schema_registry: (Boolean) Enable Schema Registry.
             enabled: '(Boolean) Enable or disable OpenSearch Dashboards (default: true).'
-            fork_from_service: (String) ❗ Service name
+            fork_from_service: (String) Name of an existing ClickHouse service to fork from. Cannot be changed after creation.
             grafana: (Attributes) grafana database service type specific arguments. Structure is documented below. (see below for nested schema)
             grafana_settings: (String) Grafana configuration settings in JSON format (exo dbaas type show grafana --settings=grafana for reference).
             id: (String) The ID of this resource.
@@ -197,7 +199,7 @@ resources:
             pglookout_settings: (String) pglookout configuration settings in JSON format (exo dbaas type show pg --settings=pglookout for reference).
             plan: (String) The plan of the database service (use the Exoscale CLI - exo dbaas type show <TYPE> --plans - for reference).
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            recovery_backup_name: (String) ❗ Name of a backup to recover from
+            recovery_backup_name: (String) Name of the backup to restore when forking from fork_from_service.
             recovery_backup_time: (String) ISO time of a backup to recover from. May only be set at creation time.
             request_timeout: '(Number) Timeout in milliseconds for requests made by OpenSearch Dashboards towards OpenSearch (default: 30000)'
             schema_registry_settings: (String) Schema Registry configuration settings in JSON format (exo dbaas type show kafka --settings=schema-registry for reference)
@@ -208,14 +210,14 @@ resources:
             termination_protection: (Boolean) The database service protection boolean flag against termination/power-off.
             timeouts: (Block, Optional) (see below for nested schema)
             timescaledb_settings: (String) TimescaleDB extension configuration settings in JSON format (exo dbaas type show pg --settings=timescaledb for reference).
-            type: (String) ❗ The type of the database service (kafka, mysql, opensearch, pg, valkey, grafana).
+            type: (String) The type of the database service (clickhouse, kafka, mysql, opensearch, pg, valkey, grafana).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
             uri: (String) The service uri stripped from credentials
             valkey: (Attributes) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
             valkey_settings: (String) Valkey configuration settings in JSON format (exo dbaas type show valkey --settings=valkey for reference).
             variant: (String) PostgreSQL variant (timescale or aiven). May only be set at creation time.
-            version: (String) Kafka major version (exo dbaas type show kafka for reference; may only be set at creation time).
+            version: (String) ClickHouse major version (exo dbaas type show clickhouse for reference).
             work_mem: (Number) Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
@@ -235,6 +237,8 @@ resources:
             admin_username: (String) A custom administrator account username (may only be set at creation time).
             backup_schedule: (String) The automated backup schedule (HH:MM).
             ca_certificate: (String, Sensitive) CA Certificate required to reach a DBaaS service through a TLS-protected connection.
+            clickhouse: (Attributes) clickhouse database service type specific arguments. Structure is documented below. (see below for nested schema)
+            clickhouse_settings: (String) ClickHouse configuration settings in JSON format (exo dbaas type show clickhouse --settings=clickhouse for reference).
             create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The creation date of the database service.
             dashboards: (Attributes) OpenSearch Dashboards settings (see below for nested schema)
@@ -246,7 +250,7 @@ resources:
             enable_sasl_auth: (Boolean) Enable SASL-based authentication method.
             enable_schema_registry: (Boolean) Enable Schema Registry.
             enabled: '(Boolean) Enable or disable OpenSearch Dashboards (default: true).'
-            fork_from_service: (String) ❗ Service name
+            fork_from_service: (String) Name of an existing ClickHouse service to fork from. Cannot be changed after creation.
             grafana: (Attributes) grafana database service type specific arguments. Structure is documented below. (see below for nested schema)
             grafana_settings: (String) Grafana configuration settings in JSON format (exo dbaas type show grafana --settings=grafana for reference).
             id: (String) The ID of this resource.
@@ -279,7 +283,7 @@ resources:
             pglookout_settings: (String) pglookout configuration settings in JSON format (exo dbaas type show pg --settings=pglookout for reference).
             plan: (String) The plan of the database service (use the Exoscale CLI - exo dbaas type show <TYPE> --plans - for reference).
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
-            recovery_backup_name: (String) ❗ Name of a backup to recover from
+            recovery_backup_name: (String) Name of the backup to restore when forking from fork_from_service.
             recovery_backup_time: (String) ISO time of a backup to recover from. May only be set at creation time.
             request_timeout: '(Number) Timeout in milliseconds for requests made by OpenSearch Dashboards towards OpenSearch (default: 30000)'
             schema_registry_settings: (String) Schema Registry configuration settings in JSON format (exo dbaas type show kafka --settings=schema-registry for reference)
@@ -290,15 +294,36 @@ resources:
             termination_protection: (Boolean) The database service protection boolean flag against termination/power-off.
             timeouts: (Block, Optional) (see below for nested schema)
             timescaledb_settings: (String) TimescaleDB extension configuration settings in JSON format (exo dbaas type show pg --settings=timescaledb for reference).
-            type: (String) ❗ The type of the database service (kafka, mysql, opensearch, pg, valkey, grafana).
+            type: (String) The type of the database service (clickhouse, kafka, mysql, opensearch, pg, valkey, grafana).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
             uri: (String) The service uri stripped from credentials
             valkey: (Attributes) valkey database service type specific arguments. Structure is documented below. (see below for nested schema)
             valkey_settings: (String) Valkey configuration settings in JSON format (exo dbaas type show valkey --settings=valkey for reference).
             variant: (String) PostgreSQL variant (timescale or aiven). May only be set at creation time.
-            version: (String) Kafka major version (exo dbaas type show kafka for reference; may only be set at creation time).
+            version: (String) ClickHouse major version (exo dbaas type show clickhouse for reference).
             work_mem: (Number) Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements: []
+    exoscale_dbaas_clickhouse_user Resource - terraform-provider-exoscale:
+        subCategory: ""
+        description: Manage service users for a ClickHouse Exoscale Database Services (DBaaS) https://community.exoscale.com/documentation/dbaas/.
+        name: exoscale_dbaas_clickhouse_user Resource - terraform-provider-exoscale
+        title: exoscale_dbaas_clickhouse_user Resource - terraform-provider-exoscale
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of this resource, computed as service/username
+            password: (String, Sensitive) The password of the ClickHouse user. If not set, the API will generate one. Cannot be retrieved after creation (use the generated value or reset via update).
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            roles: (Attributes Set) Roles granted to the user. Each role is identified by its UUID. (see below for nested schema)
+            service: (String) ❗ The name of the database service.
+            timeouts: (Block, Optional) (see below for nested schema)
+            type: (String) The type of the service user.
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            user_uuid: (String) The UUID of the ClickHouse user (internal, used for delete).
+            username: (String) ❗ The name of the user for this service.
+            uuid: (String) The UUID of the role to grant.
             zone: (String) ❗ The Exoscale Zone name.
         importStatements: []
     exoscale_dbaas_external_endpoint_datadog Resource - terraform-provider-exoscale:
@@ -1132,7 +1157,7 @@ resources:
                 f81d4fae-7dec-11d0-a765-00a0c91e6bf6@9ecc6b8b-73d4-4211-8ced-f7f29bb79524
     exoscale_sks_cluster:
         subCategory: ""
-        description: Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Clusters.
+        description: 'Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Clusters. Corresponding data source: exoscaleskscluster ../data-sources/sks_cluster.md.'
         name: exoscale_sks_cluster
         title: exoscale_sks_cluster Resource - terraform-provider-exoscale
         examples:
@@ -1143,19 +1168,18 @@ resources:
                   "zone": "ch-gva-2"
                 }
         argumentDocs:
-            addons: (Set of String, Deprecated)
             aggregation_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between the control plane and the aggregation layer (e.g. metrics-server).
-            audit: '(Block List, Max: 1) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)'
+            audit: (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
             auto_upgrade: (Boolean) Enable automatic upgrading of the control plane version.
             bearer_token: (String, Sensitive) The optional bearer token to include in the request header
             client_id: (String) The OpenID client ID.
             cni: (String) The CNI plugin that is to be used. Available options are "calico" or "cilium". Defaults to "calico". Setting empty string will result in a cluster with no CNI.
             control_plane_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between control plane components.
-            create: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             create_default_security_group: (Boolean) ❗ Creates an ad-hoc security group based on the choice of the selected CNI (may only be set at creation time).
             created_at: (String) The cluster creation date.
             default_security_group_id: (String) The ID of the cluster's ad-hoc default security group (when create_default_security_group was set at creation time).
-            delete: (String)
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) A free-form text describing the cluster.
             enable_karpenter: (Boolean) Indicates whether to deploy Karpenter for cluster autoscaling.
             enable_kube_proxy: (Boolean) ❗ Indicates whether to deploy the Kubernetes network proxy. (may only be set at creation time)
@@ -1167,20 +1191,20 @@ resources:
             groups_claim: (String) An OpenID JWT claim to use as the user's group.
             groups_prefix: (String) An OpenID prefix prepended to group claims.
             id: (String) The SKS cluster ID.
-            initial_backoff: (String) The Initial Backoff to wait before sending data to the remote server (default '10s')
+            initial_backoff: (String) The Initial Backoff to wait before sending data to the remote server (default 10s)
             issuer_url: (String) The OpenID provider URL.
             kubelet_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between kubelets and the control plane.
             labels: (Map of String) A map of key/value labels.
             metrics_server: '(Boolean) Deploy the Kubernetes Metrics Server in the control plane (boolean; default: true; may only be set at creation time).'
             name: (String) The SKS cluster name.
             nodepools: (Set of String) The list of exoscale_sks_nodepool (IDs) attached to the cluster.
-            oidc: '(Block List, Max: 1) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)'
-            read: (String)
+            oidc: (Block List) An OpenID Connect configuration to provide to the Kubernetes API server (may only be set at creation time). Structure is documented below. (see below for nested schema)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             required_claim: (Map of String) A map of key/value pairs that describes a required claim in the OpenID Token.
             service_level: '(String) The service level of the control plane (pro or starter; default: pro; may only be set at creation time).'
             state: (String) The cluster state.
             timeouts: (Block, Optional) (see below for nested schema)
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             username_claim: (String) An OpenID JWT claim to use as the user name.
             username_prefix: (String) An OpenID prefix prepended to username claims.
             version: '(String) The version of the control plane (default: latest version available from the API; see exo compute sks versions for reference; may only be set at creation time).'
@@ -1192,7 +1216,7 @@ resources:
                 f81d4fae-7dec-11d0-a765-00a0c91e6bf6@ch-gva-2
     exoscale_sks_kubeconfig:
         subCategory: ""
-        description: Manage Exoscale Scalable Kubernetes Service (SKS) Credentials (Kubeconfig).
+        description: Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Credentials (Kubeconfig).
         name: exoscale_sks_kubeconfig
         title: exoscale_sks_kubeconfig Resource - terraform-provider-exoscale
         examples:
@@ -1217,23 +1241,23 @@ resources:
                     }
         argumentDocs:
             cluster_id: (String) ❗ The parent exoscale_sks_cluster ID.
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             early_renewal_seconds: '(Number) If set, the resource will consider the Kubeconfig to have expired the given number of seconds before its actual CA certificate or client certificate expiry time. This can be useful to deploy an updated Kubeconfig in advance of the expiration of its internal current certificate. Note however that the old certificate remains valid until its true expiration time since this resource does not (and cannot) support revocation. Also note this advance update can only take place if the Terraform configuration is applied during the early renewal period (seconds; default: 0).'
             groups: (Set of String) ❗ Group names in the generated Kubeconfig. The certificate present in the Kubeconfig will have these roles set in the Organization field.
             id: (String) The ID of this resource.
             kubeconfig: (String, Sensitive) The generated Kubeconfig (YAML content).
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             ready_for_renewal: (Boolean)
             timeouts: (Block, Optional) (see below for nested schema)
             ttl_seconds: '(Number) ❗ The Time-to-Live of the Kubeconfig, after which it will expire / become invalid (seconds; default: 2592000 = 30 days).'
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             user: (String) ❗ User name in the generated Kubeconfig. The certificate present in the Kubeconfig will also have this name set for the CN field.
             zone: (String) ❗ The Exoscale Zone name.
         importStatements: []
     exoscale_sks_nodepool:
         subCategory: ""
-        description: Manage Exoscale Scalable Kubernetes Service (SKS) Node Pools.
+        description: 'Manage Exoscale Scalable Kubernetes Service (SKS) https://community.exoscale.com/product/compute/containers/ Node Pools. Corresponding data source: exoscalesksnodepool ../data-sources/sks_nodepool.md.'
         name: exoscale_sks_nodepool
         title: exoscale_sks_nodepool Resource - terraform-provider-exoscale
         examples:
@@ -1258,9 +1282,9 @@ resources:
         argumentDocs:
             anti_affinity_group_ids: (Set of String) A list of exoscale_anti_affinity_group (IDs) to be attached to the managed instances.
             cluster_id: (String) ❗ The parent exoscale_sks_cluster ID.
-            create: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The pool creation date.
-            delete: (String)
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             deploy_target_id: (String) A deploy target ID.
             description: (String) A free-form text describing the pool.
             disk_size: '(Number) The managed instances disk size (GiB; default: 50).'
@@ -1270,14 +1294,15 @@ resources:
             instance_prefix: (String) The string used to prefix the managed instances name (default pool).
             instance_type: (String) The managed compute instances type (<family>.<size>, e.g. standard.medium; use the Exoscale CLI - exo compute instance-type list - for the list of available types).
             ipv6: (Boolean) Enable IPV6 for the nodepool nodes
-            kubelet_image_gc: (Block Set) Configuration for this nodepool's kubelet image garbage collector (see below for nested schema)
+            kubelet_image_gc: (Attributes) Configuration for this nodepool's kubelet image garbage collector. (see below for nested schema)
+            kubelet_max_pods: (Number) The maximum number of pods per node (default is 110).
             labels: (Map of String) A map of key/value labels.
             low_threshold: (Number) The percent of disk usage before which image garbage collection is never run
             min_age: (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
             name: (String) The SKS node pool name.
             nvidia_mig_profile: '(String) The NVIDIA Multi-Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.'
             private_network_ids: (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             security_group_ids: (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
             size: (Number)
             state: (String) The current pool state.
@@ -1285,7 +1310,7 @@ resources:
             taints: (Map of String) A map of key/value Kubernetes taints ('taints = {  = ":" }').
             template_id: (String) The managed instances template ID.
             timeouts: (Block, Optional) (see below for nested schema)
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             version: (String) The managed instances version.
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
@@ -1347,3 +1372,133 @@ resources:
               terraform import \
                 exoscale_ssh_key.my_ssh_key \
                 my-ssh-key
+    exoscale_template:
+        subCategory: ""
+        description: 'Manage Exoscale Compute Instance Custom Templates https://community.exoscale.com/product/compute/instances/how-to/custom-templates/. Registering a custom template that can be used as the initial setup of a Compute instance. Corresponding data source: exoscale_template ../data-sources/template.md.'
+        name: exoscale_template
+        title: exoscale_template Resource - terraform-provider-exoscale
+        examples:
+            - name: my_template
+              manifest: |-
+                {
+                  "boot_mode": "uefi",
+                  "checksum": "8a4c47...",
+                  "default_user": "root",
+                  "description": "My custom template",
+                  "name": "my-custom-template",
+                  "password_enabled": false,
+                  "ssh_key_enabled": true,
+                  "url": "https://example.com/my-image.qcow2",
+                  "zone": "ch-gva-2"
+                }
+        argumentDocs:
+            application_consistent_snapshot_enabled: (Boolean) ❗ Whether the template supports application-consistent snapshots (requires the QEMU guest agent to be installed).
+            boot_mode: '(String) ❗ The template boot mode: legacy (default) or uefi.'
+            build: (String) ❗ The template build.
+            checksum: (String) ❗ The MD5 checksum of the template image referenced by url.
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            created_at: (String) The template creation date.
+            default_user: (String) ❗ Username used to log into a Compute instance based on this template.
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String) A free-form text describing the template.
+            family: (String) The template family.
+            id: (String) The ID of this resource.
+            maintainer: (String) ❗ The template maintainer.
+            name: (String) The template name.
+            password_enabled: (Boolean) ❗ Whether to enable password-based login on Compute instances based on this template.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            size: (Number) ❗ The template size in GB. Defaults to the size of the downloaded image.
+            ssh_key_enabled: (Boolean) ❗ Whether to enable SSH key-based login on Compute instances based on this template.
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            url: (String) ❗ The URL to download the template image (qcow2/raw disk image) from. Required when registering a new template. The API only uses this once and never returns it afterwards, so on terraform import it is left unset — omit it from your configuration after importing to avoid a one-time forced replacement.
+            version: (String) ❗ The template version.
+            visibility: (String) The template visibility (custom templates are always private).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements:
+            - |-
+              terraform import \
+                exoscale_template.my_template \
+                eb556678-abcd-1234-8f2b-becbd8b1cac1@ch-gva-2
+    exoscale_vpc:
+        subCategory: ""
+        description: 'Manage Exoscale Virtual Private Clouds (VPC). Corresponding data source: exoscale_vpc ../data-sources/vpc.md.'
+        name: exoscale_vpc
+        title: exoscale_vpc Resource - terraform-provider-exoscale
+        examples:
+            - name: my_vpc
+              manifest: |-
+                {
+                  "description": "My Virtual Private Cloud",
+                  "labels": {
+                    "environment": "production"
+                  },
+                  "name": "my-vpc",
+                  "zone": "${local.zone}"
+                }
+              references:
+                zone: local.zone
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            default: (Boolean) Whether this is the organization's default VPC for the zone.
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String) A text describing the VPC.
+            dns_servers: '(List of String) DHCP option 6: a list of DNS server IPv4 addresses.'
+            domain_search: '(List of String) DHCP option 119: a list of domain search strings.'
+            id: (String) The ID of this resource.
+            labels: (Map of String) A map of key/value labels.
+            name: (String) The VPC name.
+            ntp_servers: '(List of String) DHCP option 42: a list of NTP server IPv4 addresses.'
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements:
+            - |-
+              # An existing VPC may be imported by `<ID>@<zone>`:
+
+              terraform import \
+                exoscale_vpc.my_vpc \
+                f81d4fae-7dec-11d0-a765-00a0c91e6bf6@ch-gva-2
+    exoscale_vpc_subnet:
+        subCategory: ""
+        description: 'Manage Exoscale VPC https://community.exoscale.ch/product/networking/vpc/ Subnets. Corresponding data source: exoscale_vpc_subnet ../data-sources/vpc_subnet.md.'
+        name: exoscale_vpc_subnet
+        title: exoscale_vpc_subnet Resource - terraform-provider-exoscale
+        examples:
+            - name: my_vpc_subnet
+              manifest: |-
+                {
+                  "description": "My VPC Subnet",
+                  "ipv4_block": "10.0.0.0/24",
+                  "labels": {
+                    "environment": "production"
+                  },
+                  "name": "my-vpc-subnet",
+                  "vpc_id": "9ecc6b8b-73d4-4211-8ced-f7f29bb79524",
+                  "zone": "${local.zone}"
+                }
+              references:
+                zone: local.zone
+        argumentDocs:
+            address_family: (String) ❗ The Subnet address family. Currently only inet4 is supported.
+            address_space: (String) ❗ The Subnet address space. Currently only private is supported.
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String) A free-form text describing the Subnet.
+            id: (String) The ID of this resource.
+            ipv4_block: (String) ❗ The Subnet IPv4 CIDR (e.g. 10.0.0.0/24).
+            labels: (Map of String) A map of key/value labels.
+            name: (String) The Subnet name.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            vpc_id: (String) ❗ The parent exoscale_vpc ID.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements:
+            - |-
+              # An existing VPC Subnet may be imported by `<vpc-ID>@<subnet-ID>@<zone>`:
+
+              terraform import \
+                exoscale_vpc_subnet.my_vpc_subnet \
+                f81d4fae-7dec-11d0-a765-00a0c91e6bf6@9ecc6b8b-73d4-4211-8ced-f7f29bb79524@ch-gva-2
