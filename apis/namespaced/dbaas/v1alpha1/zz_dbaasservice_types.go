@@ -14,7 +14,71 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type ClickhouseInitParameters struct {
+
+	// ClickHouse configuration settings in JSON format (`exo dbaas type show clickhouse --settings=clickhouse` for reference).
+	ClickhouseSettings *string `json:"clickhouseSettings,omitempty" tf:"clickhouse_settings,omitempty"`
+
+	// Name of an existing ClickHouse service to fork from. Cannot be changed after creation.
+	ForkFromService *string `json:"forkFromService,omitempty" tf:"fork_from_service,omitempty"`
+
+	// A list of CIDR blocks to allow incoming connections from.
+	// +listType=set
+	IPFilter []*string `json:"ipFilter,omitempty" tf:"ip_filter,omitempty"`
+
+	// Name of the backup to restore when forking from `fork_from_service`.
+	RecoveryBackupName *string `json:"recoveryBackupName,omitempty" tf:"recovery_backup_name,omitempty"`
+
+	// ClickHouse major version (`exo dbaas type show clickhouse` for reference).
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
+type ClickhouseObservation struct {
+
+	// ClickHouse configuration settings in JSON format (`exo dbaas type show clickhouse --settings=clickhouse` for reference).
+	ClickhouseSettings *string `json:"clickhouseSettings,omitempty" tf:"clickhouse_settings,omitempty"`
+
+	// Name of an existing ClickHouse service to fork from. Cannot be changed after creation.
+	ForkFromService *string `json:"forkFromService,omitempty" tf:"fork_from_service,omitempty"`
+
+	// A list of CIDR blocks to allow incoming connections from.
+	// +listType=set
+	IPFilter []*string `json:"ipFilter,omitempty" tf:"ip_filter,omitempty"`
+
+	// Name of the backup to restore when forking from `fork_from_service`.
+	RecoveryBackupName *string `json:"recoveryBackupName,omitempty" tf:"recovery_backup_name,omitempty"`
+
+	// ClickHouse major version (`exo dbaas type show clickhouse` for reference).
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
+type ClickhouseParameters struct {
+
+	// ClickHouse configuration settings in JSON format (`exo dbaas type show clickhouse --settings=clickhouse` for reference).
+	// +kubebuilder:validation:Optional
+	ClickhouseSettings *string `json:"clickhouseSettings,omitempty" tf:"clickhouse_settings,omitempty"`
+
+	// Name of an existing ClickHouse service to fork from. Cannot be changed after creation.
+	// +kubebuilder:validation:Optional
+	ForkFromService *string `json:"forkFromService,omitempty" tf:"fork_from_service,omitempty"`
+
+	// A list of CIDR blocks to allow incoming connections from.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	IPFilter []*string `json:"ipFilter,omitempty" tf:"ip_filter,omitempty"`
+
+	// Name of the backup to restore when forking from `fork_from_service`.
+	// +kubebuilder:validation:Optional
+	RecoveryBackupName *string `json:"recoveryBackupName,omitempty" tf:"recovery_backup_name,omitempty"`
+
+	// ClickHouse major version (`exo dbaas type show clickhouse` for reference).
+	// +kubebuilder:validation:Optional
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
 type DBAASServiceInitParameters struct {
+	Clickhouse *ClickhouseInitParameters `json:"clickhouse,omitempty" tf:"clickhouse,omitempty"`
+
 	Grafana *GrafanaInitParameters `json:"grafana,omitempty" tf:"grafana,omitempty"`
 
 	Kafka *KafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
@@ -40,7 +104,7 @@ type DBAASServiceInitParameters struct {
 	// The database service protection boolean flag against termination/power-off.
 	TerminationProtection *bool `json:"terminationProtection,omitempty" tf:"termination_protection,omitempty"`
 
-	// ❗ The type of the database service (`kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	Valkey *ValkeyInitParameters `json:"valkey,omitempty" tf:"valkey,omitempty"`
@@ -50,6 +114,7 @@ type DBAASServiceInitParameters struct {
 }
 
 type DBAASServiceObservation struct {
+	Clickhouse *ClickhouseObservation `json:"clickhouse,omitempty" tf:"clickhouse,omitempty"`
 
 	// The creation date of the database service.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -96,7 +161,7 @@ type DBAASServiceObservation struct {
 	// The database service protection boolean flag against termination/power-off.
 	TerminationProtection *bool `json:"terminationProtection,omitempty" tf:"termination_protection,omitempty"`
 
-	// ❗ The type of the database service (`kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The service uri stripped from credentials
@@ -112,6 +177,9 @@ type DBAASServiceObservation struct {
 }
 
 type DBAASServiceParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Clickhouse *ClickhouseParameters `json:"clickhouse,omitempty" tf:"clickhouse,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Grafana *GrafanaParameters `json:"grafana,omitempty" tf:"grafana,omitempty"`
@@ -148,7 +216,7 @@ type DBAASServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	TerminationProtection *bool `json:"terminationProtection,omitempty" tf:"termination_protection,omitempty"`
 
-	// ❗ The type of the database service (`kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 

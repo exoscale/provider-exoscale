@@ -72,6 +72,33 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  clickhouse:
+                    properties:
+                      clickhouseSettings:
+                        description: ClickHouse configuration settings in JSON format
+                          (`exo dbaas type show clickhouse --settings=clickhouse`
+                          for reference).
+                        type: string
+                      forkFromService:
+                        description: Name of an existing ClickHouse service to fork
+                          from. Cannot be changed after creation.
+                        type: string
+                      ipFilter:
+                        description: A list of CIDR blocks to allow incoming connections
+                          from.
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
+                      recoveryBackupName:
+                        description: Name of the backup to restore when forking from
+                          `fork_from_service`.
+                        type: string
+                      version:
+                        description: ClickHouse major version (`exo dbaas type show
+                          clickhouse` for reference).
+                        type: string
+                    type: object
                   grafana:
                     properties:
                       grafanaSettings:
@@ -363,8 +390,8 @@ spec:
                       termination/power-off.
                     type: boolean
                   type:
-                    description: ❗ The type of the database service (`kafka`, `mysql`,
-                      `opensearch`, `pg`, `valkey`, `grafana`).
+                    description: The type of the database service (`clickhouse`, `kafka`,
+                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
                     type: string
                   valkey:
                     properties:
@@ -398,6 +425,33 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  clickhouse:
+                    properties:
+                      clickhouseSettings:
+                        description: ClickHouse configuration settings in JSON format
+                          (`exo dbaas type show clickhouse --settings=clickhouse`
+                          for reference).
+                        type: string
+                      forkFromService:
+                        description: Name of an existing ClickHouse service to fork
+                          from. Cannot be changed after creation.
+                        type: string
+                      ipFilter:
+                        description: A list of CIDR blocks to allow incoming connections
+                          from.
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
+                      recoveryBackupName:
+                        description: Name of the backup to restore when forking from
+                          `fork_from_service`.
+                        type: string
+                      version:
+                        description: ClickHouse major version (`exo dbaas type show
+                          clickhouse` for reference).
+                        type: string
+                    type: object
                   grafana:
                     properties:
                       grafanaSettings:
@@ -689,8 +743,8 @@ spec:
                       termination/power-off.
                     type: boolean
                   type:
-                    description: ❗ The type of the database service (`kafka`, `mysql`,
-                      `opensearch`, `pg`, `valkey`, `grafana`).
+                    description: The type of the database service (`clickhouse`, `kafka`,
+                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
                     type: string
                   valkey:
                     properties:
@@ -819,6 +873,33 @@ spec:
             properties:
               atProvider:
                 properties:
+                  clickhouse:
+                    properties:
+                      clickhouseSettings:
+                        description: ClickHouse configuration settings in JSON format
+                          (`exo dbaas type show clickhouse --settings=clickhouse`
+                          for reference).
+                        type: string
+                      forkFromService:
+                        description: Name of an existing ClickHouse service to fork
+                          from. Cannot be changed after creation.
+                        type: string
+                      ipFilter:
+                        description: A list of CIDR blocks to allow incoming connections
+                          from.
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
+                      recoveryBackupName:
+                        description: Name of the backup to restore when forking from
+                          `fork_from_service`.
+                        type: string
+                      version:
+                        description: ClickHouse major version (`exo dbaas type show
+                          clickhouse` for reference).
+                        type: string
+                    type: object
                   createdAt:
                     description: The creation date of the database service.
                     type: string
@@ -1094,8 +1175,8 @@ spec:
                       termination/power-off.
                     type: boolean
                   type:
-                    description: ❗ The type of the database service (`kafka`, `mysql`,
-                      `opensearch`, `pg`, `valkey`, `grafana`).
+                    description: The type of the database service (`clickhouse`, `kafka`,
+                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
                     type: string
                   updatedAt:
                     description: The date of the latest database service update.
