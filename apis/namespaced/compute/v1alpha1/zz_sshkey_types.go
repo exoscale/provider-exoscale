@@ -27,7 +27,7 @@ type SSHKeyObservation struct {
 	// The SSH key unique identifier.
 	Fingerprint *string `json:"fingerprint,omitempty" tf:"fingerprint,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) The SSH key name.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) ❗ The SSH public key that will be authorized in compute instances.

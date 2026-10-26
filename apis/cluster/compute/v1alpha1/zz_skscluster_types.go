@@ -216,6 +216,11 @@ type SKSClusterInitParameters struct {
 	// +listType=set
 	FeatureGates []*string `json:"featureGates,omitempty" tf:"feature_gates,omitempty"`
 
+	// (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// +listType=set
+	KarpenterFeatureGates []*string `json:"karpenterFeatureGates,omitempty" tf:"karpenter_feature_gates,omitempty"`
+
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
 	// +mapType=granular
@@ -303,6 +308,11 @@ type SKSClusterObservation struct {
 
 	// (String) The SKS cluster ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// +listType=set
+	KarpenterFeatureGates []*string `json:"karpenterFeatureGates,omitempty" tf:"karpenter_feature_gates,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.
@@ -395,6 +405,12 @@ type SKSClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	FeatureGates []*string `json:"featureGates,omitempty" tf:"feature_gates,omitempty"`
+
+	// (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	KarpenterFeatureGates []*string `json:"karpenterFeatureGates,omitempty" tf:"karpenter_feature_gates,omitempty"`
 
 	// (Map of String) A map of key/value labels.
 	// A map of key/value labels.

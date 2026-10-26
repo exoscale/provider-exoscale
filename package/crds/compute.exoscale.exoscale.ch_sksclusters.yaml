@@ -164,6 +164,14 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  karpenterFeatureGates:
+                    description: |-
+                      (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+                      A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   labels:
                     additionalProperties:
                       type: string
@@ -343,6 +351,14 @@ spec:
                     description: |-
                       (Set of String) Feature gates options for the cluster.
                       Feature gates options for the cluster.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  karpenterFeatureGates:
+                    description: |-
+                      (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+                      A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
                     items:
                       type: string
                     type: array
@@ -616,6 +632,14 @@ spec:
                   id:
                     description: (String) The SKS cluster ID.
                     type: string
+                  karpenterFeatureGates:
+                    description: |-
+                      (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+                      A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   labels:
                     additionalProperties:
                       type: string
