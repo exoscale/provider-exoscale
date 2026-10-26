@@ -13,13 +13,14 @@ resources:
                   "name": "my-anti-affinity-group"
                 }
         argumentDocs:
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) ❗ A free-form text describing the group.
-            id: (String) The ID of this resource.
+            id: (String) The anti-affinity group ID.
             name: (String) ❗ The anti-affinity group name.
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
             - |-
               # An existing anti-affinity group may be imported by `<ID>`:
@@ -82,9 +83,9 @@ resources:
         argumentDocs:
             anti_affinity_group_ids: (Set of String) ❗ A list of exoscale_anti_affinity_group (IDs) to attach to the instance (may only be set at creation time).
             block_storage_volume_ids: (Set of String) A list of exoscale_block_storage_volume (ID) to attach to the instance.
-            create: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The instance creation date.
-            delete: (String)
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             deploy_target_id: (String) ❗ A deploy target ID.
             destroy_protected: '(Boolean) Mark the instance as protected, the Exoscale API will refuse to delete the instance until the protection is removed (boolean; default: false).'
             disk_size: '(Number) The instance disk size (GiB; at least 10). Can not be decreased after creation. WARNING: updating this attribute stops/restarts the instance.'
@@ -103,7 +104,7 @@ resources:
             private: '(Boolean) Whether the instance is private (no public IP addresses; default: false)'
             private_network_ids: (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead.
             public_ip_address: (String) The instance (main network interface) IPv4 address.
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             reverse_dns: (String) Domain name for reverse DNS record.
             security_group_ids: (Set of String) A list of exoscale_security_group (IDs) to attach to the instance.
             ssh_key: (String, Deprecated) ❗ The exoscale_ssh_key (name) to authorize in the instance (may only be set at creation time).
@@ -112,7 +113,7 @@ resources:
             template_id: (String) ❗ The exoscale_template (ID) to use when creating the instance.
             timeouts: (Block, Optional) (see below for nested schema)
             type: '(String) The instance type (<family>.<size>, e.g. standard.medium; use the Exoscale CLI - exo compute instance-type list - for the list of available types). WARNING: updating this attribute stops/restarts the instance.'
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             user_data: (String) cloud-init configuration.
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
@@ -694,35 +695,33 @@ resources:
               manifest: |-
                 {
                   "address_family": "inet6",
-                  "healthcheck": [
-                    {
-                      "interval": 5,
-                      "mode": "https",
-                      "port": 443,
-                      "strikes_fail": 3,
-                      "strikes_ok": 2,
-                      "timeout": 3,
-                      "tls_sni": "example.net",
-                      "uri": "/health"
-                    }
-                  ],
+                  "healthcheck": {
+                    "interval": 5,
+                    "mode": "https",
+                    "port": 443,
+                    "strikes_fail": 3,
+                    "strikes_ok": 2,
+                    "timeout": 3,
+                    "tls_sni": "example.net",
+                    "uri": "/health"
+                  },
                   "reverse_dns": "example.net",
                   "zone": "ch-gva-2"
                 }
         argumentDocs:
             address_family: '(String) ❗ The Elastic IP (EIP) address family (inet4 or inet6; default: inet4).'
             cidr: (String) The Elastic IP (EIP) CIDR.
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) A free-form text describing the Elastic IP (EIP).
-            healthcheck: '(Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)'
+            healthcheck: (Attributes) Healthcheck configuration for managed EIPs. ❗ Adding it to or removing it from an existing EIP forces the creation of a new resource (an unmanaged EIP can not become managed and vice versa). (see below for nested schema)
             id: (String) The ID of this resource.
             interval: '(Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).'
             ip_address: (String) The Elastic IP (EIP) IPv4 or IPv6 address.
             labels: (Map of String) A map of key/value labels.
             mode: (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
             port: (Number) The healthcheck target port (must be between 1 and 65535).
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             reverse_dns: (String) Domain name for reverse DNS record.
             strikes_fail: '(Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).'
             strikes_ok: '(Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).'
@@ -730,7 +729,7 @@ resources:
             timeouts: (Block, Optional) (see below for nested schema)
             tls_skip_verify: '(Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).'
             tls_sni: (String) The healthcheck server name to present with SNI in https mode.
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             uri: (String) The healthcheck target URI (required in http(s) modes).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
@@ -945,7 +944,7 @@ resources:
         importStatements: []
     exoscale_nlb:
         subCategory: ""
-        description: Manage Exoscale Network Load Balancers (NLB).
+        description: 'Manage Exoscale Network Load Balancers (NLB) https://community.exoscale.com/product/networking/nlb/. Corresponding data source: exoscale_nlb ../data-sources/nlb.md.'
         name: exoscale_nlb
         title: exoscale_nlb Resource - terraform-provider-exoscale
         examples:
@@ -956,24 +955,25 @@ resources:
                   "zone": "ch-gva-2"
                 }
         argumentDocs:
-            create: (String)
+            address_family: '(String) ❗ The NLB address family (inet4|inet6; default: inet4).'
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             created_at: (String) The NLB creation date.
-            delete: (String)
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) A free-form text describing the NLB.
             id: (String) The ID of this resource.
-            ip_address: (String) The NLB IPv4 address.
+            ip_address: (String) The NLB public IP address (IPv4 or IPv6, depending on address_family).
             labels: (Map of String) A map of key/value labels.
             name: (String) The network load balancer (NLB) name.
-            read: (String)
-            services: (Set of String) The list of the exoscale_nlb_service (names).
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            services: (Set of String) The list of the exoscale_nlb_service (IDs).
             state: (String) The current NLB state.
             timeouts: (Block, Optional) (see below for nested schema)
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements: []
     exoscale_nlb_service:
         subCategory: ""
-        description: Manage Exoscale Network Load Balancer (NLB) https://community.exoscale.com/product/networking/nlb/ Services.
+        description: 'Manage Exoscale Network Load Balancer (NLB) https://community.exoscale.com/product/networking/nlb/ Services. Corresponding data source: exoscalenlbservice_list ../data-sources/nlb_service_list.md.'
         name: exoscale_nlb_service
         title: exoscale_nlb_service Resource - terraform-provider-exoscale
         examples:
@@ -1011,27 +1011,27 @@ resources:
                       "zone": "ch-gva-2"
                     }
         argumentDocs:
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) A free-form text describing the NLB service.
-            healthcheck: '(Block Set, Min: 1) The service health checking configuration. (see below for nested schema)'
+            healthcheck: (Block Set) The service health checking configuration. (see below for nested schema)
             id: (String) The ID of this resource.
             instance_pool_id: (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
             interval: '(Number) The healthcheck interval in seconds (default: 10).'
             mode: '(String) The healthcheck mode (tcp|http|https; default: tcp).'
             name: (String) The NLB service name.
             nlb_id: (String) ❗ The parent exoscale_nlb ID.
-            port: (Number) The healthcheck port.
+            port: (Number) The NLB service (TCP/UDP) port.
             protocol: '(String) The protocol (tcp|udp; default: tcp).'
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             retries: '(Number) The healthcheck retries (default: 1).'
-            state: (String)
+            state: (String) The current NLB service state.
             strategy: '(String) The strategy (round-robin|source-hash; default: round-robin).'
             target_port: (Number) The (TCP/UDP) port to forward traffic to (on target instance pool members).
             timeout: '(Number) The healthcheck timeout (seconds; default: 5).'
             timeouts: (Block, Optional) (see below for nested schema)
             tls_sni: (String) The healthcheck TLS SNI server name (only if mode is https).
-            update: (String)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             uri: (String) The healthcheck URI (must be set only if mode is http(s)).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
@@ -1193,6 +1193,7 @@ resources:
             id: (String) The SKS cluster ID.
             initial_backoff: (String) The Initial Backoff to wait before sending data to the remote server (default 10s)
             issuer_url: (String) The OpenID provider URL.
+            karpenter_feature_gates: (Set of String) A list of Karpenter controller feature gates to enable for the Karpenter controller binary.
             kubelet_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between kubelets and the control plane.
             labels: (Map of String) A map of key/value labels.
             metrics_server: '(Boolean) Deploy the Kubernetes Metrics Server in the control plane (boolean; default: true; may only be set at creation time).'
@@ -1359,14 +1360,15 @@ resources:
                       "algorithm": "ED25519"
                     }
         argumentDocs:
-            create: (String)
-            delete: (String)
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             fingerprint: (String) The SSH key unique identifier.
-            id: (String) The ID of this resource.
+            id: (String) The SSH key name.
             name: (String) ❗ The SSH key name.
             public_key: (String) ❗ The SSH public key that will be authorized in compute instances.
-            read: (String)
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
         importStatements:
             - |-
               terraform import \
@@ -1460,6 +1462,44 @@ resources:
               terraform import \
                 exoscale_vpc.my_vpc \
                 f81d4fae-7dec-11d0-a765-00a0c91e6bf6@ch-gva-2
+    exoscale_vpc_route:
+        subCategory: ""
+        description: 'Manage Exoscale VPC Subnet routes https://community.exoscale.com/product/networking/vpc/how-to/using-routing-rules/. Routes are immutable: any change to their attributes forces re-creation. Parent resource: exoscalevpcsubnet ./vpc_subnet.md.'
+        name: exoscale_vpc_route
+        title: exoscale_vpc_route Resource - terraform-provider-exoscale
+        examples:
+            - name: my_vpc_route
+              manifest: |-
+                {
+                  "description": "route to 10.0.9.0/24 via 10.0.0.5",
+                  "destination": "10.0.9.0/24",
+                  "subnet_id": "9ecc6b8b-73d4-4211-8ced-f7f29bb79524",
+                  "target": "ip=10.0.0.5",
+                  "vpc_id": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+                  "zone": "${local.zone}"
+                }
+              references:
+                zone: local.zone
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            description: (String) ❗ A free-form text describing the route.
+            destination: (String) ❗ The route destination CIDR (e.g. 10.9.0.0/24).
+            id: (String) The ID of this resource.
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            subnet_id: (String) ❗ The parent exoscale_vpc_subnet ID.
+            target: (String) ❗ The route target (e.g. ip=10.0.0.5).
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            vpc_id: (String) ❗ The parent exoscale_vpc ID.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements:
+            - |-
+              # An existing VPC route may be imported by `<vpc-ID>@<subnet-ID>@<route-ID>@<zone>`:
+
+              terraform import \
+                exoscale_vpc_route.my_vpc_route \
+                f81d4fae-7dec-11d0-a765-00a0c91e6bf6@9ecc6b8b-73d4-4211-8ced-f7f29bb79524@9ecc6b8b-73d4-4211-8ced-f7f29bb79525@ch-gva-2
     exoscale_vpc_subnet:
         subCategory: ""
         description: 'Manage Exoscale VPC https://community.exoscale.ch/product/networking/vpc/ Subnets. Corresponding data source: exoscale_vpc_subnet ../data-sources/vpc_subnet.md.'

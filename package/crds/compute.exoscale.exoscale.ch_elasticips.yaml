@@ -84,58 +84,57 @@ spec:
                       A free-form text describing the Elastic IP (EIP).
                     type: string
                   healthcheck:
-                    description: |-
-                      (Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)
-                      Healthcheck configuration for *managed* EIPs. It can not be added to an existing *Unmanaged* EIP.
-                    items:
-                      properties:
-                        interval:
-                          description: |-
-                            (Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).
-                            The healthcheck interval (seconds; must be between `5` and `300`; default: `10`).
-                          type: number
-                        mode:
-                          description: |-
-                            (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
-                            The healthcheck mode (`tcp`, `http` or `https`; may only be set at creation time).
-                          type: string
-                        port:
-                          description: |-
-                            (Number) The healthcheck target port (must be between 1 and 65535).
-                            The healthcheck target port (must be between `1` and `65535`).
-                          type: number
-                        strikesFail:
-                          description: |-
-                            (Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).
-                            The number of failed healthcheck attempts before considering the target unhealthy (must be between `1` and `20`; default: `2`).
-                          type: number
-                        strikesOk:
-                          description: |-
-                            (Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).
-                            The number of successful healthcheck attempts before considering the target healthy (must be between `1` and `20`; default: `3`).
-                          type: number
-                        timeout:
-                          description: |-
-                            (Number) The time before considering a healthcheck probing failed (seconds; must be between 2 and 60; default: 3).
-                            The time before considering a healthcheck probing failed (seconds; must be between `2` and `60`; default: `3`).
-                          type: number
-                        tlsSkipVerify:
-                          description: |-
-                            (Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).
-                            Disable TLS certificate verification for healthcheck in `https` mode (boolean; default: `false`).
-                          type: boolean
-                        tlsSni:
-                          description: |-
-                            (String) The healthcheck server name to present with SNI in https mode.
-                            The healthcheck server name to present with SNI in `https` mode.
-                          type: string
-                        uri:
-                          description: |-
-                            (String) The healthcheck target URI  modes).
-                            The healthcheck target URI (required in `http(s)` modes).
-                          type: string
-                      type: object
-                    type: array
+                    description: (Attributes) Healthcheck configuration for managed
+                      EIPs. ❗ Adding it to or removing it from an existing EIP forces
+                      the creation of a new resource (an unmanaged EIP can not become
+                      managed and vice versa). (see below for nested schema)
+                    properties:
+                      interval:
+                        description: |-
+                          (Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).
+                          The healthcheck interval (seconds; must be between `5` and `300`; default: `10`).
+                        type: number
+                      mode:
+                        description: |-
+                          (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
+                          The healthcheck mode (`tcp`, `http` or `https`; may only be set at creation time).
+                        type: string
+                      port:
+                        description: |-
+                          (Number) The healthcheck target port (must be between 1 and 65535).
+                          The healthcheck target port (must be between `1` and `65535`).
+                        type: number
+                      strikesFail:
+                        description: |-
+                          (Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).
+                          The number of failed healthcheck attempts before considering the target unhealthy (must be between `1` and `20`; default: `2`).
+                        type: number
+                      strikesOk:
+                        description: |-
+                          (Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).
+                          The number of successful healthcheck attempts before considering the target healthy (must be between `1` and `20`; default: `3`).
+                        type: number
+                      timeout:
+                        description: |-
+                          (Number) The time before considering a healthcheck probing failed (seconds; must be between 2 and 60; default: 3).
+                          The time before considering a healthcheck probing failed (seconds; must be between `2` and `60`; default: `3`).
+                        type: number
+                      tlsSkipVerify:
+                        description: |-
+                          (Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).
+                          Disable TLS certificate verification for healthcheck in `https` mode (boolean; default: `false`).
+                        type: boolean
+                      tlsSni:
+                        description: |-
+                          (String) The healthcheck server name to present with SNI in https mode.
+                          The healthcheck server name to present with SNI in `https` mode.
+                        type: string
+                      uri:
+                        description: |-
+                          (String) The healthcheck target URI  modes).
+                          The healthcheck target URI (required in `http(s)` modes).
+                        type: string
+                    type: object
                   labels:
                     additionalProperties:
                       type: string
@@ -179,58 +178,57 @@ spec:
                       A free-form text describing the Elastic IP (EIP).
                     type: string
                   healthcheck:
-                    description: |-
-                      (Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)
-                      Healthcheck configuration for *managed* EIPs. It can not be added to an existing *Unmanaged* EIP.
-                    items:
-                      properties:
-                        interval:
-                          description: |-
-                            (Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).
-                            The healthcheck interval (seconds; must be between `5` and `300`; default: `10`).
-                          type: number
-                        mode:
-                          description: |-
-                            (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
-                            The healthcheck mode (`tcp`, `http` or `https`; may only be set at creation time).
-                          type: string
-                        port:
-                          description: |-
-                            (Number) The healthcheck target port (must be between 1 and 65535).
-                            The healthcheck target port (must be between `1` and `65535`).
-                          type: number
-                        strikesFail:
-                          description: |-
-                            (Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).
-                            The number of failed healthcheck attempts before considering the target unhealthy (must be between `1` and `20`; default: `2`).
-                          type: number
-                        strikesOk:
-                          description: |-
-                            (Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).
-                            The number of successful healthcheck attempts before considering the target healthy (must be between `1` and `20`; default: `3`).
-                          type: number
-                        timeout:
-                          description: |-
-                            (Number) The time before considering a healthcheck probing failed (seconds; must be between 2 and 60; default: 3).
-                            The time before considering a healthcheck probing failed (seconds; must be between `2` and `60`; default: `3`).
-                          type: number
-                        tlsSkipVerify:
-                          description: |-
-                            (Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).
-                            Disable TLS certificate verification for healthcheck in `https` mode (boolean; default: `false`).
-                          type: boolean
-                        tlsSni:
-                          description: |-
-                            (String) The healthcheck server name to present with SNI in https mode.
-                            The healthcheck server name to present with SNI in `https` mode.
-                          type: string
-                        uri:
-                          description: |-
-                            (String) The healthcheck target URI  modes).
-                            The healthcheck target URI (required in `http(s)` modes).
-                          type: string
-                      type: object
-                    type: array
+                    description: (Attributes) Healthcheck configuration for managed
+                      EIPs. ❗ Adding it to or removing it from an existing EIP forces
+                      the creation of a new resource (an unmanaged EIP can not become
+                      managed and vice versa). (see below for nested schema)
+                    properties:
+                      interval:
+                        description: |-
+                          (Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).
+                          The healthcheck interval (seconds; must be between `5` and `300`; default: `10`).
+                        type: number
+                      mode:
+                        description: |-
+                          (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
+                          The healthcheck mode (`tcp`, `http` or `https`; may only be set at creation time).
+                        type: string
+                      port:
+                        description: |-
+                          (Number) The healthcheck target port (must be between 1 and 65535).
+                          The healthcheck target port (must be between `1` and `65535`).
+                        type: number
+                      strikesFail:
+                        description: |-
+                          (Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).
+                          The number of failed healthcheck attempts before considering the target unhealthy (must be between `1` and `20`; default: `2`).
+                        type: number
+                      strikesOk:
+                        description: |-
+                          (Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).
+                          The number of successful healthcheck attempts before considering the target healthy (must be between `1` and `20`; default: `3`).
+                        type: number
+                      timeout:
+                        description: |-
+                          (Number) The time before considering a healthcheck probing failed (seconds; must be between 2 and 60; default: 3).
+                          The time before considering a healthcheck probing failed (seconds; must be between `2` and `60`; default: `3`).
+                        type: number
+                      tlsSkipVerify:
+                        description: |-
+                          (Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).
+                          Disable TLS certificate verification for healthcheck in `https` mode (boolean; default: `false`).
+                        type: boolean
+                      tlsSni:
+                        description: |-
+                          (String) The healthcheck server name to present with SNI in https mode.
+                          The healthcheck server name to present with SNI in `https` mode.
+                        type: string
+                      uri:
+                        description: |-
+                          (String) The healthcheck target URI  modes).
+                          The healthcheck target URI (required in `http(s)` modes).
+                        type: string
+                    type: object
                   labels:
                     additionalProperties:
                       type: string
@@ -362,58 +360,57 @@ spec:
                       A free-form text describing the Elastic IP (EIP).
                     type: string
                   healthcheck:
-                    description: |-
-                      (Block List, Max: 1) Healthcheck configuration for managed EIPs. It can not be added to an existing Unmanaged EIP. (see below for nested schema)
-                      Healthcheck configuration for *managed* EIPs. It can not be added to an existing *Unmanaged* EIP.
-                    items:
-                      properties:
-                        interval:
-                          description: |-
-                            (Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).
-                            The healthcheck interval (seconds; must be between `5` and `300`; default: `10`).
-                          type: number
-                        mode:
-                          description: |-
-                            (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
-                            The healthcheck mode (`tcp`, `http` or `https`; may only be set at creation time).
-                          type: string
-                        port:
-                          description: |-
-                            (Number) The healthcheck target port (must be between 1 and 65535).
-                            The healthcheck target port (must be between `1` and `65535`).
-                          type: number
-                        strikesFail:
-                          description: |-
-                            (Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).
-                            The number of failed healthcheck attempts before considering the target unhealthy (must be between `1` and `20`; default: `2`).
-                          type: number
-                        strikesOk:
-                          description: |-
-                            (Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).
-                            The number of successful healthcheck attempts before considering the target healthy (must be between `1` and `20`; default: `3`).
-                          type: number
-                        timeout:
-                          description: |-
-                            (Number) The time before considering a healthcheck probing failed (seconds; must be between 2 and 60; default: 3).
-                            The time before considering a healthcheck probing failed (seconds; must be between `2` and `60`; default: `3`).
-                          type: number
-                        tlsSkipVerify:
-                          description: |-
-                            (Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).
-                            Disable TLS certificate verification for healthcheck in `https` mode (boolean; default: `false`).
-                          type: boolean
-                        tlsSni:
-                          description: |-
-                            (String) The healthcheck server name to present with SNI in https mode.
-                            The healthcheck server name to present with SNI in `https` mode.
-                          type: string
-                        uri:
-                          description: |-
-                            (String) The healthcheck target URI  modes).
-                            The healthcheck target URI (required in `http(s)` modes).
-                          type: string
-                      type: object
-                    type: array
+                    description: (Attributes) Healthcheck configuration for managed
+                      EIPs. ❗ Adding it to or removing it from an existing EIP forces
+                      the creation of a new resource (an unmanaged EIP can not become
+                      managed and vice versa). (see below for nested schema)
+                    properties:
+                      interval:
+                        description: |-
+                          (Number) The healthcheck interval (seconds; must be between 5 and 300; default: 10).
+                          The healthcheck interval (seconds; must be between `5` and `300`; default: `10`).
+                        type: number
+                      mode:
+                        description: |-
+                          (String) The healthcheck mode (tcp, http or https; may only be set at creation time).
+                          The healthcheck mode (`tcp`, `http` or `https`; may only be set at creation time).
+                        type: string
+                      port:
+                        description: |-
+                          (Number) The healthcheck target port (must be between 1 and 65535).
+                          The healthcheck target port (must be between `1` and `65535`).
+                        type: number
+                      strikesFail:
+                        description: |-
+                          (Number) The number of failed healthcheck attempts before considering the target unhealthy (must be between 1 and 20; default: 2).
+                          The number of failed healthcheck attempts before considering the target unhealthy (must be between `1` and `20`; default: `2`).
+                        type: number
+                      strikesOk:
+                        description: |-
+                          (Number) The number of successful healthcheck attempts before considering the target healthy (must be between 1 and 20; default: 3).
+                          The number of successful healthcheck attempts before considering the target healthy (must be between `1` and `20`; default: `3`).
+                        type: number
+                      timeout:
+                        description: |-
+                          (Number) The time before considering a healthcheck probing failed (seconds; must be between 2 and 60; default: 3).
+                          The time before considering a healthcheck probing failed (seconds; must be between `2` and `60`; default: `3`).
+                        type: number
+                      tlsSkipVerify:
+                        description: |-
+                          (Boolean) Disable TLS certificate verification for healthcheck in https mode (boolean; default: false).
+                          Disable TLS certificate verification for healthcheck in `https` mode (boolean; default: `false`).
+                        type: boolean
+                      tlsSni:
+                        description: |-
+                          (String) The healthcheck server name to present with SNI in https mode.
+                          The healthcheck server name to present with SNI in `https` mode.
+                        type: string
+                      uri:
+                        description: |-
+                          (String) The healthcheck target URI  modes).
+                          The healthcheck target URI (required in `http(s)` modes).
+                        type: string
+                    type: object
                   id:
                     description: (String) The ID of this resource.
                     type: string

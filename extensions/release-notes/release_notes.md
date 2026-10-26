@@ -3,6 +3,7 @@
 ## UNRELEASED
 
 ### IMPROVEMENTS:
+- automatic: bump terraform provider version 0.75.0
 - automatic: bump terraform provider version 0.73.0
 
 ### BUG FIXES:

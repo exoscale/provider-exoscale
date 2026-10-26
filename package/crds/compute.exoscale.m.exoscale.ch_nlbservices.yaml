@@ -34,9 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: NLBService is the Schema for the NLBServices API. Manage Exoscale
+        description: 'NLBService is the Schema for the NLBServices API. Manage Exoscale
           Network Load Balancer (NLB) https://community.exoscale.com/product/networking/nlb/
-          Services.
+          Services. Corresponding data source: exoscalenlbservice_list ../data-sources/nlb_service_list.md.'
         properties:
           apiVersion:
             description: |-
@@ -67,7 +67,7 @@ spec:
                     type: string
                   healthcheck:
                     description: |-
-                      (Block Set, Min: 1) The service health checking configuration. (see below for nested schema)
+                      (Block Set) The service health checking configuration. (see below for nested schema)
                       The service health checking configuration.
                     items:
                       properties:
@@ -83,8 +83,8 @@ spec:
                           type: string
                         port:
                           description: |-
-                            (Number) The healthcheck port.
-                            The NLB service (TCP/UDP) port.
+                            (Number) The NLB service (TCP/UDP) port.
+                            The healthcheck port.
                           type: number
                         retries:
                           description: |-
@@ -287,8 +287,8 @@ spec:
                     type: object
                   port:
                     description: |-
-                      (Number) The healthcheck port.
-                      The healthcheck port.
+                      (Number) The NLB service (TCP/UDP) port.
+                      The NLB service (TCP/UDP) port.
                     type: number
                   protocol:
                     description: |-
@@ -331,7 +331,7 @@ spec:
                     type: string
                   healthcheck:
                     description: |-
-                      (Block Set, Min: 1) The service health checking configuration. (see below for nested schema)
+                      (Block Set) The service health checking configuration. (see below for nested schema)
                       The service health checking configuration.
                     items:
                       properties:
@@ -347,8 +347,8 @@ spec:
                           type: string
                         port:
                           description: |-
-                            (Number) The healthcheck port.
-                            The NLB service (TCP/UDP) port.
+                            (Number) The NLB service (TCP/UDP) port.
+                            The healthcheck port.
                           type: number
                         retries:
                           description: |-
@@ -551,8 +551,8 @@ spec:
                     type: object
                   port:
                     description: |-
-                      (Number) The healthcheck port.
-                      The healthcheck port.
+                      (Number) The NLB service (TCP/UDP) port.
+                      The NLB service (TCP/UDP) port.
                     type: number
                   protocol:
                     description: |-
@@ -634,10 +634,6 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.healthcheck is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.healthcheck)
-                || (has(self.initProvider) && has(self.initProvider.healthcheck))'
             - message: spec.forProvider.name is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
@@ -666,7 +662,7 @@ spec:
                     type: string
                   healthcheck:
                     description: |-
-                      (Block Set, Min: 1) The service health checking configuration. (see below for nested schema)
+                      (Block Set) The service health checking configuration. (see below for nested schema)
                       The service health checking configuration.
                     items:
                       properties:
@@ -682,8 +678,8 @@ spec:
                           type: string
                         port:
                           description: |-
-                            (Number) The healthcheck port.
-                            The NLB service (TCP/UDP) port.
+                            (Number) The NLB service (TCP/UDP) port.
+                            The healthcheck port.
                           type: number
                         retries:
                           description: |-
@@ -727,8 +723,8 @@ spec:
                     type: string
                   port:
                     description: |-
-                      (Number) The healthcheck port.
-                      The healthcheck port.
+                      (Number) The NLB service (TCP/UDP) port.
+                      The NLB service (TCP/UDP) port.
                     type: number
                   protocol:
                     description: |-
@@ -736,7 +732,9 @@ spec:
                       The protocol (`tcp`|`udp`; default: `tcp`).
                     type: string
                   state:
-                    description: (String)
+                    description: |-
+                      (String) The current NLB service state.
+                      The current NLB service state.
                     type: string
                   strategy:
                     description: |-
