@@ -61,6 +61,13 @@ func setupNamespaced(mgr ctrl.Manager, o controller.Options) error {
 			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))))
 }
 
+// SetupWebhookWithManager is a no-op: ProviderConfigs and ClusterProviderConfigs
+// have a single version and need no conversion webhook. It is required by the
+// generated setup aggregator.
+func SetupWebhookWithManager(_ ctrl.Manager) error {
+	return nil
+}
+
 // SetupGated adds a controller that reconciles ProviderConfigs and ClusterProviderConfigs
 // by accounting for their current usage.
 func SetupGated(mgr ctrl.Manager, o controller.Options) error {
