@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: instances.compute.exoscale.m.exoscale.ch
 spec:
   group: compute.exoscale.m.exoscale.ch
@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: 'Instance is the Schema for the Instances API. Manage Exoscale
-          Compute Instances https://community.exoscale.com/documentation/compute/.
+          Compute Instances https://community.exoscale.com/product/compute/instances/.
           Corresponding data sources: exoscalecomputeinstance ../data-sources/compute_instance.md,
           exoscalecomputeinstance_list ../data-sources/compute_instance_list.md. After
           the creation, you can retrieve the password of an instance with Exoscale
@@ -705,6 +705,41 @@ spec:
                       init configuration.
                       [cloud-init](https://cloudinit.readthedocs.io/) configuration.
                     type: string
+                  vpc:
+                    description: |-
+                      (Block List) The exoscale_vpc to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below. (see below for nested schema)
+                      The [exoscale_vpc](./vpc.md) to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below.
+                    items:
+                      properties:
+                        id:
+                          description: |-
+                            (String) The ID of this resource.
+                            The [exoscale_vpc](./vpc.md) (ID) the subnets belong to. An instance may only be attached to one VPC, thus changing it detaches the instance from every subnet of the previous VPC.
+                          type: string
+                        interfaces:
+                          description: '(Attributes List) The VPC subnets to attach
+                            the instance to. The order is strict: inserting, removing
+                            or reordering an element detaches every interface from
+                            that position on, then attaches them again in the configured
+                            order. Attachment changes are not atomic: if an attachment
+                            fails, the interfaces detached before it stay detached
+                            until the next apply. (see below for nested schema)'
+                          items:
+                            properties:
+                              ipv4Address:
+                                description: |-
+                                  (String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).
+                                  The IPv4 address to allocate to the instance in the subnet, or `auto` to let the platform pick one (default: `auto`).
+                                type: string
+                              subnetId:
+                                description: |-
+                                  (String) The exoscale_vpc_subnet (ID) to attach the instance to.
+                                  The [exoscale_vpc_subnet](./vpc_subnet.md) (ID) to attach the instance to.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   zone:
                     description: |-
                       (String) ❗ The Exoscale Zone name.
@@ -1365,6 +1400,41 @@ spec:
                       init configuration.
                       [cloud-init](https://cloudinit.readthedocs.io/) configuration.
                     type: string
+                  vpc:
+                    description: |-
+                      (Block List) The exoscale_vpc to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below. (see below for nested schema)
+                      The [exoscale_vpc](./vpc.md) to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below.
+                    items:
+                      properties:
+                        id:
+                          description: |-
+                            (String) The ID of this resource.
+                            The [exoscale_vpc](./vpc.md) (ID) the subnets belong to. An instance may only be attached to one VPC, thus changing it detaches the instance from every subnet of the previous VPC.
+                          type: string
+                        interfaces:
+                          description: '(Attributes List) The VPC subnets to attach
+                            the instance to. The order is strict: inserting, removing
+                            or reordering an element detaches every interface from
+                            that position on, then attaches them again in the configured
+                            order. Attachment changes are not atomic: if an attachment
+                            fails, the interfaces detached before it stay detached
+                            until the next apply. (see below for nested schema)'
+                          items:
+                            properties:
+                              ipv4Address:
+                                description: |-
+                                  (String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).
+                                  The IPv4 address to allocate to the instance in the subnet, or `auto` to let the platform pick one (default: `auto`).
+                                type: string
+                              subnetId:
+                                description: |-
+                                  (String) The exoscale_vpc_subnet (ID) to attach the instance to.
+                                  The [exoscale_vpc_subnet](./vpc_subnet.md) (ID) to attach the instance to.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   zone:
                     description: |-
                       (String) ❗ The Exoscale Zone name.
@@ -1627,6 +1697,46 @@ spec:
                       init configuration.
                       [cloud-init](https://cloudinit.readthedocs.io/) configuration.
                     type: string
+                  vpc:
+                    description: |-
+                      (Block List) The exoscale_vpc to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below. (see below for nested schema)
+                      The [exoscale_vpc](./vpc.md) to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below.
+                    items:
+                      properties:
+                        id:
+                          description: |-
+                            (String) The ID of this resource.
+                            The [exoscale_vpc](./vpc.md) (ID) the subnets belong to. An instance may only be attached to one VPC, thus changing it detaches the instance from every subnet of the previous VPC.
+                          type: string
+                        interfaces:
+                          description: '(Attributes List) The VPC subnets to attach
+                            the instance to. The order is strict: inserting, removing
+                            or reordering an element detaches every interface from
+                            that position on, then attaches them again in the configured
+                            order. Attachment changes are not atomic: if an attachment
+                            fails, the interfaces detached before it stay detached
+                            until the next apply. (see below for nested schema)'
+                          items:
+                            properties:
+                              ipv4Address:
+                                description: |-
+                                  (String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).
+                                  The IPv4 address to allocate to the instance in the subnet, or `auto` to let the platform pick one (default: `auto`).
+                                type: string
+                              ipv4AddressAllocated:
+                                description: |-
+                                  (String) The IPv4 address allocated to the instance in the subnet.
+                                  The IPv4 address allocated to the instance in the subnet.
+                                type: string
+                              subnetId:
+                                description: |-
+                                  (String) The exoscale_vpc_subnet (ID) to attach the instance to.
+                                  The [exoscale_vpc_subnet](./vpc_subnet.md) (ID) to attach the instance to.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   zone:
                     description: |-
                       (String) ❗ The Exoscale Zone name.

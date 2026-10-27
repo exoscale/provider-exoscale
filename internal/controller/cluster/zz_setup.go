@@ -106,3 +106,38 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		antiaffinitygroup.SetupWebhookWithManager,
+		blockstoragevolume.SetupWebhookWithManager,
+		elasticip.SetupWebhookWithManager,
+		instance.SetupWebhookWithManager,
+		instancepool.SetupWebhookWithManager,
+		nlb.SetupWebhookWithManager,
+		nlbservice.SetupWebhookWithManager,
+		privatenetwork.SetupWebhookWithManager,
+		securitygroup.SetupWebhookWithManager,
+		securitygrouprules.SetupWebhookWithManager,
+		skscluster.SetupWebhookWithManager,
+		sksnodepool.SetupWebhookWithManager,
+		sshkey.SetupWebhookWithManager,
+		dbaasdatabasemysql.SetupWebhookWithManager,
+		dbaasdatabasepg.SetupWebhookWithManager,
+		dbaasservice.SetupWebhookWithManager,
+		dbaasuserkafka.SetupWebhookWithManager,
+		dbaasusermysql.SetupWebhookWithManager,
+		dbaasuseropensearch.SetupWebhookWithManager,
+		dbaasuserpg.SetupWebhookWithManager,
+		iamapikey.SetupWebhookWithManager,
+		iamorgpolicy.SetupWebhookWithManager,
+		iamrole.SetupWebhookWithManager,
+		providerconfig.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

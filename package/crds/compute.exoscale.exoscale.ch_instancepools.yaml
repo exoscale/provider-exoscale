@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: instancepools.compute.exoscale.exoscale.ch
 spec:
   group: compute.exoscale.exoscale.ch
@@ -360,22 +360,6 @@ spec:
                       exo compute instance-type list - for the list of available types).
                       The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
                     type: string
-                  instances:
-                    description: |-
-                      (Block Set) The list of managed instances. Structure is documented below. (see below for nested schema)
-                      The list of managed instances. Structure is documented below.
-                    items:
-                      properties:
-                        id:
-                          description: (String) The ID of this resource.
-                          type: string
-                        name:
-                          description: |-
-                            (String) The instance pool name.
-                            The instance name.
-                          type: string
-                      type: object
-                    type: array
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on managed instances (boolean; default: false).
@@ -652,11 +636,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  serviceOffering:
-                    description: |-
-                      (String, Deprecated) The managed instances type. Please use the instance_type argument instead.
-                      The managed instances type. Please use the `instance_type` argument instead.
-                    type: string
                   size:
                     description: |-
                       (Number) The number of managed instances.
@@ -672,14 +651,6 @@ spec:
                       init configuration to apply to the managed instances.
                       [cloud-init](http://cloudinit.readthedocs.io/) configuration to apply to the managed instances.
                     type: string
-                  virtualMachines:
-                    description: |-
-                      (Set of String, Deprecated) The list of managed instances (IDs). Please use the instances.*.id attribute instead.
-                      The list of managed instances (IDs). Please use the `instances.*.id` attribute instead.
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
                   zone:
                     description: |-
                       (String) ❗ The Exoscale Zone name.
@@ -984,22 +955,6 @@ spec:
                       exo compute instance-type list - for the list of available types).
                       The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
                     type: string
-                  instances:
-                    description: |-
-                      (Block Set) The list of managed instances. Structure is documented below. (see below for nested schema)
-                      The list of managed instances. Structure is documented below.
-                    items:
-                      properties:
-                        id:
-                          description: (String) The ID of this resource.
-                          type: string
-                        name:
-                          description: |-
-                            (String) The instance pool name.
-                            The instance name.
-                          type: string
-                      type: object
-                    type: array
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on managed instances (boolean; default: false).
@@ -1276,11 +1231,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  serviceOffering:
-                    description: |-
-                      (String, Deprecated) The managed instances type. Please use the instance_type argument instead.
-                      The managed instances type. Please use the `instance_type` argument instead.
-                    type: string
                   size:
                     description: |-
                       (Number) The number of managed instances.
@@ -1296,14 +1246,6 @@ spec:
                       init configuration to apply to the managed instances.
                       [cloud-init](http://cloudinit.readthedocs.io/) configuration to apply to the managed instances.
                     type: string
-                  virtualMachines:
-                    description: |-
-                      (Set of String, Deprecated) The list of managed instances (IDs). Please use the instances.*.id attribute instead.
-                      The list of managed instances (IDs). Please use the `instances.*.id` attribute instead.
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
                   zone:
                     description: |-
                       (String) ❗ The Exoscale Zone name.
@@ -1397,6 +1339,10 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: spec.forProvider.instanceType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.instanceType)
+                || (has(self.initProvider) && has(self.initProvider.instanceType))'
             - message: spec.forProvider.name is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
@@ -1471,13 +1417,14 @@ spec:
                       The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
                     type: string
                   instances:
-                    description: |-
-                      (Block Set) The list of managed instances. Structure is documented below. (see below for nested schema)
-                      The list of managed instances. Structure is documented below.
+                    description: (Attributes Set) The list of managed instances. Structure
+                      is documented below. (see below for nested schema)
                     items:
                       properties:
                         id:
-                          description: (String) The ID of this resource.
+                          description: |-
+                            (String) The ID of this resource.
+                            The instance ID.
                           type: string
                         ipv6Address:
                           description: |-
@@ -1540,18 +1487,15 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
-                  serviceOffering:
-                    description: |-
-                      (String, Deprecated) The managed instances type. Please use the instance_type argument instead.
-                      The managed instances type. Please use the `instance_type` argument instead.
-                    type: string
                   size:
                     description: |-
                       (Number) The number of managed instances.
                       The number of managed instances.
                     type: number
                   state:
-                    description: (String)
+                    description: |-
+                      (String) The instance pool state.
+                      The instance pool state.
                     type: string
                   templateId:
                     description: |-

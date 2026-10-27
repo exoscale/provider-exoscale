@@ -151,6 +151,10 @@ type InstanceInitParameters struct {
 	// [cloud-init](https://cloudinit.readthedocs.io/) configuration.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 
+	// (Block List) The exoscale_vpc to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below. (see below for nested schema)
+	// The [exoscale_vpc](./vpc.md) to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below.
+	VPC []VPCInitParameters `json:"vpc,omitempty" tf:"vpc,omitempty"`
+
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -271,6 +275,10 @@ type InstanceObservation struct {
 	// init configuration.
 	// [cloud-init](https://cloudinit.readthedocs.io/) configuration.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+
+	// (Block List) The exoscale_vpc to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below. (see below for nested schema)
+	// The [exoscale_vpc](./vpc.md) to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below.
+	VPC []VPCObservation `json:"vpc,omitempty" tf:"vpc,omitempty"`
 
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
@@ -435,10 +443,54 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 
+	// (Block List) The exoscale_vpc to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below. (see below for nested schema)
+	// The [exoscale_vpc](./vpc.md) to attach the instance to (at most one block). Removing the block detaches the instance from every subnet. Structure is documented below.
+	// +kubebuilder:validation:Optional
+	VPC []VPCParameters `json:"vpc,omitempty" tf:"vpc,omitempty"`
+
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type InterfacesInitParameters struct {
+
+	// (String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).
+	// The IPv4 address to allocate to the instance in the subnet, or `auto` to let the platform pick one (default: `auto`).
+	IPv4Address *string `json:"ipv4Address,omitempty" tf:"ipv4_address,omitempty"`
+
+	// (String) The exoscale_vpc_subnet (ID) to attach the instance to.
+	// The [exoscale_vpc_subnet](./vpc_subnet.md) (ID) to attach the instance to.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type InterfacesObservation struct {
+
+	// (String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).
+	// The IPv4 address to allocate to the instance in the subnet, or `auto` to let the platform pick one (default: `auto`).
+	IPv4Address *string `json:"ipv4Address,omitempty" tf:"ipv4_address,omitempty"`
+
+	// (String) The IPv4 address allocated to the instance in the subnet.
+	// The IPv4 address allocated to the instance in the subnet.
+	IPv4AddressAllocated *string `json:"ipv4AddressAllocated,omitempty" tf:"ipv4_address_allocated,omitempty"`
+
+	// (String) The exoscale_vpc_subnet (ID) to attach the instance to.
+	// The [exoscale_vpc_subnet](./vpc_subnet.md) (ID) to attach the instance to.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type InterfacesParameters struct {
+
+	// (String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).
+	// The IPv4 address to allocate to the instance in the subnet, or `auto` to let the platform pick one (default: `auto`).
+	// +kubebuilder:validation:Optional
+	IPv4Address *string `json:"ipv4Address,omitempty" tf:"ipv4_address,omitempty"`
+
+	// (String) The exoscale_vpc_subnet (ID) to attach the instance to.
+	// The [exoscale_vpc_subnet](./vpc_subnet.md) (ID) to attach the instance to.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
 }
 
 type NetworkInterfaceInitParameters struct {
@@ -498,6 +550,38 @@ type NetworkInterfaceParameters struct {
 	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 }
 
+type VPCInitParameters struct {
+
+	// (String) The ID of this resource.
+	// The [exoscale_vpc](./vpc.md) (ID) the subnets belong to. An instance may only be attached to one VPC, thus changing it detaches the instance from every subnet of the previous VPC.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (Attributes List) The VPC subnets to attach the instance to. The order is strict: inserting, removing or reordering an element detaches every interface from that position on, then attaches them again in the configured order. Attachment changes are not atomic: if an attachment fails, the interfaces detached before it stay detached until the next apply. (see below for nested schema)
+	Interfaces []InterfacesInitParameters `json:"interfaces,omitempty" tf:"interfaces,omitempty"`
+}
+
+type VPCObservation struct {
+
+	// (String) The ID of this resource.
+	// The [exoscale_vpc](./vpc.md) (ID) the subnets belong to. An instance may only be attached to one VPC, thus changing it detaches the instance from every subnet of the previous VPC.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (Attributes List) The VPC subnets to attach the instance to. The order is strict: inserting, removing or reordering an element detaches every interface from that position on, then attaches them again in the configured order. Attachment changes are not atomic: if an attachment fails, the interfaces detached before it stay detached until the next apply. (see below for nested schema)
+	Interfaces []InterfacesObservation `json:"interfaces,omitempty" tf:"interfaces,omitempty"`
+}
+
+type VPCParameters struct {
+
+	// (String) The ID of this resource.
+	// The [exoscale_vpc](./vpc.md) (ID) the subnets belong to. An instance may only be attached to one VPC, thus changing it detaches the instance from every subnet of the previous VPC.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
+
+	// (Attributes List) The VPC subnets to attach the instance to. The order is strict: inserting, removing or reordering an element detaches every interface from that position on, then attaches them again in the configured order. Attachment changes are not atomic: if an attachment fails, the interfaces detached before it stay detached until the next apply. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Interfaces []InterfacesParameters `json:"interfaces" tf:"interfaces,omitempty"`
+}
+
 // InstanceSpec defines the desired state of Instance
 type InstanceSpec struct {
 	v2.ManagedResourceSpec `json:",inline"`
@@ -525,7 +609,7 @@ type InstanceStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Instance is the Schema for the Instances API. Manage Exoscale Compute Instances https://community.exoscale.com/documentation/compute/. Corresponding data sources: exoscalecomputeinstance ../data-sources/compute_instance.md, exoscalecomputeinstance_list ../data-sources/compute_instance_list.md. After the creation, you can retrieve the password of an instance with Exoscale CLI https://github.com/exoscale/cli: exo compute instance reveal-password NAME.
+// Instance is the Schema for the Instances API. Manage Exoscale Compute Instances https://community.exoscale.com/product/compute/instances/. Corresponding data sources: exoscalecomputeinstance ../data-sources/compute_instance.md, exoscalecomputeinstance_list ../data-sources/compute_instance_list.md. After the creation, you can retrieve the password of an instance with Exoscale CLI https://github.com/exoscale/cli: exo compute instance reveal-password NAME.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

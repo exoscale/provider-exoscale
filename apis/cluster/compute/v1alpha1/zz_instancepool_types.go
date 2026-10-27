@@ -81,10 +81,6 @@ type InstancePoolInitParameters struct {
 	// The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// (Block Set) The list of managed instances. Structure is documented below. (see below for nested schema)
-	// The list of managed instances. Structure is documented below.
-	Instances []InstancesInitParameters `json:"instances,omitempty" tf:"instances,omitempty"`
-
 	// (String) The exoscale_ssh_key (name) to authorize in the managed instances.
 	// The [exoscale_ssh_key](./ssh_key.md) (name) to authorize in the managed instances.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.SSHKey
@@ -139,10 +135,6 @@ type InstancePoolInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (String, Deprecated) The managed instances type. Please use the instance_type argument instead.
-	// The managed instances type. Please use the `instance_type` argument instead.
-	ServiceOffering *string `json:"serviceOffering,omitempty" tf:"service_offering,omitempty"`
-
 	// (Number) The number of managed instances.
 	// The number of managed instances.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
@@ -154,11 +146,6 @@ type InstancePoolInitParameters struct {
 	// init configuration to apply to the managed instances.
 	// [cloud-init](http://cloudinit.readthedocs.io/) configuration to apply to the managed instances.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
-
-	// (Set of String, Deprecated) The list of managed instances (IDs). Please use the instances.*.id attribute instead.
-	// The list of managed instances (IDs). Please use the `instances.*.id` attribute instead.
-	// +listType=set
-	VirtualMachines []*string `json:"virtualMachines,omitempty" tf:"virtual_machines,omitempty"`
 
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
@@ -209,8 +196,7 @@ type InstancePoolObservation struct {
 	// The managed compute instances type (`<family>.<size>`, e.g. `standard.medium`; use the [Exoscale CLI](https://github.com/exoscale/cli/) - `exo compute instance-type list` - for the list of available types).
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// (Block Set) The list of managed instances. Structure is documented below. (see below for nested schema)
-	// The list of managed instances. Structure is documented below.
+	// (Attributes Set) The list of managed instances. Structure is documented below. (see below for nested schema)
 	Instances []InstancesObservation `json:"instances,omitempty" tf:"instances,omitempty"`
 
 	// (String) The exoscale_ssh_key (name) to authorize in the managed instances.
@@ -240,15 +226,12 @@ type InstancePoolObservation struct {
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// (String, Deprecated) The managed instances type. Please use the instance_type argument instead.
-	// The managed instances type. Please use the `instance_type` argument instead.
-	ServiceOffering *string `json:"serviceOffering,omitempty" tf:"service_offering,omitempty"`
-
 	// (Number) The number of managed instances.
 	// The number of managed instances.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// (String)
+	// (String) The instance pool state.
+	// The instance pool state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
 	// (String) The exoscale_template (ID) to use when creating the managed instances.
@@ -346,11 +329,6 @@ type InstancePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// (Block Set) The list of managed instances. Structure is documented below. (see below for nested schema)
-	// The list of managed instances. Structure is documented below.
-	// +kubebuilder:validation:Optional
-	Instances []InstancesParameters `json:"instances,omitempty" tf:"instances,omitempty"`
-
 	// (String) The exoscale_ssh_key (name) to authorize in the managed instances.
 	// The [exoscale_ssh_key](./ssh_key.md) (name) to authorize in the managed instances.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.SSHKey
@@ -411,11 +389,6 @@ type InstancePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (String, Deprecated) The managed instances type. Please use the instance_type argument instead.
-	// The managed instances type. Please use the `instance_type` argument instead.
-	// +kubebuilder:validation:Optional
-	ServiceOffering *string `json:"serviceOffering,omitempty" tf:"service_offering,omitempty"`
-
 	// (Number) The number of managed instances.
 	// The number of managed instances.
 	// +kubebuilder:validation:Optional
@@ -431,12 +404,6 @@ type InstancePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 
-	// (Set of String, Deprecated) The list of managed instances (IDs). Please use the instances.*.id attribute instead.
-	// The list of managed instances (IDs). Please use the `instances.*.id` attribute instead.
-	// +kubebuilder:validation:Optional
-	// +listType=set
-	VirtualMachines []*string `json:"virtualMachines,omitempty" tf:"virtual_machines,omitempty"`
-
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
 	// +kubebuilder:validation:Optional
@@ -444,18 +411,12 @@ type InstancePoolParameters struct {
 }
 
 type InstancesInitParameters struct {
-
-	// (String) The ID of this resource.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (String) The instance pool name.
-	// The instance name.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type InstancesObservation struct {
 
 	// (String) The ID of this resource.
+	// The instance ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) The instance (main network interface) IPv6 address.
@@ -472,15 +433,6 @@ type InstancesObservation struct {
 }
 
 type InstancesParameters struct {
-
-	// (String) The ID of this resource.
-	// +kubebuilder:validation:Optional
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (String) The instance pool name.
-	// The instance name.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // InstancePoolSpec defines the desired state of InstancePool
@@ -519,6 +471,7 @@ type InstancePoolStatus struct {
 type InstancePool struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceType) || (has(self.initProvider) && has(self.initProvider.instanceType))",message="spec.forProvider.instanceType is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.size) || (has(self.initProvider) && has(self.initProvider.size))",message="spec.forProvider.size is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.templateId) || (has(self.initProvider) && has(self.initProvider.templateId))",message="spec.forProvider.templateId is a required parameter"

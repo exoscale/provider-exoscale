@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: sshkeys.compute.exoscale.exoscale.ch
 spec:
   group: compute.exoscale.exoscale.ch
@@ -200,7 +200,7 @@ spec:
                       The SSH key unique identifier.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String) The SSH key name.
                     type: string
                   publicKey:
                     description: |-
