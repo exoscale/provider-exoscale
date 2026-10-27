@@ -18,7 +18,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "IAMAPIKey"
 
 		r.References["role_id"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/iam/v1alpha1.IAMRole",
+			TerraformName: "exoscale_iam_role",
 		}
 	})
 

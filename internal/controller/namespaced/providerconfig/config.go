@@ -37,7 +37,7 @@ func setupCluster(mgr ctrl.Manager, o controller.Options) error {
 		Watches(&v1beta1.ProviderConfigUsage{}, &resource.EnqueueRequestForProviderConfig{}).
 		Complete(providerconfig.NewReconciler(mgr, of,
 			providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
-			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))))
+			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))))) //nolint:staticcheck // crossplane-runtime event.NewAPIRecorder only accepts the old record.EventRecorder
 }
 
 // setupNamespaced adds a controller that reconciles ProviderConfigs by accounting for
@@ -58,7 +58,7 @@ func setupNamespaced(mgr ctrl.Manager, o controller.Options) error {
 		Watches(&v1beta1.ProviderConfigUsage{}, &resource.EnqueueRequestForProviderConfig{}).
 		Complete(providerconfig.NewReconciler(mgr, of,
 			providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
-			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))))
+			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))))) //nolint:staticcheck // crossplane-runtime event.NewAPIRecorder only accepts the old record.EventRecorder
 }
 
 // SetupWebhookWithManager is a no-op: ProviderConfigs and ClusterProviderConfigs

@@ -1,3 +1,4 @@
+//nolint:goconst // resource configurators repeat referenced Terraform names on purpose
 package dbaas
 
 import (
@@ -18,7 +19,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DBAASUserPG"
 
 		r.References["service"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+			TerraformName: "exoscale_dbaas",
 		}
 	})
 
@@ -27,7 +28,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DBAASDatabasePG"
 
 		r.References["service"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+			TerraformName: "exoscale_dbaas",
 		}
 	})
 
@@ -36,7 +37,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DBAASUserMySQL"
 
 		r.References["service"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+			TerraformName: "exoscale_dbaas",
 		}
 	})
 
@@ -45,7 +46,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DBAASDatabaseMySQL"
 
 		r.References["service"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+			TerraformName: "exoscale_dbaas",
 		}
 	})
 
@@ -54,7 +55,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DBAASUserKafka"
 
 		r.References["service"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+			TerraformName: "exoscale_dbaas",
 		}
 	})
 
@@ -63,7 +64,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "DBAASUserOpenSearch"
 
 		r.References["service"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/cluster/dbaas/v1alpha1.DBAASService",
+			TerraformName: "exoscale_dbaas",
 		}
 	})
 }

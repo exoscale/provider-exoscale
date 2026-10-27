@@ -21,7 +21,7 @@ func Configure(p *config.Provider) {
 		r.Kind = "SecurityGroupRules"
 
 		r.References["security_group_id"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SecurityGroup",
+			TerraformName: "exoscale_security_group",
 		}
 
 		// Ignore the deprecated security_group field to avoid conflicts
@@ -56,22 +56,22 @@ func Configure(p *config.Provider) {
 		r.Kind = "Instance"
 
 		r.References["anti_affinity_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+			TerraformName: "exoscale_anti_affinity_group",
 		}
 		r.References["block_storage_volume_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.BlockStorageVolume",
+			TerraformName: "exoscale_block_storage_volume",
 		}
 		r.References["elastic_ip_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.ElasticIP",
+			TerraformName: "exoscale_elastic_ip",
 		}
 		r.References["network_interface.network_id"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork",
+			TerraformName: "exoscale_private_network",
 		}
 		r.References["security_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SecurityGroup",
+			TerraformName: "exoscale_security_group",
 		}
 		r.References["ssh_keys"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SSHKey",
+			TerraformName: "exoscale_ssh_key",
 		}
 	})
 
@@ -80,22 +80,22 @@ func Configure(p *config.Provider) {
 		r.Kind = "InstancePool"
 
 		r.References["affinity_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+			TerraformName: "exoscale_anti_affinity_group",
 		}
 		r.References["anti_affinity_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+			TerraformName: "exoscale_anti_affinity_group",
 		}
 		r.References["elastic_ip_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.ElasticIP",
+			TerraformName: "exoscale_elastic_ip",
 		}
 		r.References["key_pair"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SSHKey",
+			TerraformName: "exoscale_ssh_key",
 		}
 		r.References["network_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork",
+			TerraformName: "exoscale_private_network",
 		}
 		r.References["security_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SecurityGroup",
+			TerraformName: "exoscale_security_group",
 		}
 
 		// Ignore the deprecated service_offering, virtual_machines field to avoid conflicts
@@ -114,10 +114,10 @@ func Configure(p *config.Provider) {
 		r.Kind = "NLBService"
 
 		r.References["instance_pool_id"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.InstancePool",
+			TerraformName: "exoscale_instance_pool",
 		}
 		r.References["nlb_id"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.NLB",
+			TerraformName: "exoscale_nlb",
 		}
 	})
 
@@ -131,16 +131,16 @@ func Configure(p *config.Provider) {
 		r.Kind = "SKSNodepool"
 
 		r.References["cluster_id"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SKSCluster",
+			TerraformName: "exoscale_sks_cluster",
 		}
 		r.References["anti_affinity_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.AntiAffinityGroup",
+			TerraformName: "exoscale_anti_affinity_group",
 		}
 		r.References["private_network_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork",
+			TerraformName: "exoscale_private_network",
 		}
 		r.References["security_group_ids"] = config.Reference{
-			Type: "github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.SecurityGroup",
+			TerraformName: "exoscale_security_group",
 		}
 	})
 }
