@@ -596,10 +596,8 @@ func (in *ElasticIPInitParameters) DeepCopyInto(out *ElasticIPInitParameters) {
 	}
 	if in.Healthcheck != nil {
 		in, out := &in.Healthcheck, &out.Healthcheck
-		*out = make([]HealthcheckInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(HealthcheckInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
@@ -691,10 +689,8 @@ func (in *ElasticIPObservation) DeepCopyInto(out *ElasticIPObservation) {
 	}
 	if in.Healthcheck != nil {
 		in, out := &in.Healthcheck, &out.Healthcheck
-		*out = make([]HealthcheckObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(HealthcheckObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
@@ -759,10 +755,8 @@ func (in *ElasticIPParameters) DeepCopyInto(out *ElasticIPParameters) {
 	}
 	if in.Healthcheck != nil {
 		in, out := &in.Healthcheck, &out.Healthcheck
-		*out = make([]HealthcheckParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(HealthcheckParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
@@ -1255,6 +1249,13 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VPC != nil {
+		in, out := &in.VPC, &out.VPC
+		*out = make([]VPCInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone
 		*out = new(string)
@@ -1491,6 +1492,13 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VPC != nil {
+		in, out := &in.VPC, &out.VPC
+		*out = make([]VPCObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone
 		*out = new(string)
@@ -1719,6 +1727,13 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VPC != nil {
+		in, out := &in.VPC, &out.VPC
+		*out = make([]VPCParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone
 		*out = new(string)
@@ -1865,13 +1880,6 @@ func (in *InstancePoolInitParameters) DeepCopyInto(out *InstancePoolInitParamete
 		*out = new(string)
 		**out = **in
 	}
-	if in.Instances != nil {
-		in, out := &in.Instances, &out.Instances
-		*out = make([]InstancesInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
 	if in.KeyPair != nil {
 		in, out := &in.KeyPair, &out.KeyPair
 		*out = new(string)
@@ -1959,11 +1967,6 @@ func (in *InstancePoolInitParameters) DeepCopyInto(out *InstancePoolInitParamete
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.ServiceOffering != nil {
-		in, out := &in.ServiceOffering, &out.ServiceOffering
-		*out = new(string)
-		**out = **in
-	}
 	if in.Size != nil {
 		in, out := &in.Size, &out.Size
 		*out = new(float64)
@@ -1978,17 +1981,6 @@ func (in *InstancePoolInitParameters) DeepCopyInto(out *InstancePoolInitParamete
 		in, out := &in.UserData, &out.UserData
 		*out = new(string)
 		**out = **in
-	}
-	if in.VirtualMachines != nil {
-		in, out := &in.VirtualMachines, &out.VirtualMachines
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
 	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone
@@ -2170,11 +2162,6 @@ func (in *InstancePoolObservation) DeepCopyInto(out *InstancePoolObservation) {
 			}
 		}
 	}
-	if in.ServiceOffering != nil {
-		in, out := &in.ServiceOffering, &out.ServiceOffering
-		*out = new(string)
-		**out = **in
-	}
 	if in.Size != nil {
 		in, out := &in.Size, &out.Size
 		*out = new(float64)
@@ -2325,13 +2312,6 @@ func (in *InstancePoolParameters) DeepCopyInto(out *InstancePoolParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.Instances != nil {
-		in, out := &in.Instances, &out.Instances
-		*out = make([]InstancesParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
 	if in.KeyPair != nil {
 		in, out := &in.KeyPair, &out.KeyPair
 		*out = new(string)
@@ -2419,11 +2399,6 @@ func (in *InstancePoolParameters) DeepCopyInto(out *InstancePoolParameters) {
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.ServiceOffering != nil {
-		in, out := &in.ServiceOffering, &out.ServiceOffering
-		*out = new(string)
-		**out = **in
-	}
 	if in.Size != nil {
 		in, out := &in.Size, &out.Size
 		*out = new(float64)
@@ -2438,17 +2413,6 @@ func (in *InstancePoolParameters) DeepCopyInto(out *InstancePoolParameters) {
 		in, out := &in.UserData, &out.UserData
 		*out = new(string)
 		**out = **in
-	}
-	if in.VirtualMachines != nil {
-		in, out := &in.VirtualMachines, &out.VirtualMachines
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
 	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone
@@ -2540,16 +2504,6 @@ func (in *InstanceStatus) DeepCopy() *InstanceStatus {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *InstancesInitParameters) DeepCopyInto(out *InstancesInitParameters) {
 	*out = *in
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new InstancesInitParameters.
@@ -2600,16 +2554,6 @@ func (in *InstancesObservation) DeepCopy() *InstancesObservation {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *InstancesParameters) DeepCopyInto(out *InstancesParameters) {
 	*out = *in
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new InstancesParameters.
@@ -2618,6 +2562,86 @@ func (in *InstancesParameters) DeepCopy() *InstancesParameters {
 		return nil
 	}
 	out := new(InstancesParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *InterfacesInitParameters) DeepCopyInto(out *InterfacesInitParameters) {
+	*out = *in
+	if in.IPv4Address != nil {
+		in, out := &in.IPv4Address, &out.IPv4Address
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new InterfacesInitParameters.
+func (in *InterfacesInitParameters) DeepCopy() *InterfacesInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(InterfacesInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *InterfacesObservation) DeepCopyInto(out *InterfacesObservation) {
+	*out = *in
+	if in.IPv4Address != nil {
+		in, out := &in.IPv4Address, &out.IPv4Address
+		*out = new(string)
+		**out = **in
+	}
+	if in.IPv4AddressAllocated != nil {
+		in, out := &in.IPv4AddressAllocated, &out.IPv4AddressAllocated
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new InterfacesObservation.
+func (in *InterfacesObservation) DeepCopy() *InterfacesObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(InterfacesObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *InterfacesParameters) DeepCopyInto(out *InterfacesParameters) {
+	*out = *in
+	if in.IPv4Address != nil {
+		in, out := &in.IPv4Address, &out.IPv4Address
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new InterfacesParameters.
+func (in *InterfacesParameters) DeepCopy() *InterfacesParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(InterfacesParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -2742,6 +2766,11 @@ func (in *NLB) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *NLBInitParameters) DeepCopyInto(out *NLBInitParameters) {
 	*out = *in
+	if in.AddressFamily != nil {
+		in, out := &in.AddressFamily, &out.AddressFamily
+		*out = new(string)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -2820,6 +2849,11 @@ func (in *NLBList) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *NLBObservation) DeepCopyInto(out *NLBObservation) {
 	*out = *in
+	if in.AddressFamily != nil {
+		in, out := &in.AddressFamily, &out.AddressFamily
+		*out = new(string)
+		**out = **in
+	}
 	if in.CreatedAt != nil {
 		in, out := &in.CreatedAt, &out.CreatedAt
 		*out = new(string)
@@ -2897,6 +2931,11 @@ func (in *NLBObservation) DeepCopy() *NLBObservation {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *NLBParameters) DeepCopyInto(out *NLBParameters) {
 	*out = *in
+	if in.AddressFamily != nil {
+		in, out := &in.AddressFamily, &out.AddressFamily
+		*out = new(string)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -4123,6 +4162,17 @@ func (in *SKSClusterInitParameters) DeepCopyInto(out *SKSClusterInitParameters) 
 			}
 		}
 	}
+	if in.KarpenterFeatureGates != nil {
+		in, out := &in.KarpenterFeatureGates, &out.KarpenterFeatureGates
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -4296,6 +4346,17 @@ func (in *SKSClusterObservation) DeepCopyInto(out *SKSClusterObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KarpenterFeatureGates != nil {
+		in, out := &in.KarpenterFeatureGates, &out.KarpenterFeatureGates
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -4424,6 +4485,17 @@ func (in *SKSClusterParameters) DeepCopyInto(out *SKSClusterParameters) {
 	}
 	if in.FeatureGates != nil {
 		in, out := &in.FeatureGates, &out.FeatureGates
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.KarpenterFeatureGates != nil {
+		in, out := &in.KarpenterFeatureGates, &out.KarpenterFeatureGates
 		*out = make([]*string, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -5950,6 +6022,87 @@ func (in *SnapshotTargetParameters) DeepCopy() *SnapshotTargetParameters {
 		return nil
 	}
 	out := new(SnapshotTargetParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *VPCInitParameters) DeepCopyInto(out *VPCInitParameters) {
+	*out = *in
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Interfaces != nil {
+		in, out := &in.Interfaces, &out.Interfaces
+		*out = make([]InterfacesInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new VPCInitParameters.
+func (in *VPCInitParameters) DeepCopy() *VPCInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(VPCInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *VPCObservation) DeepCopyInto(out *VPCObservation) {
+	*out = *in
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Interfaces != nil {
+		in, out := &in.Interfaces, &out.Interfaces
+		*out = make([]InterfacesObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new VPCObservation.
+func (in *VPCObservation) DeepCopy() *VPCObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(VPCObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *VPCParameters) DeepCopyInto(out *VPCParameters) {
+	*out = *in
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Interfaces != nil {
+		in, out := &in.Interfaces, &out.Interfaces
+		*out = make([]InterfacesParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new VPCParameters.
+func (in *VPCParameters) DeepCopy() *VPCParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(VPCParameters)
 	in.DeepCopyInto(out)
 	return out
 }

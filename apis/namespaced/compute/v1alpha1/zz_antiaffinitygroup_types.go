@@ -31,7 +31,7 @@ type AntiAffinityGroupObservation struct {
 	// ❗ A free-form text describing the group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The ID of this resource.
+	// affinity group ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// affinity group name.

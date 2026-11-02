@@ -119,7 +119,6 @@ func (tr *InstancePool) LateInitialize(attrs []byte) (bool, error) {
 	}
 	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
 	opts = append(opts, resource.WithNameFilter("AffinityGroupIds"))
-	opts = append(opts, resource.WithNameFilter("ServiceOffering"))
 	opts = append(opts, resource.WithNameFilter("VirtualMachines"))
 
 	li := resource.NewGenericLateInitializer(opts...)
@@ -128,5 +127,5 @@ func (tr *InstancePool) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *InstancePool) GetTerraformSchemaVersion() int {
-	return 0
+	return 1
 }

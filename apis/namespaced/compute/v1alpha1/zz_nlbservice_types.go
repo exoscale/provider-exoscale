@@ -24,8 +24,8 @@ type NLBServiceHealthcheckInitParameters struct {
 	// The healthcheck mode (`tcp`|`http`|`https`; default: `tcp`).
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// (Number) The healthcheck port.
-	// The NLB service (TCP/UDP) port.
+	// (Number) The NLB service (TCP/UDP) port.
+	// The healthcheck port.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Number) The healthcheck retries (default: 1).
@@ -55,8 +55,8 @@ type NLBServiceHealthcheckObservation struct {
 	// The healthcheck mode (`tcp`|`http`|`https`; default: `tcp`).
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// (Number) The healthcheck port.
-	// The NLB service (TCP/UDP) port.
+	// (Number) The NLB service (TCP/UDP) port.
+	// The healthcheck port.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Number) The healthcheck retries (default: 1).
@@ -88,8 +88,8 @@ type NLBServiceHealthcheckParameters struct {
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// (Number) The healthcheck port.
-	// The NLB service (TCP/UDP) port.
+	// (Number) The NLB service (TCP/UDP) port.
+	// The healthcheck port.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`
 
@@ -120,7 +120,7 @@ type NLBServiceInitParameters struct {
 	// A free-form text describing the NLB service.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block Set, Min: 1) The service health checking configuration. (see below for nested schema)
+	// (Block Set) The service health checking configuration. (see below for nested schema)
 	// The service health checking configuration.
 	Healthcheck []NLBServiceHealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
@@ -154,8 +154,8 @@ type NLBServiceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NlbIDSelector *v1.NamespacedSelector `json:"nlbIdSelector,omitempty" tf:"-"`
 
-	// (Number) The healthcheck port.
-	// The healthcheck port.
+	// (Number) The NLB service (TCP/UDP) port.
+	// The NLB service (TCP/UDP) port.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (String) The protocol (tcp|udp; default: tcp).
@@ -181,7 +181,7 @@ type NLBServiceObservation struct {
 	// A free-form text describing the NLB service.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block Set, Min: 1) The service health checking configuration. (see below for nested schema)
+	// (Block Set) The service health checking configuration. (see below for nested schema)
 	// The service health checking configuration.
 	Healthcheck []NLBServiceHealthcheckObservation `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
@@ -200,15 +200,16 @@ type NLBServiceObservation struct {
 	// ❗ The parent [exoscale_nlb](./nlb.md) ID.
 	NlbID *string `json:"nlbId,omitempty" tf:"nlb_id,omitempty"`
 
-	// (Number) The healthcheck port.
-	// The healthcheck port.
+	// (Number) The NLB service (TCP/UDP) port.
+	// The NLB service (TCP/UDP) port.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (String) The protocol (tcp|udp; default: tcp).
 	// The protocol (`tcp`|`udp`; default: `tcp`).
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String)
+	// (String) The current NLB service state.
+	// The current NLB service state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
 	// robin|source-hash; default: round-robin).
@@ -231,7 +232,7 @@ type NLBServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block Set, Min: 1) The service health checking configuration. (see below for nested schema)
+	// (Block Set) The service health checking configuration. (see below for nested schema)
 	// The service health checking configuration.
 	// +kubebuilder:validation:Optional
 	Healthcheck []NLBServiceHealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
@@ -269,8 +270,8 @@ type NLBServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	NlbIDSelector *v1.NamespacedSelector `json:"nlbIdSelector,omitempty" tf:"-"`
 
-	// (Number) The healthcheck port.
-	// The healthcheck port.
+	// (Number) The NLB service (TCP/UDP) port.
+	// The NLB service (TCP/UDP) port.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
@@ -322,7 +323,7 @@ type NLBServiceStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// NLBService is the Schema for the NLBServices API. Manage Exoscale Network Load Balancer (NLB) https://community.exoscale.com/product/networking/nlb/ Services.
+// NLBService is the Schema for the NLBServices API. Manage Exoscale Network Load Balancer (NLB) https://community.exoscale.com/product/networking/nlb/ Services. Corresponding data source: exoscalenlbservice_list ../data-sources/nlb_service_list.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -331,7 +332,6 @@ type NLBServiceStatus struct {
 type NLBService struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.healthcheck) || (has(self.initProvider) && has(self.initProvider.healthcheck))",message="spec.forProvider.healthcheck is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.port) || (has(self.initProvider) && has(self.initProvider.port))",message="spec.forProvider.port is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.targetPort) || (has(self.initProvider) && has(self.initProvider.targetPort))",message="spec.forProvider.targetPort is a required parameter"

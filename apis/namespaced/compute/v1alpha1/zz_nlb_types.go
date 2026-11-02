@@ -16,6 +16,10 @@ import (
 
 type NLBInitParameters struct {
 
+	// (String) ❗ The NLB address family (inet4|inet6; default: inet4).
+	// ❗ The NLB address family (`inet4`|`inet6`; default: `inet4`).
+	AddressFamily *string `json:"addressFamily,omitempty" tf:"address_family,omitempty"`
+
 	// form text describing the NLB.
 	// A free-form text describing the NLB.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -36,6 +40,10 @@ type NLBInitParameters struct {
 
 type NLBObservation struct {
 
+	// (String) ❗ The NLB address family (inet4|inet6; default: inet4).
+	// ❗ The NLB address family (`inet4`|`inet6`; default: `inet4`).
+	AddressFamily *string `json:"addressFamily,omitempty" tf:"address_family,omitempty"`
+
 	// (String) The NLB creation date.
 	// The NLB creation date.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -47,8 +55,8 @@ type NLBObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The NLB IPv4 address.
-	// The NLB IPv4 address.
+	// (String) The NLB public IP address (IPv4 or IPv6, depending on address_family).
+	// The NLB public IP address (IPv4 or IPv6, depending on `address_family`).
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
 	// (Map of String) A map of key/value labels.
@@ -60,8 +68,8 @@ type NLBObservation struct {
 	// The network load balancer (NLB) name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) The list of the exoscale_nlb_service (names).
-	// The list of the [exoscale_nlb_service](./nlb_service.md) (names).
+	// (Set of String) The list of the exoscale_nlb_service (IDs).
+	// The list of the [exoscale_nlb_service](./nlb_service.md) (IDs).
 	// +listType=set
 	Services []*string `json:"services,omitempty" tf:"services,omitempty"`
 
@@ -75,6 +83,11 @@ type NLBObservation struct {
 }
 
 type NLBParameters struct {
+
+	// (String) ❗ The NLB address family (inet4|inet6; default: inet4).
+	// ❗ The NLB address family (`inet4`|`inet6`; default: `inet4`).
+	// +kubebuilder:validation:Optional
+	AddressFamily *string `json:"addressFamily,omitempty" tf:"address_family,omitempty"`
 
 	// form text describing the NLB.
 	// A free-form text describing the NLB.
@@ -125,7 +138,7 @@ type NLBStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// NLB is the Schema for the NLBs API. Manage Exoscale Network Load Balancers (NLB).
+// NLB is the Schema for the NLBs API. Manage Exoscale Network Load Balancers (NLB) https://community.exoscale.com/product/networking/nlb/. Corresponding data source: exoscale_nlb ../data-sources/nlb.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
