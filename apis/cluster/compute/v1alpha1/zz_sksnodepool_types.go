@@ -102,6 +102,10 @@ type SKSNodepoolInitParameters struct {
 	// The managed instances disk size (GiB; default: `50`).
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// (Boolean) Allow the managed instances to act as routers in their VPC (boolean; default: false). A change only applies to the instances created afterwards.
+	// Allow the managed instances to act as routers in their VPC (boolean; default: `false`). A change only applies to the instances created afterwards.
+	IPForwarding *bool `json:"ipForwarding,omitempty" tf:"ip_forwarding,omitempty"`
+
 	// (Boolean) Enable IPV6 for the nodepool nodes
 	// Enable IPV6 for the nodepool nodes
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
@@ -130,12 +134,16 @@ type SKSNodepoolInitParameters struct {
 	// The SKS node pool name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Expose the managed GPUs with the NVIDIA Dynamic Resource Allocation (DRA) driver instead of the NVIDIA device plugin (boolean; default: false). Requires a GPU instance type and Kubernetes 1.34 or later.
+	// Expose the managed GPUs with the NVIDIA [Dynamic Resource Allocation (DRA)](https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/) driver instead of the NVIDIA device plugin (boolean; default: `false`). Requires a GPU instance type and Kubernetes 1.34 or later.
+	NvidiaDraDriver *bool `json:"nvidiaDraDriver,omitempty" tf:"nvidia_dra_driver,omitempty"`
+
 	// Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.
 	// The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) profile to enable on the managed GPUs. The GPU family is inferred from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`, `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`, `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`, `4g.96gb`, `2g.48gb+gfx`.
 	NvidiaMigProfile *string `json:"nvidiaMigProfile,omitempty" tf:"nvidia_mig_profile,omitempty"`
 
-	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
-	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances.
+	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of VPC.
+	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.PrivateNetwork
 	// +listType=set
 	PrivateNetworkIds []*string `json:"privateNetworkIds,omitempty" tf:"private_network_ids,omitempty"`
@@ -174,6 +182,9 @@ type SKSNodepoolInitParameters struct {
 	// +mapType=granular
 	Taints map[string]*string `json:"taints,omitempty" tf:"taints,omitempty"`
 
+	// (Attributes) The VPC to attach the managed instances to. Removing it detaches them from the VPC. (see below for nested schema)
+	VPC *SKSNodepoolVPCInitParameters `json:"vpc,omitempty" tf:"vpc,omitempty"`
+
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -209,6 +220,10 @@ type SKSNodepoolObservation struct {
 	// (String) The SKS node pool ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Boolean) Allow the managed instances to act as routers in their VPC (boolean; default: false). A change only applies to the instances created afterwards.
+	// Allow the managed instances to act as routers in their VPC (boolean; default: `false`). A change only applies to the instances created afterwards.
+	IPForwarding *bool `json:"ipForwarding,omitempty" tf:"ip_forwarding,omitempty"`
+
 	// (Boolean) Enable IPV6 for the nodepool nodes
 	// Enable IPV6 for the nodepool nodes
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
@@ -241,12 +256,16 @@ type SKSNodepoolObservation struct {
 	// The SKS node pool name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Expose the managed GPUs with the NVIDIA Dynamic Resource Allocation (DRA) driver instead of the NVIDIA device plugin (boolean; default: false). Requires a GPU instance type and Kubernetes 1.34 or later.
+	// Expose the managed GPUs with the NVIDIA [Dynamic Resource Allocation (DRA)](https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/) driver instead of the NVIDIA device plugin (boolean; default: `false`). Requires a GPU instance type and Kubernetes 1.34 or later.
+	NvidiaDraDriver *bool `json:"nvidiaDraDriver,omitempty" tf:"nvidia_dra_driver,omitempty"`
+
 	// Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.
 	// The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) profile to enable on the managed GPUs. The GPU family is inferred from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`, `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`, `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`, `4g.96gb`, `2g.48gb+gfx`.
 	NvidiaMigProfile *string `json:"nvidiaMigProfile,omitempty" tf:"nvidia_mig_profile,omitempty"`
 
-	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
-	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances.
+	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of VPC.
+	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +listType=set
 	PrivateNetworkIds []*string `json:"privateNetworkIds,omitempty" tf:"private_network_ids,omitempty"`
 
@@ -274,6 +293,9 @@ type SKSNodepoolObservation struct {
 	// (String) The managed instances template ID.
 	// The managed instances template ID.
 	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
+
+	// (Attributes) The VPC to attach the managed instances to. Removing it detaches them from the VPC. (see below for nested schema)
+	VPC *SKSNodepoolVPCObservation `json:"vpc,omitempty" tf:"vpc,omitempty"`
 
 	// (String) The managed instances version.
 	// The managed instances version.
@@ -330,6 +352,11 @@ type SKSNodepoolParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// (Boolean) Allow the managed instances to act as routers in their VPC (boolean; default: false). A change only applies to the instances created afterwards.
+	// Allow the managed instances to act as routers in their VPC (boolean; default: `false`). A change only applies to the instances created afterwards.
+	// +kubebuilder:validation:Optional
+	IPForwarding *bool `json:"ipForwarding,omitempty" tf:"ip_forwarding,omitempty"`
+
 	// (Boolean) Enable IPV6 for the nodepool nodes
 	// Enable IPV6 for the nodepool nodes
 	// +kubebuilder:validation:Optional
@@ -365,13 +392,18 @@ type SKSNodepoolParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Expose the managed GPUs with the NVIDIA Dynamic Resource Allocation (DRA) driver instead of the NVIDIA device plugin (boolean; default: false). Requires a GPU instance type and Kubernetes 1.34 or later.
+	// Expose the managed GPUs with the NVIDIA [Dynamic Resource Allocation (DRA)](https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/) driver instead of the NVIDIA device plugin (boolean; default: `false`). Requires a GPU instance type and Kubernetes 1.34 or later.
+	// +kubebuilder:validation:Optional
+	NvidiaDraDriver *bool `json:"nvidiaDraDriver,omitempty" tf:"nvidia_dra_driver,omitempty"`
+
 	// Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.
 	// The NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) profile to enable on the managed GPUs. The GPU family is inferred from `instance_type`: `gpua30.*` accepts `2g.12gb`, `1g.6gb+me`, `1g.6gb`, `2g.12gb+me`, `4g.24gb`; `gpurtx6000pro.*` accepts `1g.24gb-me`, `1g.24gb`, `2g.48gb-me`, `2g.48gb`, `4g.96gb+gfx`, `1g.24gb+me`, `2g.48gb+me.all`, `1g.24gb+gfx`, `1g.24gb+me.all`, `4g.96gb`, `2g.48gb+gfx`.
 	// +kubebuilder:validation:Optional
 	NvidiaMigProfile *string `json:"nvidiaMigProfile,omitempty" tf:"nvidia_mig_profile,omitempty"`
 
-	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
-	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances.
+	// (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of VPC.
+	// A list of [exoscale_private_network](./private_network.md) (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/cluster/compute/v1alpha1.PrivateNetwork
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -415,10 +447,49 @@ type SKSNodepoolParameters struct {
 	// +mapType=granular
 	Taints map[string]*string `json:"taints,omitempty" tf:"taints,omitempty"`
 
+	// (Attributes) The VPC to attach the managed instances to. Removing it detaches them from the VPC. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	VPC *SKSNodepoolVPCParameters `json:"vpc,omitempty" tf:"vpc,omitempty"`
+
 	// (String) ❗ The Exoscale Zone name.
 	// ❗ The Exoscale [Zone](https://www.exoscale.com/datacenters/) name.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type SKSNodepoolVPCInitParameters struct {
+
+	// (String) The SKS node pool ID.
+	// The [exoscale_vpc](./vpc.md) (ID) the subnets belong to.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (List of String) A list of exoscale_vpc_subnet (IDs) to attach the managed instances to, in this order.
+	// A list of [exoscale_vpc_subnet](./vpc_subnet.md) (IDs) to attach the managed instances to, in this order.
+	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+}
+
+type SKSNodepoolVPCObservation struct {
+
+	// (String) The SKS node pool ID.
+	// The [exoscale_vpc](./vpc.md) (ID) the subnets belong to.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (List of String) A list of exoscale_vpc_subnet (IDs) to attach the managed instances to, in this order.
+	// A list of [exoscale_vpc_subnet](./vpc_subnet.md) (IDs) to attach the managed instances to, in this order.
+	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+}
+
+type SKSNodepoolVPCParameters struct {
+
+	// (String) The SKS node pool ID.
+	// The [exoscale_vpc](./vpc.md) (ID) the subnets belong to.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
+
+	// (List of String) A list of exoscale_vpc_subnet (IDs) to attach the managed instances to, in this order.
+	// A list of [exoscale_vpc_subnet](./vpc_subnet.md) (IDs) to attach the managed instances to, in this order.
+	// +kubebuilder:validation:Optional
+	SubnetIds []*string `json:"subnetIds" tf:"subnet_ids,omitempty"`
 }
 
 // SKSNodepoolSpec defines the desired state of SKSNodepool

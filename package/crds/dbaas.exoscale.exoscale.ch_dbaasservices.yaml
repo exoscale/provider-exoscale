@@ -389,9 +389,23 @@ spec:
                     description: The database service protection boolean flag against
                       termination/power-off.
                     type: boolean
+                  thanos:
+                    properties:
+                      ipFilter:
+                        description: A list of CIDR blocks to allow incoming connections
+                          from.
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
+                      thanosSettings:
+                        description: Thanos configuration settings in JSON format
+                          (`exo dbaas type show thanos --settings=thanos` for reference).
+                        type: string
+                    type: object
                   type:
                     description: The type of the database service (`clickhouse`, `kafka`,
-                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`, `thanos`).
                     type: string
                   valkey:
                     properties:
@@ -742,9 +756,23 @@ spec:
                     description: The database service protection boolean flag against
                       termination/power-off.
                     type: boolean
+                  thanos:
+                    properties:
+                      ipFilter:
+                        description: A list of CIDR blocks to allow incoming connections
+                          from.
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
+                      thanosSettings:
+                        description: Thanos configuration settings in JSON format
+                          (`exo dbaas type show thanos --settings=thanos` for reference).
+                        type: string
+                    type: object
                   type:
                     description: The type of the database service (`clickhouse`, `kafka`,
-                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`, `thanos`).
                     type: string
                   valkey:
                     properties:
@@ -1174,9 +1202,35 @@ spec:
                     description: The database service protection boolean flag against
                       termination/power-off.
                     type: boolean
+                  thanos:
+                    properties:
+                      ipFilter:
+                        description: A list of CIDR blocks to allow incoming connections
+                          from.
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
+                      queryFrontendUri:
+                        description: Thanos Query Frontend URI.
+                        type: string
+                      queryUri:
+                        description: Thanos Query URI.
+                        type: string
+                      receiverRemoteWriteUri:
+                        description: Thanos Receiver remote write URI.
+                        type: string
+                      rulerUri:
+                        description: Thanos Ruler URI.
+                        type: string
+                      thanosSettings:
+                        description: Thanos configuration settings in JSON format
+                          (`exo dbaas type show thanos --settings=thanos` for reference).
+                        type: string
+                    type: object
                   type:
                     description: The type of the database service (`clickhouse`, `kafka`,
-                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+                      `mysql`, `opensearch`, `pg`, `valkey`, `grafana`, `thanos`).
                     type: string
                   updatedAt:
                     description: The date of the latest database service update.

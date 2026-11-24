@@ -474,8 +474,8 @@ spec:
                     type: string
                   networkIds:
                     description: |-
-                      (Set of String) A list of exoscale_private_network (IDs).
-                      A list of [exoscale_private_network](./private_network.md) (IDs).
+                      (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
+                      A list of [exoscale_private_network](./private_network.md) (IDs). Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
                     items:
                       type: string
                     type: array
@@ -1105,8 +1105,8 @@ spec:
                     type: string
                   networkIds:
                     description: |-
-                      (Set of String) A list of exoscale_private_network (IDs).
-                      A list of [exoscale_private_network](./private_network.md) (IDs).
+                      (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
+                      A list of [exoscale_private_network](./private_network.md) (IDs). Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
                     items:
                       type: string
                     type: array
@@ -1503,8 +1503,8 @@ spec:
                     type: string
                   networkIds:
                     description: |-
-                      (Set of String) A list of exoscale_private_network (IDs).
-                      A list of [exoscale_private_network](./private_network.md) (IDs).
+                      (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
+                      A list of [exoscale_private_network](./private_network.md) (IDs). Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
                     items:
                       type: string
                     type: array

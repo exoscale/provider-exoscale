@@ -108,8 +108,8 @@ type InstancePoolInitParameters struct {
 	// The instance pool name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) A list of exoscale_private_network (IDs).
-	// A list of [exoscale_private_network](./private_network.md) (IDs).
+	// (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
+	// A list of [exoscale_private_network](./private_network.md) (IDs). Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork
 	// +listType=set
 	NetworkIds []*string `json:"networkIds,omitempty" tf:"network_ids,omitempty"`
@@ -217,8 +217,8 @@ type InstancePoolObservation struct {
 	// The instance pool name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) A list of exoscale_private_network (IDs).
-	// A list of [exoscale_private_network](./private_network.md) (IDs).
+	// (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
+	// A list of [exoscale_private_network](./private_network.md) (IDs). Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +listType=set
 	NetworkIds []*string `json:"networkIds,omitempty" tf:"network_ids,omitempty"`
 
@@ -360,8 +360,8 @@ type InstancePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) A list of exoscale_private_network (IDs).
-	// A list of [exoscale_private_network](./private_network.md) (IDs).
+	// (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
+	// A list of [exoscale_private_network](./private_network.md) (IDs). Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.PrivateNetwork
 	// +kubebuilder:validation:Optional
 	// +listType=set

@@ -77,6 +77,10 @@ type InstanceInitParameters struct {
 	// Enable TPM on the instance (boolean; default: `false`). Can not be disabled after the creation. **WARNING**: enabling this attribute stops/restarts the instance.
 	EnableTpm *bool `json:"enableTpm,omitempty" tf:"enable_tpm,omitempty"`
 
+	// (Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.
+	// ❗ Allow the instance to act as a router in a VPC network (boolean; default: `false`). Can not be changed after the creation.
+	IPForwarding *bool `json:"ipForwarding,omitempty" tf:"ip_forwarding,omitempty"`
+
 	// (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
 	// Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
@@ -90,8 +94,8 @@ type InstanceInitParameters struct {
 	// The compute instance name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
-	// Private network interfaces (may be specified multiple times). Structure is documented below.
+	// (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)
+	// Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/): use the `vpc` block instead.
 	NetworkInterface []NetworkInterfaceInitParameters `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
 	// (Boolean) Whether the instance is private (no public IP addresses; default: false)
@@ -203,6 +207,10 @@ type InstanceObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.
+	// ❗ Allow the instance to act as a router in a VPC network (boolean; default: `false`). Can not be changed after the creation.
+	IPForwarding *bool `json:"ipForwarding,omitempty" tf:"ip_forwarding,omitempty"`
+
 	// (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
 	// Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
@@ -224,16 +232,16 @@ type InstanceObservation struct {
 	// The compute instance name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
-	// Private network interfaces (may be specified multiple times). Structure is documented below.
+	// (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)
+	// Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/): use the `vpc` block instead.
 	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
 	// (Boolean) Whether the instance is private (no public IP addresses; default: false)
 	// Whether the instance is private (no public IP addresses; default: false)
 	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
 
-	// (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead.
-	// A list of private networks (IDs) attached to the instance. Please use the `network_interface.*.network_id` argument instead.
+	// (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead. Private Networks are deprecated in favor of VPC.
+	// A list of private networks (IDs) attached to the instance. Please use the `network_interface.*.network_id` argument instead. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
 	// +listType=set
 	PrivateNetworkIds []*string `json:"privateNetworkIds,omitempty" tf:"private_network_ids,omitempty"`
 
@@ -356,6 +364,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableTpm *bool `json:"enableTpm,omitempty" tf:"enable_tpm,omitempty"`
 
+	// (Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.
+	// ❗ Allow the instance to act as a router in a VPC network (boolean; default: `false`). Can not be changed after the creation.
+	// +kubebuilder:validation:Optional
+	IPForwarding *bool `json:"ipForwarding,omitempty" tf:"ip_forwarding,omitempty"`
+
 	// (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
 	// Enable IPv6 on the instance (boolean; default: `false`). Can not be disabled after being enabled.
 	// +kubebuilder:validation:Optional
@@ -372,8 +385,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
-	// Private network interfaces (may be specified multiple times). Structure is documented below.
+	// (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)
+	// Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/): use the `vpc` block instead.
 	// +kubebuilder:validation:Optional
 	NetworkInterface []NetworkInterfaceParameters `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 

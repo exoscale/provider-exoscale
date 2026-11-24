@@ -74,6 +74,14 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  allowedNetworks:
+                    description: |-
+                      (Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+                      The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   audit:
                     description: |-
                       (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
@@ -265,6 +273,14 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  allowedNetworks:
+                    description: |-
+                      (Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+                      The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   audit:
                     description: |-
                       (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
@@ -543,6 +559,14 @@ spec:
             properties:
               atProvider:
                 properties:
+                  allowedNetworks:
+                    description: |-
+                      (Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+                      The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   audit:
                     description: |-
                       (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)

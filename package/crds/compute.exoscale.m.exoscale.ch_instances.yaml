@@ -367,6 +367,11 @@ spec:
                       (Boolean) Enable TPM on the instance (boolean; default: false). Can not be disabled after the creation. WARNING: enabling this attribute stops/restarts the instance.
                       Enable TPM on the instance (boolean; default: `false`). Can not be disabled after the creation. **WARNING**: enabling this attribute stops/restarts the instance.
                     type: boolean
+                  ipForwarding:
+                    description: |-
+                      (Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.
+                      ❗ Allow the instance to act as a router in a VPC network (boolean; default: `false`). Can not be changed after the creation.
+                    type: boolean
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
@@ -387,8 +392,8 @@ spec:
                     type: string
                   networkInterface:
                     description: |-
-                      (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
-                      Private network interfaces (may be specified multiple times). Structure is documented below.
+                      (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)
+                      Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/): use the `vpc` block instead.
                     items:
                       properties:
                         ipAddress:
@@ -1062,6 +1067,11 @@ spec:
                       (Boolean) Enable TPM on the instance (boolean; default: false). Can not be disabled after the creation. WARNING: enabling this attribute stops/restarts the instance.
                       Enable TPM on the instance (boolean; default: `false`). Can not be disabled after the creation. **WARNING**: enabling this attribute stops/restarts the instance.
                     type: boolean
+                  ipForwarding:
+                    description: |-
+                      (Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.
+                      ❗ Allow the instance to act as a router in a VPC network (boolean; default: `false`). Can not be changed after the creation.
+                    type: boolean
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
@@ -1082,8 +1092,8 @@ spec:
                     type: string
                   networkInterface:
                     description: |-
-                      (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
-                      Private network interfaces (may be specified multiple times). Structure is documented below.
+                      (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)
+                      Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/): use the `vpc` block instead.
                     items:
                       properties:
                         ipAddress:
@@ -1582,6 +1592,11 @@ spec:
                   id:
                     description: (String) The ID of this resource.
                     type: string
+                  ipForwarding:
+                    description: |-
+                      (Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.
+                      ❗ Allow the instance to act as a router in a VPC network (boolean; default: `false`). Can not be changed after the creation.
+                    type: boolean
                   ipv6:
                     description: |-
                       (Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.
@@ -1612,8 +1627,8 @@ spec:
                     type: string
                   networkInterface:
                     description: |-
-                      (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
-                      Private network interfaces (may be specified multiple times). Structure is documented below.
+                      (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)
+                      Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/): use the `vpc` block instead.
                     items:
                       properties:
                         ipAddress:
@@ -1640,8 +1655,8 @@ spec:
                     type: boolean
                   privateNetworkIds:
                     description: |-
-                      (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead.
-                      A list of private networks (IDs) attached to the instance. Please use the `network_interface.*.network_id` argument instead.
+                      (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead. Private Networks are deprecated in favor of VPC.
+                      A list of private networks (IDs) attached to the instance. Please use the `network_interface.*.network_id` argument instead. Private Networks are deprecated in favor of [VPC](https://community.exoscale.com/product/networking/vpc/).
                     items:
                       type: string
                     type: array
