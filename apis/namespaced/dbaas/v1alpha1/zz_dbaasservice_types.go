@@ -104,7 +104,9 @@ type DBAASServiceInitParameters struct {
 	// The database service protection boolean flag against termination/power-off.
 	TerminationProtection *bool `json:"terminationProtection,omitempty" tf:"termination_protection,omitempty"`
 
-	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+	Thanos *ThanosInitParameters `json:"thanos,omitempty" tf:"thanos,omitempty"`
+
+	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`, `thanos`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	Valkey *ValkeyInitParameters `json:"valkey,omitempty" tf:"valkey,omitempty"`
@@ -161,7 +163,9 @@ type DBAASServiceObservation struct {
 	// The database service protection boolean flag against termination/power-off.
 	TerminationProtection *bool `json:"terminationProtection,omitempty" tf:"termination_protection,omitempty"`
 
-	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+	Thanos *ThanosObservation `json:"thanos,omitempty" tf:"thanos,omitempty"`
+
+	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`, `thanos`).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The service uri stripped from credentials
@@ -216,7 +220,10 @@ type DBAASServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	TerminationProtection *bool `json:"terminationProtection,omitempty" tf:"termination_protection,omitempty"`
 
-	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`).
+	// +kubebuilder:validation:Optional
+	Thanos *ThanosParameters `json:"thanos,omitempty" tf:"thanos,omitempty"`
+
+	// The type of the database service (`clickhouse`, `kafka`, `mysql`, `opensearch`, `pg`, `valkey`, `grafana`, `thanos`).
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -806,6 +813,50 @@ type PgParameters struct {
 	// Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).
 	// +kubebuilder:validation:Optional
 	WorkMem *float64 `json:"workMem,omitempty" tf:"work_mem,omitempty"`
+}
+
+type ThanosInitParameters struct {
+
+	// A list of CIDR blocks to allow incoming connections from.
+	// +listType=set
+	IPFilter []*string `json:"ipFilter,omitempty" tf:"ip_filter,omitempty"`
+
+	// Thanos configuration settings in JSON format (`exo dbaas type show thanos --settings=thanos` for reference).
+	ThanosSettings *string `json:"thanosSettings,omitempty" tf:"thanos_settings,omitempty"`
+}
+
+type ThanosObservation struct {
+
+	// A list of CIDR blocks to allow incoming connections from.
+	// +listType=set
+	IPFilter []*string `json:"ipFilter,omitempty" tf:"ip_filter,omitempty"`
+
+	// Thanos Query Frontend URI.
+	QueryFrontendURI *string `json:"queryFrontendUri,omitempty" tf:"query_frontend_uri,omitempty"`
+
+	// Thanos Query URI.
+	QueryURI *string `json:"queryUri,omitempty" tf:"query_uri,omitempty"`
+
+	// Thanos Receiver remote write URI.
+	ReceiverRemoteWriteURI *string `json:"receiverRemoteWriteUri,omitempty" tf:"receiver_remote_write_uri,omitempty"`
+
+	// Thanos Ruler URI.
+	RulerURI *string `json:"rulerUri,omitempty" tf:"ruler_uri,omitempty"`
+
+	// Thanos configuration settings in JSON format (`exo dbaas type show thanos --settings=thanos` for reference).
+	ThanosSettings *string `json:"thanosSettings,omitempty" tf:"thanos_settings,omitempty"`
+}
+
+type ThanosParameters struct {
+
+	// A list of CIDR blocks to allow incoming connections from.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	IPFilter []*string `json:"ipFilter,omitempty" tf:"ip_filter,omitempty"`
+
+	// Thanos configuration settings in JSON format (`exo dbaas type show thanos --settings=thanos` for reference).
+	// +kubebuilder:validation:Optional
+	ThanosSettings *string `json:"thanosSettings,omitempty" tf:"thanos_settings,omitempty"`
 }
 
 type ValkeyInitParameters struct {

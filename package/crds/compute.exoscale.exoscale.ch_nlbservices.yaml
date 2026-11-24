@@ -124,8 +124,8 @@ spec:
                     type: array
                   instancePoolId:
                     description: |-
-                      (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
-                      ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to.
+                      (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
+                      ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to. Either `instance_pool_id` or `label_selector` must be specified.
                     type: string
                   instancePoolIdRef:
                     description: Reference to a InstancePool in compute to populate
@@ -203,6 +203,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  labelSelector:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
+                      Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries **all** the listed pairs, and the map must hold at least one pair. If `instance_pool_id` is also specified, the backends are the union of both. Removing the attribute removes the selector, but either `label_selector` or `instance_pool_id` must be specified.
+                    type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: |-
                       (String) The NLB service name.
@@ -376,8 +384,8 @@ spec:
                     type: array
                   instancePoolId:
                     description: |-
-                      (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
-                      ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to.
+                      (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
+                      ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to. Either `instance_pool_id` or `label_selector` must be specified.
                     type: string
                   instancePoolIdRef:
                     description: Reference to a InstancePool in compute to populate
@@ -455,6 +463,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  labelSelector:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
+                      Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries **all** the listed pairs, and the map must hold at least one pair. If `instance_pool_id` is also specified, the backends are the union of both. Removing the attribute removes the selector, but either `label_selector` or `instance_pool_id` must be specified.
+                    type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: |-
                       (String) The NLB service name.
@@ -726,9 +742,17 @@ spec:
                     type: string
                   instancePoolId:
                     description: |-
-                      (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
-                      ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to.
+                      (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
+                      ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to. Either `instance_pool_id` or `label_selector` must be specified.
                     type: string
+                  labelSelector:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
+                      Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries **all** the listed pairs, and the map must hold at least one pair. If `instance_pool_id` is also specified, the backends are the union of both. Removing the attribute removes the selector, but either `label_selector` or `instance_pool_id` must be specified.
+                    type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: |-
                       (String) The NLB service name.

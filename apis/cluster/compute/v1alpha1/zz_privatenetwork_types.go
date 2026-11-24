@@ -146,7 +146,7 @@ type PrivateNetworkStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// PrivateNetwork is the Schema for the PrivateNetworks API. Manage Exoscale Private Networks https://community.exoscale.com/product/networking/private-network/. Corresponding data source: exoscaleprivatenetwork ../data-sources/private_network.md.
+// PrivateNetwork is the Schema for the PrivateNetworks API. Manage Exoscale Private Networks https://community.exoscale.com/product/networking/private-network/. ~> Deprecated: Private Networks are deprecated in favor of VPC https://community.exoscale.com/product/networking/vpc/. Use the exoscale_vpc ./vpc.md and exoscalevpcsubnet ./vpc_subnet.md resources instead, and the vpc block of exoscalecomputeinstance ./compute_instance.md to attach instances to them. Corresponding data source: exoscaleprivatenetwork ../data-sources/private_network.md.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

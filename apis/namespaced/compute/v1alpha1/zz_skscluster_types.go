@@ -176,6 +176,11 @@ type OidcParameters struct {
 
 type SKSClusterInitParameters struct {
 
+	// (Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+	// The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+	// +listType=set
+	AllowedNetworks []*string `json:"allowedNetworks,omitempty" tf:"allowed_networks,omitempty"`
+
 	// (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
 	// Parameters for Kubernetes Audit configuration (may only be enabled at creation time)
 	Audit []AuditInitParameters `json:"audit,omitempty" tf:"audit,omitempty"`
@@ -253,6 +258,11 @@ type SKSClusterInitParameters struct {
 }
 
 type SKSClusterObservation struct {
+
+	// (Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+	// The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+	// +listType=set
+	AllowedNetworks []*string `json:"allowedNetworks,omitempty" tf:"allowed_networks,omitempty"`
 
 	// (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
 	// Parameters for Kubernetes Audit configuration (may only be enabled at creation time)
@@ -355,6 +365,12 @@ type SKSClusterObservation struct {
 }
 
 type SKSClusterParameters struct {
+
+	// (Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+	// The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	AllowedNetworks []*string `json:"allowedNetworks,omitempty" tf:"allowed_networks,omitempty"`
 
 	// (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
 	// Parameters for Kubernetes Audit configuration (may only be enabled at creation time)

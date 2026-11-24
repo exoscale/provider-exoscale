@@ -124,8 +124,8 @@ type NLBServiceInitParameters struct {
 	// The service health checking configuration.
 	Healthcheck []NLBServiceHealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
-	// (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
-	// ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to.
+	// (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
+	// ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to. Either `instance_pool_id` or `label_selector` must be specified.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.InstancePool
 	InstancePoolID *string `json:"instancePoolId,omitempty" tf:"instance_pool_id,omitempty"`
 
@@ -136,6 +136,11 @@ type NLBServiceInitParameters struct {
 	// Selector for a InstancePool in compute to populate instancePoolId.
 	// +kubebuilder:validation:Optional
 	InstancePoolIDSelector *v1.NamespacedSelector `json:"instancePoolIdSelector,omitempty" tf:"-"`
+
+	// (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
+	// Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries **all** the listed pairs, and the map must hold at least one pair. If `instance_pool_id` is also specified, the backends are the union of both. Removing the attribute removes the selector, but either `label_selector` or `instance_pool_id` must be specified.
+	// +mapType=granular
+	LabelSelector map[string]*string `json:"labelSelector,omitempty" tf:"label_selector,omitempty"`
 
 	// (String) The NLB service name.
 	// The NLB service name.
@@ -188,9 +193,14 @@ type NLBServiceObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
-	// ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to.
+	// (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
+	// ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to. Either `instance_pool_id` or `label_selector` must be specified.
 	InstancePoolID *string `json:"instancePoolId,omitempty" tf:"instance_pool_id,omitempty"`
+
+	// (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
+	// Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries **all** the listed pairs, and the map must hold at least one pair. If `instance_pool_id` is also specified, the backends are the union of both. Removing the attribute removes the selector, but either `label_selector` or `instance_pool_id` must be specified.
+	// +mapType=granular
+	LabelSelector map[string]*string `json:"labelSelector,omitempty" tf:"label_selector,omitempty"`
 
 	// (String) The NLB service name.
 	// The NLB service name.
@@ -237,8 +247,8 @@ type NLBServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	Healthcheck []NLBServiceHealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
-	// (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
-	// ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to.
+	// (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
+	// ❗ The [exoscale_instance_pool](./instance_pool.md) (ID) to forward traffic to. Either `instance_pool_id` or `label_selector` must be specified.
 	// +crossplane:generate:reference:type=github.com/exoscale/provider-exoscale/apis/namespaced/compute/v1alpha1.InstancePool
 	// +kubebuilder:validation:Optional
 	InstancePoolID *string `json:"instancePoolId,omitempty" tf:"instance_pool_id,omitempty"`
@@ -250,6 +260,12 @@ type NLBServiceParameters struct {
 	// Selector for a InstancePool in compute to populate instancePoolId.
 	// +kubebuilder:validation:Optional
 	InstancePoolIDSelector *v1.NamespacedSelector `json:"instancePoolIdSelector,omitempty" tf:"-"`
+
+	// (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
+	// Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries **all** the listed pairs, and the map must hold at least one pair. If `instance_pool_id` is also specified, the backends are the union of both. Removing the attribute removes the selector, but either `label_selector` or `instance_pool_id` must be specified.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	LabelSelector map[string]*string `json:"labelSelector,omitempty" tf:"label_selector,omitempty"`
 
 	// (String) The NLB service name.
 	// The NLB service name.

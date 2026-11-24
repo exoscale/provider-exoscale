@@ -95,6 +95,7 @@ resources:
             id: (String) The ID of this resource.
             interfaces: '(Attributes List) The VPC subnets to attach the instance to. The order is strict: inserting, removing or reordering an element detaches every interface from that position on, then attaches them again in the configured order. Attachments made outside of Terraform are planned for removal, except those with a public IPv4 address: these are left alone unless listed here, which makes Terraform manage them (an attachment listed at its current position and IPv4 address is adopted as is). Positions only count the attachments managed by Terraform: unmanaged ones are skipped, so a position may differ from the NIC name on the instance. Attachment changes are not atomic: if an attachment fails, the interfaces detached before it stay detached until the next apply. (see below for nested schema)'
             ip_address: (String) The IPv4 address to request as static DHCP lease if the network interface is attached to a managed private network.
+            ip_forwarding: '(Boolean) ❗ Allow the instance to act as a router in a VPC network (boolean; default: false). Can not be changed after the creation.'
             ipv4_address: '(String) The IPv4 address to allocate to the instance in the subnet, or auto to let the platform pick one (default: auto).'
             ipv4_address_allocated: (String) The IPv4 address allocated to the instance in the subnet.
             ipv6: '(Boolean) Enable IPv6 on the instance (boolean; default: false). Can not be disabled after being enabled.'
@@ -103,9 +104,9 @@ resources:
             mac_address: (String) MAC address
             name: (String) The compute instance name.
             network_id: (String) The exoscale_private_network (ID) to attach to the instance.
-            network_interface: (Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. (see below for nested schema)
+            network_interface: '(Block Set) Private network interfaces (may be specified multiple times). Structure is documented below. Private Networks are deprecated in favor of VPC: use the vpc block instead. (see below for nested schema)'
             private: '(Boolean) Whether the instance is private (no public IP addresses; default: false)'
-            private_network_ids: (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead.
+            private_network_ids: (Set of String, Deprecated) A list of private networks (IDs) attached to the instance. Please use the network_interface.*.network_id argument instead. Private Networks are deprecated in favor of VPC.
             public_ip_address: (String) The instance (main network interface) IPv4 address.
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             reverse_dns: (String) Domain name for reverse DNS record.
@@ -204,19 +205,25 @@ resources:
             pgbouncer_settings: (String) PgBouncer configuration settings in JSON format (exo dbaas type show pg --settings=pgbouncer for reference).
             pglookout_settings: (String) pglookout configuration settings in JSON format (exo dbaas type show pg --settings=pglookout for reference).
             plan: (String) The plan of the database service (use the Exoscale CLI - exo dbaas type show <TYPE> --plans - for reference).
+            query_frontend_uri: (String) Thanos Query Frontend URI.
+            query_uri: (String) Thanos Query URI.
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            receiver_remote_write_uri: (String) Thanos Receiver remote write URI.
             recovery_backup_name: (String) Name of the backup to restore when forking from fork_from_service.
             recovery_backup_time: (String) ISO time of a backup to recover from. May only be set at creation time.
             request_timeout: '(Number) Timeout in milliseconds for requests made by OpenSearch Dashboards towards OpenSearch (default: 30000)'
+            ruler_uri: (String) Thanos Ruler URI.
             schema_registry_settings: (String) Schema Registry configuration settings in JSON format (exo dbaas type show kafka --settings=schema-registry for reference)
             settings: '(String) OpenSearch-specific settings, in json. e.g.jsonencode({thread_pool_search_size: 64}). Use exo x get-dbaas-settings-opensearch to get a list of available settings.'
             shared_buffers_percentage: (Number) Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60, which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.
             sorting_algorithm: (String) alphabetical or creation_date.
             state: (String) The current state of the database service.
             termination_protection: (Boolean) The database service protection boolean flag against termination/power-off.
+            thanos: (Attributes) thanos database service type specific arguments. Structure is documented below. (see below for nested schema)
+            thanos_settings: (String) Thanos configuration settings in JSON format (exo dbaas type show thanos --settings=thanos for reference).
             timeouts: (Block, Optional) (see below for nested schema)
             timescaledb_settings: (String) TimescaleDB extension configuration settings in JSON format (exo dbaas type show pg --settings=timescaledb for reference).
-            type: (String) The type of the database service (clickhouse, kafka, mysql, opensearch, pg, valkey, grafana).
+            type: (String) The type of the database service (clickhouse, kafka, mysql, opensearch, pg, valkey, grafana, thanos).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
             uri: (String) The service uri stripped from credentials
@@ -288,19 +295,25 @@ resources:
             pgbouncer_settings: (String) PgBouncer configuration settings in JSON format (exo dbaas type show pg --settings=pgbouncer for reference).
             pglookout_settings: (String) pglookout configuration settings in JSON format (exo dbaas type show pg --settings=pglookout for reference).
             plan: (String) The plan of the database service (use the Exoscale CLI - exo dbaas type show <TYPE> --plans - for reference).
+            query_frontend_uri: (String) Thanos Query Frontend URI.
+            query_uri: (String) Thanos Query URI.
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            receiver_remote_write_uri: (String) Thanos Receiver remote write URI.
             recovery_backup_name: (String) Name of the backup to restore when forking from fork_from_service.
             recovery_backup_time: (String) ISO time of a backup to recover from. May only be set at creation time.
             request_timeout: '(Number) Timeout in milliseconds for requests made by OpenSearch Dashboards towards OpenSearch (default: 30000)'
+            ruler_uri: (String) Thanos Ruler URI.
             schema_registry_settings: (String) Schema Registry configuration settings in JSON format (exo dbaas type show kafka --settings=schema-registry for reference)
             settings: '(String) OpenSearch-specific settings, in json. e.g.jsonencode({thread_pool_search_size: 64}). Use exo x get-dbaas-settings-opensearch to get a list of available settings.'
             shared_buffers_percentage: (Number) Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60, which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.
             sorting_algorithm: (String) alphabetical or creation_date.
             state: (String) The current state of the database service.
             termination_protection: (Boolean) The database service protection boolean flag against termination/power-off.
+            thanos: (Attributes) thanos database service type specific arguments. Structure is documented below. (see below for nested schema)
+            thanos_settings: (String) Thanos configuration settings in JSON format (exo dbaas type show thanos --settings=thanos for reference).
             timeouts: (Block, Optional) (see below for nested schema)
             timescaledb_settings: (String) TimescaleDB extension configuration settings in JSON format (exo dbaas type show pg --settings=timescaledb for reference).
-            type: (String) The type of the database service (clickhouse, kafka, mysql, opensearch, pg, valkey, grafana).
+            type: (String) The type of the database service (clickhouse, kafka, mysql, opensearch, pg, valkey, grafana, thanos).
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             updated_at: (String) The date of the latest database service update.
             uri: (String) The service uri stripped from credentials
@@ -452,6 +465,111 @@ resources:
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             zone: (String) ❗ The Exoscale Zone name.
         importStatements: []
+    exoscale_dbaas_kafka_schema_registry_acl:
+        subCategory: ""
+        description: 'Manage a Kafka Schema Registry ACL entry of an Exoscale Database Service (DBaaS) https://community.exoscale.com/product/dbaas/. The API has no update operation for ACL entries: changing any argument replaces the entry.'
+        name: exoscale_dbaas_kafka_schema_registry_acl
+        title: exoscale_dbaas_kafka_schema_registry_acl Resource - terraform-provider-exoscale
+        examples:
+            - name: my_app_orders
+              manifest: |-
+                {
+                  "permission": "schema_registry_read",
+                  "resource": "Subject:orders-*",
+                  "service": "${exoscale_dbaas.my_kafka.name}",
+                  "username": "${exoscale_dbaas_kafka_user.my_app.username}",
+                  "zone": "${exoscale_dbaas.my_kafka.zone}"
+                }
+              references:
+                service: exoscale_dbaas.my_kafka.name
+                username: exoscale_dbaas_kafka_user.my_app.username
+                zone: exoscale_dbaas.my_kafka.zone
+              dependencies:
+                exoscale_dbaas.my_kafka: |-
+                    {
+                      "kafka": {
+                        "enable_schema_registry": true
+                      },
+                      "name": "my-kafka",
+                      "plan": "startup-4",
+                      "type": "kafka",
+                      "zone": "ch-gva-2"
+                    }
+                exoscale_dbaas_kafka_user.my_app: |-
+                    {
+                      "service": "${exoscale_dbaas.my_kafka.name}",
+                      "username": "my-app",
+                      "zone": "${exoscale_dbaas.my_kafka.zone}"
+                    }
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of the ACL entry, assigned by the service.
+            permission: (String) ❗ The permission granted on the resource (schema_registry_read or schema_registry_write).
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            resource: '(String) ❗ The Schema Registry resource name or pattern the entry applies to: Config: or Subject:<name> (e.g. Subject:orders-*).'
+            service: (String) ❗ The name of the Kafka database service.
+            timeouts: (Block, Optional) (see below for nested schema)
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            username: (String) ❗ The Kafka username or username pattern (e.g. app-*) the entry applies to.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements:
+            - |-
+              # The ACL entry ID is the `id` listed by `exo x get-dbaas-kafka-acl-config <service> -z <zone>`.
+              terraform import \
+                exoscale_dbaas_kafka_schema_registry_acl.my_app_orders \
+                my-kafka/acl5ec257a26ce@ch-gva-2
+    exoscale_dbaas_kafka_topic_acl:
+        subCategory: ""
+        description: 'Manage a Kafka topic ACL entry of an Exoscale Database Service (DBaaS) https://community.exoscale.com/product/dbaas/. The API has no update operation for ACL entries: changing any argument replaces the entry.'
+        name: exoscale_dbaas_kafka_topic_acl
+        title: exoscale_dbaas_kafka_topic_acl Resource - terraform-provider-exoscale
+        examples:
+            - name: my_app_orders
+              manifest: |-
+                {
+                  "permission": "readwrite",
+                  "service": "${exoscale_dbaas.my_kafka.name}",
+                  "topic": "orders-*",
+                  "username": "${exoscale_dbaas_kafka_user.my_app.username}",
+                  "zone": "${exoscale_dbaas.my_kafka.zone}"
+                }
+              references:
+                service: exoscale_dbaas.my_kafka.name
+                username: exoscale_dbaas_kafka_user.my_app.username
+                zone: exoscale_dbaas.my_kafka.zone
+              dependencies:
+                exoscale_dbaas.my_kafka: |-
+                    {
+                      "name": "my-kafka",
+                      "plan": "startup-4",
+                      "type": "kafka",
+                      "zone": "ch-gva-2"
+                    }
+                exoscale_dbaas_kafka_user.my_app: |-
+                    {
+                      "service": "${exoscale_dbaas.my_kafka.name}",
+                      "username": "my-app",
+                      "zone": "${exoscale_dbaas.my_kafka.zone}"
+                    }
+        argumentDocs:
+            create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+            id: (String) The ID of the ACL entry, assigned by the service.
+            permission: (String) ❗ The permission granted on the topic (admin, read, readwrite or write).
+            read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+            service: (String) ❗ The name of the Kafka database service.
+            timeouts: (Block, Optional) (see below for nested schema)
+            topic: (String) ❗ The Kafka topic name or pattern (e.g. orders-*) the entry applies to.
+            update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+            username: (String) ❗ The Kafka username or username pattern (e.g. app-*) the entry applies to.
+            zone: (String) ❗ The Exoscale Zone name.
+        importStatements:
+            - |-
+              # The ACL entry ID is the `id` listed by `exo x get-dbaas-kafka-acl-config <service> -z <zone>`.
+              terraform import \
+                exoscale_dbaas_kafka_topic_acl.my_app_orders \
+                my-kafka/acl5ec2571aff0@ch-gva-2
     exoscale_dbaas_kafka_user Resource - terraform-provider-exoscale:
         subCategory: ""
         description: Manage service users for a Kafka Exoscale Database Services (DBaaS) https://community.exoscale.com/product/dbaas/.
@@ -868,7 +986,7 @@ resources:
             labels: (Map of String) A map of key/value labels.
             min_available: (Number) Minimum number of running Instances.
             name: (String) The instance pool name.
-            network_ids: (Set of String) A list of exoscale_private_network (IDs).
+            network_ids: (Set of String) A list of exoscale_private_network (IDs). Private Networks are deprecated in favor of VPC.
             public_ip_address: (String) The instance (main network interface) IPv4 address.
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             security_group_ids: (Set of String) A list of exoscale_security_group (IDs).
@@ -1059,14 +1177,43 @@ resources:
                       "name": "my-nlb",
                       "zone": "ch-gva-2"
                     }
+            - name: my_nlb_labels_service
+              manifest: |-
+                {
+                  "healthcheck": [
+                    {
+                      "port": 8053
+                    }
+                  ],
+                  "label_selector": {
+                    "exoscale.com/managed-by": "terraform",
+                    "role": "web"
+                  },
+                  "name": "my-nlb-labels-service",
+                  "nlb_id": "${exoscale_nlb.my_nlb.id}",
+                  "port": 8053,
+                  "protocol": "tcp",
+                  "target_port": 8053,
+                  "zone": "${exoscale_nlb.my_nlb.zone}"
+                }
+              references:
+                nlb_id: exoscale_nlb.my_nlb.id
+                zone: exoscale_nlb.my_nlb.zone
+              dependencies:
+                exoscale_nlb.my_nlb: |-
+                    {
+                      "name": "my-nlb",
+                      "zone": "ch-gva-2"
+                    }
         argumentDocs:
             create: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             delete: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
             description: (String) A free-form text describing the NLB service.
             healthcheck: (Block Set) The service health checking configuration. (see below for nested schema)
             id: (String) The ID of this resource.
-            instance_pool_id: (String) ❗ The exoscale_instance_pool (ID) to forward traffic to.
+            instance_pool_id: (String) ❗ The exoscale_instance_pool (ID) to forward traffic to. Either instance_pool_id or label_selector must be specified.
             interval: '(Number) The healthcheck interval in seconds (default: 10).'
+            label_selector: (Map of String) Labels of instances to forward traffic to, as key/value pairs. Labels are matched exactly, including case and trailing spaces. Only instances in the same organization and zone as the NLB are candidates. An instance is a backend when it carries all the listed pairs, and the map must hold at least one pair. If instance_pool_id is also specified, the backends are the union of both. Removing the attribute removes the selector, but either label_selector or instance_pool_id must be specified.
             mode: '(String) The healthcheck mode (tcp|http|https; default: tcp).'
             name: (String) The NLB service name.
             nlb_id: (String) ❗ The parent exoscale_nlb ID.
@@ -1092,7 +1239,7 @@ resources:
                 f81d4fae-7dec-11d0-a765-00a0c91e6bf6/9ecc6b8b-73d4-4211-8ced-f7f29bb79524@ch-gva-2
     exoscale_private_network:
         subCategory: ""
-        description: 'Manage Exoscale Private Networks https://community.exoscale.com/product/networking/private-network/. Corresponding data source: exoscaleprivatenetwork ../data-sources/private_network.md.'
+        description: 'Manage Exoscale Private Networks https://community.exoscale.com/product/networking/private-network/. ~> Deprecated: Private Networks are deprecated in favor of VPC https://community.exoscale.com/product/networking/vpc/. Use the exoscale_vpc ./vpc.md and exoscalevpcsubnet ./vpc_subnet.md resources instead, and the vpc block of exoscalecomputeinstance ./compute_instance.md to attach instances to them. Corresponding data source: exoscaleprivatenetwork ../data-sources/private_network.md.'
         name: exoscale_private_network
         title: exoscale_private_network Resource - terraform-provider-exoscale
         examples:
@@ -1218,6 +1365,7 @@ resources:
                 }
         argumentDocs:
             aggregation_ca: (String, Sensitive) The CA certificate (in PEM format) for TLS communications between the control plane and the aggregation layer (e.g. metrics-server).
+            allowed_networks: '(Set of String) The IP allowlist of the cluster: a list of CIDR blocks allowed to access the Kubernetes API server endpoint.'
             audit: (Block List) Parameters for Kubernetes Audit configuration (may only be enabled at creation time) (see below for nested schema)
             auto_upgrade: (Boolean) Enable automatic upgrading of the control plane version.
             bearer_token: (String, Sensitive) The optional bearer token to include in the request header
@@ -1343,6 +1491,7 @@ resources:
             instance_pool_id: (String) The underlying exoscale_instance_pool ID.
             instance_prefix: (String) The string used to prefix the managed instances name (default pool).
             instance_type: (String) The managed compute instances type (<family>.<size>, e.g. standard.medium; use the Exoscale CLI - exo compute instance-type list - for the list of available types).
+            ip_forwarding: '(Boolean) Allow the managed instances to act as routers in their VPC (boolean; default: false). A change only applies to the instances created afterwards.'
             ipv6: (Boolean) Enable IPV6 for the nodepool nodes
             kubelet_image_gc: (Attributes) Configuration for this nodepool's kubelet image garbage collector. (see below for nested schema)
             kubelet_max_pods: (Number) The maximum number of pods per node (default is 110).
@@ -1350,18 +1499,21 @@ resources:
             low_threshold: (Number) The percent of disk usage before which image garbage collection is never run
             min_age: (String) The minimum age for an unused image before it is garbage collected (k8s duration format, eg. 1h)
             name: (String) The SKS node pool name.
+            nvidia_dra_driver: '(Boolean) Expose the managed GPUs with the NVIDIA Dynamic Resource Allocation (DRA) driver instead of the NVIDIA device plugin (boolean; default: false). Requires a GPU instance type and Kubernetes 1.34 or later.'
             nvidia_mig_profile: '(String) The NVIDIA Multi-Instance GPU (MIG) profile to enable on the managed GPUs. The GPU family is inferred from instance_type: gpua30.* accepts 2g.12gb, 1g.6gb+me, 1g.6gb, 2g.12gb+me, 4g.24gb; gpurtx6000pro.* accepts 1g.24gb-me, 1g.24gb, 2g.48gb-me, 2g.48gb, 4g.96gb+gfx, 1g.24gb+me, 2g.48gb+me.all, 1g.24gb+gfx, 1g.24gb+me.all, 4g.96gb, 2g.48gb+gfx.'
-            private_network_ids: (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances.
+            private_network_ids: (Set of String) A list of exoscale_private_network (IDs) to be attached to the managed instances. Private Networks are deprecated in favor of VPC.
             read: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
             security_group_ids: (Set of String) A list of exoscale_security_group (IDs) to be attached to the managed instances.
             size: (Number)
             state: (String) The current pool state.
             storage_lvm: (Boolean) Create nodes with non-standard partitioning for persistent storage (requires min 100G of disk space) (may only be set at creation time).
+            subnet_ids: (List of String) A list of exoscale_vpc_subnet (IDs) to attach the managed instances to, in this order.
             taints: (Map of String) A map of key/value Kubernetes taints ('taints = {  = ":" }').
             template_id: (String) The managed instances template ID.
             timeouts: (Block, Optional) (see below for nested schema)
             update: (String) A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
             version: (String) The managed instances version.
+            vpc: (Attributes) The VPC to attach the managed instances to. Removing it detaches them from the VPC. (see below for nested schema)
             zone: (String) ❗ The Exoscale Zone name.
         importStatements:
             - |-
